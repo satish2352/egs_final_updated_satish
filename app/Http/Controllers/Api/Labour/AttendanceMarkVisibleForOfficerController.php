@@ -20,7 +20,7 @@ class AttendanceMarkVisibleForOfficerController extends Controller
 {
     public function getAllAttendanceMarkedLabour(Request $request) {
         try {
-            $user = Auth::user()->id;            
+            $user = auth()->user()->id;            
             $date = date('Y-m-d'); 
            
             $fromDate = date('Y-m-d', strtotime($request->input('from_date')));

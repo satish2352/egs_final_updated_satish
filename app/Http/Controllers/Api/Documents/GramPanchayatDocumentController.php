@@ -32,7 +32,7 @@ class GramPanchayatDocumentController extends Controller
             return response()->json(['status' => 'error', 'message' => $validator->errors()->all()], 400);
         }
         try {
-            $user = Auth::user();
+            $user = auth()->user();
             $document_data = new GramPanchayatDocuments();
             $document_data->user_id = $user->id; 
             $document_data->document_name = $request->document_name;
@@ -61,7 +61,7 @@ class GramPanchayatDocumentController extends Controller
         try {
             $data_output = [];
 
-            $user = Auth::user()->id;
+            $user = auth()->user()->id;
             $is_approved = '' ;
             $is_resubmitted = ''; 
 
@@ -209,7 +209,7 @@ class GramPanchayatDocumentController extends Controller
     }
     public function getAllDocumentsOfficer(Request $request){
         try {
-            $user = Auth::user()->id;
+            $user = auth()->user()->id;
 
             $fromDate = date('Y-m-d', strtotime($request->input('from_date')));
             $fromDate =  $fromDate.' 00:00:01';
@@ -305,7 +305,7 @@ class GramPanchayatDocumentController extends Controller
     }
     public function getDownloadDocument(Request $request){
         try {
-            $user = Auth::user()->id;
+            $user = auth()->user()->id;
             $document_pdffile = $request->input('document_name');
         
             $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
@@ -356,7 +356,7 @@ class GramPanchayatDocumentController extends Controller
     }
     public function countGramsevakDocument(Request $request) {
         try {
-            $user = Auth::user();
+            $user = auth()->user();
     
             $documentCount = GramPanchayatDocuments::where('user_id', $user->id)
             ->where('is_approved', 2)

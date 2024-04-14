@@ -23,7 +23,7 @@ class OfficerController extends Controller
 {
     public function getParticularLabourOfficer(Request $request){
         try {
-            $user = Auth::user()->id;
+            $user = auth()->user()->id;
             $mgnrega_card_id = $request->input('mgnrega_card_id');
             $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
                 ->where('users.id', $user)
@@ -143,7 +143,7 @@ class OfficerController extends Controller
     }    
     public function getLabourStatusListReceived(Request $request){
         try {
-            $user = Auth::user()->id;
+            $user = auth()->user()->id;
             $is_approved = '' ;
             $is_resubmitted = ''; 
 
@@ -257,7 +257,7 @@ class OfficerController extends Controller
     }
     public function updateLabourStatusApproved(Request $request){
         try {
-            $user = Auth::user()->id;
+            $user = auth()->user()->id;
                 // Validate the incoming request
             $validator = Validator::make($request->all(), [
                 'mgnrega_card_id' => 'required',
@@ -292,7 +292,7 @@ class OfficerController extends Controller
     }
     public function updateLabourStatusNotApproved(Request $request) {
         try {
-            $user = Auth::user();
+            $user = auth()->user();
             
             $labour_id = $request->input('labour_id'); 
            
@@ -347,7 +347,7 @@ class OfficerController extends Controller
     }
     public function officerReportsCount(Request $request) {
         try {
-            $user = Auth::user()->id;
+            $user = auth()->user()->id;
     
             $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
                 ->where('users.id', $user)

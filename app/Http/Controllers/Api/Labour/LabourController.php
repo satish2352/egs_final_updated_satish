@@ -67,7 +67,7 @@ class LabourController extends Controller
                     return response()->json(['status' => 'error', 'message' => $validator->errors()->all()], 200);
                 }
 
-                $user = Auth::user();
+                $user = auth()->user();
 
                 $labour_data = new Labour();
                 $labour_data->user_id = $user->id;
@@ -132,7 +132,7 @@ class LabourController extends Controller
 
         try {
             $data_output = [];
-            $user = Auth::user()->id;
+            $user = auth()->user()->id;
             
             $is_approved = '' ;
             $is_resubmitted = ''; 
@@ -282,7 +282,7 @@ class LabourController extends Controller
     }
     public function updateLabourFirstForm(Request $request){
         try {
-            $user = Auth::user();
+            $user = auth()->user();
             // $labour_id = $request->input('id');
             $validator = Validator::make($request->all(), [
                 'full_name' => 'required',
@@ -356,7 +356,7 @@ class LabourController extends Controller
     }
     public function updateLabourSecondForm(Request $request){
         try {
-            $user = Auth::user();
+            $user = auth()->user();
 
             $validatorRules = [
                 'latitude' => ['required', 'between:-90,90'], 
@@ -472,7 +472,7 @@ class LabourController extends Controller
     }
     public function gramsevakReportscount(Request $request) {
         try {
-            $user = Auth::user();
+            $user = auth()->user();
     
             $fromDate = date('Y-m-d').' 00:00:01';
             $toDate =  date('Y-m-d').' 23:59:59';
@@ -593,7 +593,7 @@ class LabourController extends Controller
     public function autoSuggMgnregaCardId(Request $request)
     {
         try {
-        $user = Auth::user()->id;
+        $user = auth()->user()->id;
         $mgnrega_card_id = $request->input('mgnrega_card_id');
 
         if (!$mgnrega_card_id) {

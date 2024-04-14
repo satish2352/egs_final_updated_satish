@@ -33,7 +33,7 @@ class LabourAttendanceMarkController extends Controller
     
         try {
             // Check if the user exists
-            $user = Auth::user();
+            $user = auth()->user();
             if (!$user) {
                 return response()->json(['status' => 'false', 'message' => 'User not found'], 200);
             }
@@ -133,7 +133,7 @@ class LabourAttendanceMarkController extends Controller
     }
     public function getAllAttendanceMarkedLabour(Request $request) {
         try {
-            $user = Auth::user()->id;
+            $user = auth()->user()->id;
         
             $page = isset($request["start"]) ? $request["start"] : Config::get('DocumentConstant.LABOUR_DEFAULT_START') ;
             // $rowperpage = isset($request["length"])? $request["length"] : Config::get('DocumentConstant.LABOUR_DEFAULT_LENGTH') ; // Rows display per page
@@ -186,7 +186,7 @@ class LabourAttendanceMarkController extends Controller
     }
     public function updateAttendanceMark(Request $request) {
     try {
-        $user = Auth::user()->id;
+        $user = auth()->user()->id;
         $currentTime = date('H:i:s');
         $currentDate = date('Y-m-d');
 

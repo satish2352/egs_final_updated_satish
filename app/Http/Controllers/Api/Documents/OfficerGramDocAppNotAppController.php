@@ -20,7 +20,7 @@ class OfficerGramDocAppNotAppController extends Controller
 {
     public function getReceivedDocumentListForAppNotApp(Request $request){
         try {
-            $user = Auth::user()->id;
+            $user = auth()->user()->id;
             $is_approved = '' ;
             $is_resubmitted = ''; 
             $fromDate = date('Y-m-d', strtotime($request->input('from_date')));
@@ -152,7 +152,7 @@ class OfficerGramDocAppNotAppController extends Controller
     }
     public function updateDocumentStatusApproved(Request $request){
         try {
-            $user = Auth::user()->id;
+            $user = auth()->user()->id;
                 // Validate the incoming request
             $validator = Validator::make($request->all(), [
                 'gram_document_id' => 'required',
@@ -180,7 +180,7 @@ class OfficerGramDocAppNotAppController extends Controller
     }
     public function updateDocumentStatusNotApproved(Request $request) {
         try {
-            $user = Auth::user();
+            $user = auth()->user();
             
             $gram_document_id = $request->input('gram_document_id'); 
         
@@ -236,7 +236,7 @@ class OfficerGramDocAppNotAppController extends Controller
     }
     public function countOfficerDocument(Request $request) {
         try {
-            $user = Auth::user()->id;
+            $user = auth()->user()->id;
 
             $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
                 ->where('users.id', $user)

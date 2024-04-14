@@ -16,7 +16,7 @@ class ProjectController extends Controller
 {
     public function getAllProjectForOfficer(Request $request){
         try {
-            $user = Auth::user()->id;
+            $user = auth()->user()->id;
             
             $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
             ->where('users.id', $user)
@@ -67,7 +67,7 @@ class ProjectController extends Controller
     }
     public function filterDataProjectsLaboursMap(Request $request){
         try {
-            $user = Auth::user()->id;
+            $user = auth()->user()->id;
             $userLatitude = $request->latitude; 
             $userLongitude = $request->longitude; 
             $distanceInKm = DistanceKM::first()->distance_km;

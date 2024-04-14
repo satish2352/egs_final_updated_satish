@@ -38,7 +38,7 @@ class AllMasterController extends Controller
     }
     public function getAllMastersUpdated(Request $request){
         try {
-            // $user = Auth::user()->id;
+            // $user = auth()->user()->id;
             $data_output = TblArea::where(['is_active'=> '1','is_new'=> 1])->orderBy('id', 'asc')->get();
     
             return response()->json(['status' => 'true', 'message' => 'All new data retrieved successfully', 'data' => $data_output], 200);
