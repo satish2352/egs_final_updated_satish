@@ -56,6 +56,8 @@ class Handler extends ExceptionHandler
         }
 
 
-        return redirect()->guest(route('login')); // Redirect to login page for web requests
+        return response()->json([
+            'data' => 'Wrong token provided'
+        ], 404);
     }
 }
