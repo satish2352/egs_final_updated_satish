@@ -47,7 +47,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $email)->first();
         if (!$user) {
-            return response()->json(['status' => 'False','message' => 'User not found'], 200);
+            return response()->json(['status' => 'False','message' => 'User not found'], 400);
         }
 
         if ($user->device_id != 'null' && $user->device_id != $device_id) {
