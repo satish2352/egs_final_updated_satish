@@ -159,7 +159,12 @@ class ProjectController extends Controller
                 $projectData_array['name'] = $value->project_name;
                 $projectData_array['latitude'] = $value->latitude;
                 $projectData_array['longitude'] = $value->longitude;
-
+                $projectData_array['District'] = $value->District;
+                $projectData_array['district_name'] = $value->district_name;
+                $projectData_array['taluka'] = $value->taluka;
+                $projectData_array['taluka_name'] = $value->taluka_name;
+                $projectData_array['village'] = $value->village;
+                $projectData_array['village_name'] = $value->village_name;
                 $projectData_array['type'] = 'project';
                 array_push($labourData_array_final, $projectData_array);
             }
