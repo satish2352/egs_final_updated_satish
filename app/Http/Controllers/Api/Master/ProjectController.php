@@ -43,6 +43,9 @@ class ProjectController extends Controller
         $data_user_output = $data_user_output->get()->toArray(); 
             // dd($data_user_output);
             $project = Project::leftJoin('users', 'projects.District', '=', 'users.user_district')  
+            ->leftJoin('tbl_area as district_projects', 'projects.District', '=', 'district_projects.location_id')  
+            ->leftJoin('tbl_area as taluka_projects', 'projects.taluka', '=', 'taluka_projects.location_id')
+           ->leftJoin('tbl_area as village_projects', 'projects.village', '=', 'village_projects.location_id')
               ->where('projects.end_date', '>=',date('Y-m-d'))
               ->where('projects.District', $data_user_output)
             //   ->where('projects.is_active', true)
@@ -52,6 +55,12 @@ class ProjectController extends Controller
               ->select(
                   'projects.id',
                   'projects.project_name',
+                  'projects.District',
+                  'district_projects.name as district_name',
+                  'projects.taluka',
+                  'taluka_projects.name as taluka_name',
+                  'projects.village',
+                  'village_projects.name as village_name',
 				  'projects.latitude',
 				  'projects.longitude',
                   'projects.start_date',
@@ -150,7 +159,12 @@ class ProjectController extends Controller
                 $projectData_array['name'] = $value->project_name;
                 $projectData_array['latitude'] = $value->latitude;
                 $projectData_array['longitude'] = $value->longitude;
-
+                $projectData_array['District'] = $value->District;
+                $projectData_array['district_name'] = $value->district_name;
+                $projectData_array['taluka'] = $value->taluka;
+                $projectData_array['taluka_name'] = $value->taluka_name;
+                $projectData_array['village'] = $value->village;
+                $projectData_array['village_name'] = $value->village_name;
                 $projectData_array['type'] = 'project';
                 array_push($labourData_array_final, $projectData_array);
             }

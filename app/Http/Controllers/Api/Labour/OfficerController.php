@@ -193,11 +193,8 @@ class OfficerController extends Controller
                 ->leftJoin('tbl_area as taluka_labour', 'labour.taluka_id', '=', 'taluka_labour.location_id')
                 ->leftJoin('tbl_area as village_labour', 'labour.village_id', '=', 'village_labour.location_id')
                 ->whereIn('labour.user_id', $data_user_output)
-                ->when($request->has('document_type_name'), function($query) use ($request) {
-                    $query->where('tbl_documenttype.document_type_name', 'like', '%' . $request->document_type_name . '%');
-                })
-                ->when($request->has('gram_document_id'), function($query) use ($request) {
-                    $query->where('labour.id',$request->gram_document_id);
+                ->when($request->has('mgnrega_card_id'), function($query) use ($request) {
+                    $query->where('labour.mgnrega_card_id', 'like', '%' . $request->mgnrega_card_id . '%');
                 })
                 ->when($request->has('is_approved'), function($query) use ($is_approved) {
                     $query->where('labour.is_approved', $is_approved);
@@ -205,18 +202,6 @@ class OfficerController extends Controller
                 ->when($request->has('is_resubmitted'), function($query) use ($is_resubmitted) {
                     $query->where('labour.is_resubmitted', $is_resubmitted);
                 });
-                // ->when($request->get('from_date'), function($query) use ($fromDate, $toDate) {
-                //     $query->whereBetween('labour.updated_at', [$fromDate, $toDate]);
-                // });
-                if ($request->has('district_id')) {
-                    $basic_query_object->where('district_labour.location_id', $request->input('district_id'));
-                }
-                if ($request->has('taluka_id')) {
-                    $basic_query_object->where('taluka_labour.location_id', $request->input('taluka_id'));
-                }
-                if ($request->has('village_id')) {
-                    $basic_query_object->where('village_labour.location_id', $request->input('village_id'));
-                }
 
                 $totalRecords = $basic_query_object->select('labour.id')->get()->count();
 

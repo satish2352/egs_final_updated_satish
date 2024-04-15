@@ -45,7 +45,6 @@ Route::group([
 
  
 
-
         // Protected routes that require authentication token
         Route::middleware('auth:api')->group(function () {
             //=============Start labour=================

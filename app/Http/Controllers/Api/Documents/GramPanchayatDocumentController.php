@@ -117,6 +117,7 @@ class GramPanchayatDocumentController extends Controller
                     'tbl_gram_panchayat_documents.id',
                     'tbl_gram_panchayat_documents.document_name',
                     'tbl_documenttype.document_type_name',
+                    'tbl_documenttype.doc_color',
                     'tbl_gram_panchayat_documents.document_pdf',
                     'users.user_district',
                     'district_u.name as district_name',
@@ -258,16 +259,11 @@ class GramPanchayatDocumentController extends Controller
                 ->whereIn('tbl_gram_panchayat_documents.user_id',$data_user_output)
                 ->when($request->has('document_type_name'), function($query) use ($request) {
                     $query->where('tbl_documenttype.document_type_name', 'like', '%' . $request->document_type_name . '%');
-                })
-                ->when($request->get('user_taluka'), function($query) use ($request) {
-                    $query->where('users.user_taluka', $request->user_taluka);
-                })  
-                ->when($request->get('user_village'), function($query) use ($request) {
-                    $query->where('users.user_village', $request->user_village);
-                })  
-                ->when($request->get('from_date'), function($query) use ($fromDate, $toDate) {
-                    $query->whereBetween('tbl_gram_panchayat_documents.updated_at', [$fromDate, $toDate]);
                 });
+                
+                // ->when($request->get('from_date'), function($query) use ($fromDate, $toDate) {
+                //     $query->whereBetween('tbl_gram_panchayat_documents.updated_at', [$fromDate, $toDate]);
+                // });
 
                 $totalRecords = $basic_query_object->select('tbl_gram_panchayat_documents.id')->get()->count();
                 
@@ -277,6 +273,7 @@ class GramPanchayatDocumentController extends Controller
                     User::raw("CONCAT(users.f_name, IFNULL(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
                     'tbl_gram_panchayat_documents.document_name',
                     'tbl_documenttype.document_type_name',
+                    'tbl_documenttype.doc_color',
                     'tbl_gram_panchayat_documents.document_pdf',
                     'users.user_district',
                     'district_labour.name as district_name',
