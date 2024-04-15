@@ -43,9 +43,6 @@ class ProjectController extends Controller
         $data_user_output = $data_user_output->get()->toArray(); 
             // dd($data_user_output);
             $project = Project::leftJoin('users', 'projects.District', '=', 'users.user_district')  
-            ->leftJoin('tbl_area as district_projects', 'projects.District', '=', 'district_projects.location_id')  
-            ->leftJoin('tbl_area as taluka_projects', 'projects.taluka', '=', 'taluka_projects.location_id')
-           ->leftJoin('tbl_area as village_projects', 'projects.village', '=', 'village_projects.location_id')
               ->where('projects.end_date', '>=',date('Y-m-d'))
               ->where('projects.District', $data_user_output)
             //   ->where('projects.is_active', true)
@@ -55,12 +52,6 @@ class ProjectController extends Controller
               ->select(
                   'projects.id',
                   'projects.project_name',
-                  'projects.District',
-                  'district_projects.name as district_name',
-                  'projects.taluka',
-                  'taluka_projects.name as taluka_name',
-                  'projects.village',
-                  'village_projects.name as village_name',
 				  'projects.latitude',
 				  'projects.longitude',
                   'projects.start_date',
@@ -102,7 +93,10 @@ class ProjectController extends Controller
                 )->distinct('labour.id')
                 ->orderBy('id', 'desc');
     
-                $projectQuery = Project::where('projects.is_active', true)
+                $projectQuery = Project:: leftJoin('tbl_area as district_projects', 'projects.District', '=', 'district_projects.location_id')  
+                ->leftJoin('tbl_area as taluka_projects', 'projects.taluka', '=', 'taluka_projects.location_id')
+               ->leftJoin('tbl_area as village_projects', 'projects.village', '=', 'village_projects.location_id')
+                ->where('projects.is_active', true)
                 ->where('projects.end_date', '>=', now())
                 ->when($request->has('latitude'), function($query) use ($latN, $latS, $lonE, $lonW) {
                     $query->where('projects.latitude', '<=', $latN)
@@ -120,7 +114,13 @@ class ProjectController extends Controller
                     'projects.start_date',
                     'projects.end_date',
                     'projects.latitude',
-                    'projects.longitude'
+                    'projects.longitude',
+                    'projects.District',
+                    'district_projects.name as district_name',
+                    'projects.taluka',
+                    'taluka_projects.name as taluka_name',
+                    'projects.village',
+                    'village_projects.name as village_name',
                 )->distinct('projects.id')
                 ->orderBy('id', 'desc');
 
