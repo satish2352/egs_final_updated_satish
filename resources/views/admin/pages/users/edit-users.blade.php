@@ -248,8 +248,8 @@
                                                     <select class="form-control" name="user_village" id="user_village">
                                                         <option value="">Select Village</option>
                                                     </select>
-                                                    @if ($errors->has('village'))
-                                                        <span class="red-text"><?php echo $errors->first('village', ':message'); ?></span>
+                                                    @if ($errors->has('user_village'))
+                                                        <span class="red-text"><?php echo $errors->first('user_village', ':message'); ?></span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -293,34 +293,7 @@
         </div>
 
         <script>
-            // function getStateCity(stateId, city_id) {
-
-            //     $('#city').html('<option value="">Select City</option>');
-            //     if (stateId !== '') {
-            //         $.ajax({
-            //             url: '{{ route('cities') }}',
-            //             type: 'GET',
-            //             data: {
-            //                 stateId: stateId
-            //             },
-
-            //             success: function(response) {
-            //                 if (response.city.length > 0) {
-            //                     $.each(response.city, function(index, city) {
-            //                         $('#city').append('<option value="' + city
-            //                             .location_id +
-            //                             '" selected>' + city.name + '</option>');
-            //                     });
-            //                     if (city_id != null) {
-            //                         $('#city').val(city_id);
-            //                     } else {
-            //                         $('#city').val("");
-            //                     }
-            //                 }
-            //             }
-            //         });
-            //     }
-            // }
+            
 
             function getState(stateId) {
                 $('#state').html('<option value="">Select State</option>');
@@ -377,6 +350,7 @@
             function getDistrictTaluka(districtId, taluka_id) {
 
                 $('#taluka').html('<option value="">Select District</option>');
+                $('#village').html('<option value="">Select Village</option>');
                 if (districtId !== '') {
                     $.ajax({
                         url: '{{ route('taluka') }}',
@@ -405,7 +379,8 @@
 
             function getWorkingDistrictTaluka(districtId, taluka_id) {
 
-                $('#taluka').html('<option value="">Select District</option>');
+                $('#user_taluka').html('<option value="">Select District</option>');
+                $('#user_village').html('<option value="">Select District</option>');
                 if (districtId !== '') {
                     $.ajax({
                         url: '{{ route('taluka') }}',
@@ -463,7 +438,7 @@
 
             function getWorkingTalukaVillage(talukaId, village_id) {
 
-            $('#village').html('<option value="">Select Village</option>');
+            $('#user_village').html('<option value="">Select Village</option>');
                 if (talukaId !== '') {
                     $.ajax({
                         url: '{{ route('village') }}',
@@ -536,9 +511,16 @@
                 $("#district").on('change', function() {
                     getDistrictTaluka($("#district").val(),'');
                 });
+                $("#user_district").on('change', function() {
+                    getWorkingDistrictTaluka($("#user_district").val(),'');
+                });
 
                 $("#taluka").on('change', function() {
                     getTalukaVillage($("#taluka").val(),'');
+                });
+
+                $("#user_taluka").on('change', function() {
+                    getWorkingTalukaVillage($("#user_taluka").val(),'');
                 });
             });
 
