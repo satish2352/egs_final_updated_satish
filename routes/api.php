@@ -29,12 +29,6 @@ use App\Http\Controllers\Api\Labour\AttendanceMarkVisibleForOfficerController;
 
 
 
-Route::post('/login', [AuthController::class, 'login']);
-// Route::post('refresh', 'AuthController@refresh');
-Route::post('me', [AuthController::class, 'me']);
-
-Route::post('/list-masters', [AllMasterController::class, 'getAllMasters']);
-Route::post('/list-updated-master', [AllMasterController::class, 'getAllMastersUpdated']);
 
 Route::group([
 
@@ -44,7 +38,12 @@ Route::group([
 ], function ($router) {
 
  
+        Route::post('/login', [AuthController::class, 'login']);
+        // Route::post('refresh', 'AuthController@refresh');
+        Route::post('me', [AuthController::class, 'me']);
 
+        Route::post('/list-masters', [AllMasterController::class, 'getAllMasters']);
+        Route::post('/list-updated-master', [AllMasterController::class, 'getAllMastersUpdated']);
 
         // Protected routes that require authentication token
         Route::middleware('auth:api')->group(function () {
