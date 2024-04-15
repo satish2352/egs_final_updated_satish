@@ -178,16 +178,6 @@ class LabourController extends Controller
                     $query->where('tbl_mark_attendance.project_id',$request->project_id);
                 });
 
-            if ($request->has('district_id')) {
-                $basic_query_object->where('district_labour.location_id', $request->input('district_id'));
-            }
-            if ($request->has('taluka_id')) {
-                $basic_query_object->where('taluka_labour.location_id', $request->input('taluka_id'));
-            }
-            if ($request->has('village_id')) {
-                $basic_query_object->where('village_labour.location_id', $request->input('village_id'));
-            }
-
             $totalRecords = $basic_query_object->select('labour.id')->get()->count();
             $data_output = $basic_query_object->select(
                 'labour.id',

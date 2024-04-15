@@ -90,15 +90,6 @@ class OfficerGramDocAppNotAppController extends Controller
                 ->when($request->get('from_date'), function($query) use ($fromDate, $toDate) {
                     $query->whereBetween('tbl_gram_panchayat_documents.updated_at', [$fromDate, $toDate]);
                 });
-                if ($request->has('district_id')) {
-                    $basic_query_object->where('district_u.location_id', $request->input('district_id'));
-                }
-                if ($request->has('taluka_id')) {
-                    $basic_query_object->where('taluka_u.location_id', $request->input('taluka_id'));
-                }
-                if ($request->has('village_id')) {
-                    $basic_query_object->where('village_u.location_id', $request->input('village_id'));
-                }
 
                 $totalRecords = $basic_query_object->select('tbl_gram_panchayat_documents.id')->get()->count();
 
@@ -106,6 +97,7 @@ class OfficerGramDocAppNotAppController extends Controller
                     'tbl_gram_panchayat_documents.id',
                     'tbl_gram_panchayat_documents.document_name',
                     'tbl_documenttype.document_type_name',
+                    'tbl_documenttype.doc_color',
                     'tbl_gram_panchayat_documents.document_pdf',
                         User::raw("CONCAT(users.f_name, IFNULL(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
                     'users.user_district',
