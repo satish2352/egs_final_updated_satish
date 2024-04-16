@@ -46,8 +46,9 @@ class ProjectController extends Controller
               ->where('projects.end_date', '>=',date('Y-m-d'))
               ->where('projects.District', $data_user_output)
             //   ->where('projects.is_active', true)
-              ->when($request->has('project_name'), function($query) use ($request) {
-                $query->where('projects.project_name', 'like', '%' . $request->project_name . '%');
+              ->when($request->has('id'), function($query) use ($request) {
+                $query->where('projects.id',$request->id);
+                // $query->where('projects.project_name', 'like', '%' . $request->project_name . '%');
             })             
               ->select(
                   'projects.id',
