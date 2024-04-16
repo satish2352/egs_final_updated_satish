@@ -495,13 +495,14 @@ class LabourAttendanceMarkController extends Controller
                                 }
 
                                 elseif($mgnregaCardCount <= 2){
-                                    if($existingEntry->created_at > date('Y-m-d').' 13:00:00' &&  $existingEntry->project_id == $request->project_id){
-                                        return response()->json(['status' => 'false', 'message' => 'Attendance for this card ID Half day already marked for today'], 200);
-                                    }
-                                    else{
+                                    if($existingEntry->created_at > date('Y-m-d').' 13:00:00' &&  $existingEntry->project_id != $request->project_id){
                                         $existingEntry->project_id = $request->project_id;
                                         $existingEntry->attendance_day = 'half_day';
                                         $existingEntry->save();
+                                       
+                                    }
+                                    else{
+                                        return response()->json(['status' => 'false', 'message' => 'Attendance for this card ID Half day already marked for today'], 200);
                                     }
 
                                 }
