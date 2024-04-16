@@ -250,6 +250,7 @@ class LabourAttendanceMarkController extends Controller
             $basic_query_object = LabourAttendanceMark::leftJoin('labour', 'tbl_mark_attendance.mgnrega_card_id', '=', 'labour.mgnrega_card_id')
                 ->leftJoin('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
                 ->where('tbl_mark_attendance.user_id', $user)
+                ->where('tbl_mark_attendance.is_deleted', 0)
                 ->whereDate('tbl_mark_attendance.updated_at', $date)
                   ->when($request->get('project_id'), function($query) use ($request) {
                     $query->where('tbl_mark_attendance.project_id',$request->project_id);
@@ -478,6 +479,12 @@ class LabourAttendanceMarkController extends Controller
 
                                     return response()->json(['status' => 'true', 'message' => 'Attendance updated successfully'], 200);
                                     }
+
+                                   elseif($existingEntry->attendance_day == 'full_day' && $mgnregaCardCount <= 2 && $existingEntry->project_id == $request->project_id){
+                                            $existingEntry->attendance_day = $request->attendance_day;
+                                            $existingEntry->save();
+                                   }
+
                                 else{
                                     return response()->json(['status' => 'false', 'message' => 'please select other project for 2nd half day'], 200);
                                 }
@@ -490,8 +497,9 @@ class LabourAttendanceMarkController extends Controller
                                         $existingEntry->save();
 
                                         LabourAttendanceMark::where('mgnrega_card_id', $existingEntry->mgnrega_card_id)
-                                            ->where('id', '!=', $existingEntry->id)
-                                            ->delete();
+                                        ->where('id', '!=', $existingEntry->id)
+                                        ->update(['is_deleted' => 1]);
+
                                 }
 
                                 elseif($mgnregaCardCount <= 2){
