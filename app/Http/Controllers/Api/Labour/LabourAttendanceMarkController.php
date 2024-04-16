@@ -420,7 +420,7 @@ class LabourAttendanceMarkController extends Controller
     
             
             if ($validator->fails()) {
-                return response()->json(['status' => 'false', 'message' => $validator->errors()], 400);
+                return response()->json(['status' => 'false', 'message' => $validator->errors()], 200);
             }
     
             
@@ -503,6 +503,7 @@ class LabourAttendanceMarkController extends Controller
                                         $existingEntry->attendance_day = 'half_day';
                                         $existingEntry->save();
                                     }
+
                                 }
                          } 
                       
@@ -514,7 +515,7 @@ class LabourAttendanceMarkController extends Controller
                      
            } else {
                
-                return response()->json(['status' => 'false', 'message' => 'Attendance not found'], 404);
+                return response()->json(['status' => 'false', 'message' => 'Attendance not found'], 200);
             }
     
             return response()->json(['status' => 'true', 'message' => 'Attendance updated successfully'], 200);
