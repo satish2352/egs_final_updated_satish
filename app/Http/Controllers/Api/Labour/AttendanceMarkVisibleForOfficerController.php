@@ -29,7 +29,6 @@ class AttendanceMarkVisibleForOfficerController extends Controller
             $toDate =  $toDate.' 23:59:59';
 
             $page = isset($request["start"]) ? $request["start"] : Config::get('DocumentConstant.LABOUR_DEFAULT_START') ;
-            // $rowperpage = isset($request["length"])? $request["length"] : Config::get('DocumentConstant.LABOUR_DEFAULT_LENGTH') ; // Rows display per page
             $rowperpage = LABOUR_DEFAULT_LENGTH;
             $start = ($page - 1) * $rowperpage;
 
@@ -53,15 +52,14 @@ class AttendanceMarkVisibleForOfficerController extends Controller
 
         $data_user_output = $data_user_output->get()->toArray();  
 
-        // dd($data_user_output);
             $basic_query_object = LabourAttendanceMark::leftJoin('labour', 'tbl_mark_attendance.mgnrega_card_id', '=', 'labour.mgnrega_card_id')
             ->leftJoin('users', 'tbl_mark_attendance.user_id', '=', 'users.id')
             ->leftJoin('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
             ->leftJoin('tbl_area as taluka_labour', 'users.user_taluka', '=', 'taluka_labour.location_id')
             ->leftJoin('tbl_area as village_labour', 'users.user_village', '=', 'village_labour.location_id')
-            // ->where('tbl_mark_attendance.user_id', $data_user_output)
                 ->where('users.user_district', $user_working_dist)
                 ->whereDate('tbl_mark_attendance.updated_at', $date)
+                ->where('tbl_mark_attendance.is_deleted', 0)
                 ->when($request->get('project_id'), function($query) use ($request) {
                     $query->where('tbl_mark_attendance.project_id',$request->project_id);
                 })
@@ -117,5 +115,4 @@ class AttendanceMarkVisibleForOfficerController extends Controller
             return response()->json(['status' => 'false', 'message' => 'Attendance List Fail','error' => $e->getMessage()], 500);
         }
     }
-    
 }
