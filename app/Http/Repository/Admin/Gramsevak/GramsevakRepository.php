@@ -171,7 +171,7 @@ class GramsevakRepository
 		$sess_user_type=session()->get('user_type');
 		$sess_user_role=session()->get('role_id');
 
-		$doc_output = GramPanchayatDocuments::where('tbl_gram_panchayat_documents.is_approved', '3')
+		$doc_output = GramPanchayatDocuments::where('tbl_gram_panchayat_documents.is_approved', '1')
 		->where('tbl_gram_panchayat_documents.is_resubmitted', '0')
 		->select('user_id')
 		->get()
@@ -746,7 +746,7 @@ class GramsevakRepository
 				->select('user_id')
                 ->get()
 				->toArray();
-				
+
 		if($sess_user_role=='1')
 		{
 		
