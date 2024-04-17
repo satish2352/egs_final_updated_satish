@@ -181,19 +181,15 @@ class LabourAttendanceMarkController extends Controller
     public function updateAttendanceMark(Request $request) {
         try {
             $user = Auth::user()->id;
-    
-            
             $validator = Validator::make($request->all(), [
                 'project_id' => 'required',
                 'mgnrega_card_id' => 'required',
                 'attendance_day' => 'required',
             ]);
-    
             
             if ($validator->fails()) {
                 return response()->json(['status' => 'false', 'message' => $validator->errors()], 200);
             }
-    
             
             $fromDate = date('Y-m-d').' 00:00:01';
             $toDate =  date('Y-m-d').' 23:59:59';
