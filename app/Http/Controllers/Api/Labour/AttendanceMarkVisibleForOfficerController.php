@@ -18,7 +18,7 @@ use Carbon\Carbon;
 
 class AttendanceMarkVisibleForOfficerController extends Controller
 {
-    public function getAllAttendanceMarkedLabour(Request $request) {
+    public function getAllAttendanceMarkedLabourForOfficer(Request $request) {
         try {
             $user = auth()->user()->id;            
             $date = date('Y-m-d'); 
