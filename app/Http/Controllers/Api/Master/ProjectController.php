@@ -56,7 +56,7 @@ class ProjectController extends Controller
 				  'projects.longitude',
                   'projects.start_date',
                   'projects.end_date',
-              )
+              )->distinct('projects.id')
               ->orderBy('id', 'desc')
               ->get();
             //   dd($project);
