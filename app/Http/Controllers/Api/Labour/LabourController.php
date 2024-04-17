@@ -146,7 +146,7 @@ class LabourController extends Controller
                 $is_resubmitted = 0 ;
             } elseif($request->has('is_approved') && $request->is_approved == 'not_approved') { //3
                 $is_approved = 3 ;
-            } elseif($request->has('is_approved') && $request->is_approved == 'approved') { //3
+            } elseif($request->has('is_approved') && $request->is_approved == 'approved') { //2
                 $is_approved = 2 ;
             } 
             elseif($request->has('is_resubmitted') && $request->is_resubmitted == 'resubmitted' && $request->has('is_approved') && $request->is_approved == 'resend') { 
@@ -271,7 +271,6 @@ class LabourController extends Controller
     public function updateLabourFirstForm(Request $request){
         try {
             $user = auth()->user();
-            // $labour_id = $request->input('id');
             $validator = Validator::make($request->all(), [
                 'full_name' => 'required',
                 'gender_id' => 'required',
@@ -280,7 +279,7 @@ class LabourController extends Controller
                 'village_id' => 'required',
                 'skill_id' => 'required',
                 'mobile_number' => ['required', 'digits:10'],
-                // 'mgnrega_card_id' => ['required'],
+                'mgnrega_card_id' => ['required'],
             ]);
 
             if ($validator->fails()) {
@@ -301,9 +300,7 @@ class LabourController extends Controller
 
             // Check if the provided mgnrega_card_id already exists in the database
             $existingLabour = Labour::where('mgnrega_card_id', $request->mgnrega_card_id)->first();
-            // if ($existingLabour && $existingLabour->id !== $labour_data->id ) {
-            //     return response()->json(['status' => 'error', 'message' => 'MGNREGA card ID already exists'], 200);
-            // }
+           
 
             if ($existingLabour) {
                 if ($existingLabour->is_approved == 2) {
@@ -316,7 +313,7 @@ class LabourController extends Controller
                     }
                 }
             }
-            // Update labour details
+            
             $labour_data->user_id = $user->id;
             $labour_data->full_name = $request->full_name;
             $labour_data->gender_id = $request->gender_id;
@@ -331,7 +328,6 @@ class LabourController extends Controller
             $labour_data->is_resubmitted = true;
             $labour_data->reason_id = null;
             $labour_data->other_remark = 'null';
-            // $labour_data->mgnrega_card_id = $request->mgnrega_card_id;
             if ($labour_data->is_approved != 2) {
                 $labour_data->mgnrega_card_id = $request->mgnrega_card_id;
             }

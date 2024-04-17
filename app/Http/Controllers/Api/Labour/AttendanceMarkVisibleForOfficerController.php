@@ -18,7 +18,7 @@ use Carbon\Carbon;
 
 class AttendanceMarkVisibleForOfficerController extends Controller
 {
-    public function getAllAttendanceMarkedLabour(Request $request) {
+    public function getAllAttendanceMarkedLabourForOfficer(Request $request) {
         try {
             $user = auth()->user()->id;            
             $date = date('Y-m-d'); 
@@ -55,19 +55,19 @@ class AttendanceMarkVisibleForOfficerController extends Controller
             $basic_query_object = LabourAttendanceMark::leftJoin('labour', 'tbl_mark_attendance.mgnrega_card_id', '=', 'labour.mgnrega_card_id')
             ->leftJoin('users', 'tbl_mark_attendance.user_id', '=', 'users.id')
             ->leftJoin('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
-            ->leftJoin('tbl_area as taluka_labour', 'users.user_taluka', '=', 'taluka_labour.location_id')
-            ->leftJoin('tbl_area as village_labour', 'users.user_village', '=', 'village_labour.location_id')
+            ->leftJoin('tbl_area as taluka_projects', 'projects.taluka', '=', 'taluka_projects.location_id')
+            ->leftJoin('tbl_area as village_projects', 'projects.village', '=', 'village_projects.location_id')
                 ->where('users.user_district', $user_working_dist)
                 ->whereDate('tbl_mark_attendance.updated_at', $date)
                 ->where('tbl_mark_attendance.is_deleted', 0)
                 ->when($request->get('project_id'), function($query) use ($request) {
                     $query->where('tbl_mark_attendance.project_id',$request->project_id);
                 })
-                ->when($request->get('user_taluka'), function($query) use ($request) {
-                    $query->where('users.user_taluka', $request->user_taluka);
+                ->when($request->get('taluka'), function($query) use ($request) {
+                    $query->where('projects.taluka', $request->taluka);
                 })  
-                ->when($request->get('user_village'), function($query) use ($request) {
-                    $query->where('users.user_village', $request->user_village);
+                ->when($request->get('village'), function($query) use ($request) {
+                    $query->where('projects.village', $request->village);
                 })
 
                 ->when($request->get('from_date'), function($query) use ($fromDate, $toDate) {
@@ -87,10 +87,10 @@ class AttendanceMarkVisibleForOfficerController extends Controller
                     'labour.mobile_number',
                     'labour.landline_number',
                     'labour.mgnrega_card_id',
-                    'users.user_taluka',
-                    'taluka_labour.name as taluka_name',
-                    'users.user_village',
-                    'village_labour.name as village_name',
+                    'projects.taluka',
+                    'taluka_projects.name as taluka_name',
+                    'projects.village',
+                    'village_projects.name as village_name',
                     'labour.latitude',
                     'labour.longitude',
                     'labour.profile_image',
