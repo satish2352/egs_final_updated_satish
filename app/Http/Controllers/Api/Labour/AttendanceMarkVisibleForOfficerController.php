@@ -55,8 +55,8 @@ class AttendanceMarkVisibleForOfficerController extends Controller
             $basic_query_object = LabourAttendanceMark::leftJoin('labour', 'tbl_mark_attendance.mgnrega_card_id', '=', 'labour.mgnrega_card_id')
             ->leftJoin('users', 'tbl_mark_attendance.user_id', '=', 'users.id')
             ->leftJoin('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
-            ->leftJoin('tbl_area as taluka_labour', 'users.user_taluka', '=', 'taluka_labour.location_id')
-            ->leftJoin('tbl_area as village_labour', 'users.user_village', '=', 'village_labour.location_id')
+            // ->leftJoin('tbl_area as taluka_labour', 'users.user_taluka', '=', 'taluka_labour.location_id')
+            // ->leftJoin('tbl_area as village_labour', 'users.user_village', '=', 'village_labour.location_id')
                 ->where('users.user_district', $user_working_dist)
                 ->whereDate('tbl_mark_attendance.updated_at', $date)
                 ->where('tbl_mark_attendance.is_deleted', 0)
@@ -87,10 +87,10 @@ class AttendanceMarkVisibleForOfficerController extends Controller
                     'labour.mobile_number',
                     'labour.landline_number',
                     'labour.mgnrega_card_id',
-                    'users.user_taluka',
-                    'taluka_labour.name as taluka_name',
-                    'users.user_village',
-                    'village_labour.name as village_name',
+                    // 'users.user_taluka',
+                    // 'taluka_labour.name as taluka_name',
+                    // 'users.user_village',
+                    // 'village_labour.name as village_name',
                     'labour.latitude',
                     'labour.longitude',
                     'labour.profile_image',
