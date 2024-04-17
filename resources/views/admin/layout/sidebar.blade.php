@@ -209,16 +209,16 @@
             @endif
 
            
-            @if (in_array('list-gramsevak', $data_for_url))
+            <!-- @if (in_array('list-gramsevak', $data_for_url))
             <li class="{{request()->is('list-gramsevak*')
                 ? 'nav-item active' : 'nav-item' }}">
-                <?php $currenturl = Request::url(); ?>
+                <?php //$currenturl = Request::url(); ?>
                 <a class="nav-link" href="{{ route('list-gramsevak') }}">
                     <i class="fas fa-file-alt fa-lg menu-icon"></i>
                     <span class="menu-title">Gramsevak Management</span>
                 </a>
             </li>
-            @endif
+            @endif -->
 
             @if(session()->get('role_id')=='1' || session()->get('role_id')=='2')
             <li class="nav-item">
