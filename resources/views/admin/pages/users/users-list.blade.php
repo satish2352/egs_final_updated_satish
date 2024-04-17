@@ -56,12 +56,6 @@
                                                         </td>
 
 
-                                                        {{-- <td>@if ($item->is_active)
-                                                        <button type="button" class="btn btn-success btn-sm">Active</button>
-                                                        @else 
-                                                        <button type="button" class="btn btn-danger btn-sm">In Active</button>
-                                                        
-                                                        @endif</td> --}}
                                                         <td class="d-flex">
                                                         @if (in_array('per_update', $data_permission))
                                                             <a href="{{ route('edit-users', base64_encode($item->id)) }}"
