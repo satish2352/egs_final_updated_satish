@@ -43,14 +43,12 @@ class ProjectController extends Controller
         $data_user_output = $data_user_output->get()->toArray(); 
             // dd($data_user_output);
             $project = Project::leftJoin('users', 'projects.District', '=', 'users.user_district')  
-            ->leftJoin('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
               ->where('projects.end_date', '>=',date('Y-m-d'))
               ->where('projects.District', $data_user_output)
             //   ->where('projects.is_active', true)
-            ->when($request->get('project_id'), function($query) use ($request) {
-                $query->leftJoin('tbl_mark_attendance as ma1', 'labour.mgnrega_card_id', '=', 'ma1.mgnrega_card_id');
-                $query->where('ma1.project_id', $request->project_id);
-            })            
+              ->when($request->has('project_name'), function($query) use ($request) {
+                $query->where('projects.project_name', 'like', '%' . $request->project_name . '%');
+            })             
               ->select(
                   'projects.id',
                   'projects.project_name',
