@@ -41,14 +41,11 @@ class ProjectController extends Controller
         }
 
         $data_user_output = $data_user_output->get()->toArray(); 
-            // dd($data_user_output);
+        // dd($data_user_output); 
             $project = Project::leftJoin('users', 'projects.District', '=', 'users.user_district')  
               ->where('projects.end_date', '>=',date('Y-m-d'))
-              ->where('projects.District', $data_user_output)
-            //   ->where('projects.is_active', true)
-              ->when($request->has('project_name'), function($query) use ($request) {
-                $query->where('projects.project_name', 'like', '%' . $request->project_name . '%');
-            })             
+              ->whereIn('projects.District', $data_user_output)
+              ->where('projects.is_active', true)
               ->select(
                   'projects.id',
                   'projects.project_name',
@@ -59,10 +56,10 @@ class ProjectController extends Controller
               )->distinct('projects.id')
               ->orderBy('id', 'desc')
               ->get();
-            //   dd($project);
-            return response()->json(['status' => 'success', 'message' => 'All data retrieved successfully', 'data' => $project], 200);
+           
+            return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', 'data' => $project], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+            return response()->json(['status' => 'false', 'message' => 'Projects List Get Fail', 'error' => $e->getMessage()], 500);
         }
     }
     public function filterDataProjectsLaboursMap(Request $request){
