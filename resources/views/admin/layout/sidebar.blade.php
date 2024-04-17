@@ -220,7 +220,7 @@
             </li>
             @endif
 
-            @if(session()->get('role_id')=='2')
+            @if(session()->get('role_id')=='1' || session()->get('role_id')=='2')
             <li class="nav-item">
                 <a class="{{request()->is('list-role*')
                             ? 'nav-link active' : 'nav-link' }}" data-toggle="collapse" href="#master" aria-expanded="false"
@@ -256,7 +256,7 @@
                     @if (in_array('list-labours', $data_for_url))
                         <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-grampanchayt-doc-resubmitted*')
                             ? 'nav-link active' : 'nav-link' }}"
-                                    href="{{ route('list-grampanchayt-doc-resubmitted') }}">Resubmitted Labours</a></li>
+                                    href="{{ route('list-grampanchayt-doc-resubmitted') }}">Resubmitted Documents</a></li>
                     @endif
 
                     </ul>
@@ -264,7 +264,7 @@
             </li> 
         @endif                    
 
-        @if(session()->get('role_id')=='1' || session()->get('role_id')=='3')
+        @if(session()->get('role_id')=='3')
         <li class="nav-item">
                 <a class="{{request()->is('list-role*')
                             ? 'nav-link active' : 'nav-link' }}" data-toggle="collapse" href="#master" aria-expanded="false"
@@ -301,7 +301,7 @@
                     @if (in_array('list-labours', $data_for_url))
                         <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-resubmitted-labours*')
                             ? 'nav-link active' : 'nav-link' }}"
-                                    href="{{ route('list-resubmitted-labours') }}">Resubmitted Labours</a></li>
+                                    href="{{ route('list-resubmitted-labours') }}">Resubmitted Documents</a></li>
                     @endif
 
                     </ul>

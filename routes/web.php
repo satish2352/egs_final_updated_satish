@@ -272,6 +272,9 @@ Route::get('/edit-village/{edit_id}', ['as' => 'edit-village', 'uses' => 'App\Ht
 Route::post('/update-village', ['as' => 'update-village', 'uses' => 'App\Http\Controllers\Admin\Area\AreaController@updateVillage']);
 Route::post('/delete-village', ['as' => 'delete-village', 'uses' => 'App\Http\Controllers\Admin\Area\AreaController@deleteVillage']);
 
+Route::post('/get-ajax-listing', ['as' => 'get-ajax-listing', 'uses' => 'App\Http\Controllers\Admin\Master\DocumenttypeController@ajaxList']);
+
+
 
 });
 
