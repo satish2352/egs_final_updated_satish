@@ -170,7 +170,7 @@ class LabourAttendanceMarkController extends Controller
                     if (sizeof($data_output) > 0) {
                     $totalPages = ceil($totalRecords/$rowperpage);
                 } else {
-                    $totalPages = 1;
+                    $totalPages = 0;
                 }
     
             return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', "totalRecords" => $totalRecords, "totalPages"=>$totalPages, 'page_no_to_hilight'=>$page, 'data' => $data_output], 200);

@@ -153,10 +153,10 @@ class GramPanchayatDocumentController extends Controller
                         ->get();
                 }
 
-                if(sizeof($data_output)>=1) {
+                if(sizeof($data_output)>=0) {
                     $totalPages = ceil($totalRecords/$rowperpage);
                 } else {
-                    $totalPages = 1;
+                    $totalPages = 0;
                 }
             return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', "totalRecords" => $totalRecords, "totalPages"=>$totalPages, 'page_no_to_hilight'=>$page, 'data' => $data_output], 200);
         } catch (\Exception $e) {
@@ -290,10 +290,10 @@ class GramPanchayatDocumentController extends Controller
                     $document_data->document_pdf = Config::get('DocumentConstant.GRAM_PANCHAYAT_DOC_VIEW') . $document_data->document_pdf;
                 }
 
-                if(sizeof($data_output)>=1) {
+                if(sizeof($data_output)>=0) {
                     $totalPages = ceil($totalRecords/$rowperpage);
                 } else {
-                    $totalPages = 1;
+                    $totalPages = 0;
                 }
             return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', "totalRecords" => $totalRecords, "totalPages"=>$totalPages, 'page_no_to_hilight'=>$page, 'data' => $data_output], 200);
         } catch (\Exception $e) {

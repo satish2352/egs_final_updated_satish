@@ -256,12 +256,7 @@ class LabourController extends Controller
                     ->where('tbl_history.labour_id', $labourhistory['id'])
                     ->get();
             }
-
-            // if(sizeof($data_output)>=1) {
-            //     $totalPages = ceil($totalRecords/$rowperpage);
-            // } else {
-            //     $totalPages = 1;
-            // }
+            
             if (sizeof($data_output) > 0) {
                 $totalPages = ceil($totalRecords/$rowperpage);
             } else {
