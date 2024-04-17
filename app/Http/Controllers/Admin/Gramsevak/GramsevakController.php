@@ -282,7 +282,7 @@ class GramsevakController extends Controller {
             ->get()
             ->toArray();
 
-            $dynamic_reasons = Reasons::where('is_active', 1)
+            $dynamic_reasons = DocumentReasons::where('is_active', 1)
             ->select('id','reason_name')
             ->get()
             ->toArray();
@@ -303,7 +303,7 @@ class GramsevakController extends Controller {
         ->get()
         ->toArray();
 
-        $dynamic_reasons = Reasons::where('is_active', 1)
+        $dynamic_reasons = DocumentReasons::where('is_active', 1)
         ->select('id','reason_name')
         ->get()
         ->toArray();
@@ -379,7 +379,7 @@ class GramsevakController extends Controller {
             ->get()
             ->toArray();
 
-            $dynamic_reasons = Reasons::where('is_active', 1)
+            $dynamic_reasons = DocumentReasons::where('is_active', 1)
             ->select('id','reason_name')
             ->get()
             ->toArray();
@@ -400,7 +400,7 @@ class GramsevakController extends Controller {
         ->get()
         ->toArray();
 
-        $dynamic_reasons = Reasons::where('is_active', 1)
+        $dynamic_reasons = DocumentReasons::where('is_active', 1)
         ->select('id','reason_name')
         ->get()
         ->toArray();
@@ -476,7 +476,7 @@ class GramsevakController extends Controller {
             ->get()
             ->toArray();
 
-            $dynamic_reasons = Reasons::where('is_active', 1)
+            $dynamic_reasons = DocumentReasons::where('is_active', 1)
             ->select('id','reason_name')
             ->get()
             ->toArray();
@@ -497,7 +497,7 @@ class GramsevakController extends Controller {
         ->get()
         ->toArray();
 
-        $dynamic_reasons = Reasons::where('is_active', 1)
+        $dynamic_reasons = DocumentReasons::where('is_active', 1)
         ->select('id','reason_name')
         ->get()
         ->toArray();
@@ -573,7 +573,7 @@ class GramsevakController extends Controller {
             ->get()
             ->toArray();
 
-            $dynamic_reasons = Reasons::where('is_active', 1)
+            $dynamic_reasons = DocumentReasons::where('is_active', 1)
             ->select('id','reason_name')
             ->get()
             ->toArray();
@@ -594,7 +594,7 @@ class GramsevakController extends Controller {
         ->get()
         ->toArray();
 
-        $dynamic_reasons = Reasons::where('is_active', 1)
+        $dynamic_reasons = DocumentReasons::where('is_active', 1)
         ->select('id','reason_name')
         ->get()
         ->toArray();
