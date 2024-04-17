@@ -70,7 +70,6 @@ Route::group([
            Route::post('/list-document', [GramPanchayatDocumentController::class, 'getAllDocuments']);
            Route::post('/update-document', [GramPanchayatDocumentController::class, 'updateDocuments']);
            Route::post('/download-document', [GramPanchayatDocumentController::class, 'getDownloadDocument']);
-           Route::post('/list-document-officer', [GramPanchayatDocumentController::class, 'getAllDocumentsForOfficerFilterList']);
            Route::post('/count-gramsevak-document', [GramPanchayatDocumentController::class, 'countGramsevakDocument']);
             
            //  ===================Start OfficerGramDocAppNotAppController============
@@ -78,6 +77,7 @@ Route::group([
            Route::post('/update-officer-document-status-approved', [OfficerGramDocAppNotAppController::class, 'updateDocumentStatusApproved']);
            Route::post('/update-officer-document-status-not-approved', [OfficerGramDocAppNotAppController::class, 'updateDocumentStatusNotApproved']);
            Route::post('/count-officer-document', [OfficerGramDocAppNotAppController::class, 'countOfficerDocument']);
+           Route::post('/list-document-officer', [OfficerGramDocAppNotAppController::class, 'getAllDocumentsForOfficerFilterList']);
    
            //    =================Start OfficerController===============
            Route::post('/list-labour-received-to-officer-for-approval', [OfficerController::class, 'getLabourStatusListReceived']);
