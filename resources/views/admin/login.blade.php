@@ -50,6 +50,7 @@
                                 <img src="{{ asset('/assets/images/mlogo.png') }}" alt="logo">
                             </div>
                             <!--  Login Form -->
+                            <h4 class="text-center" style="color:#392C70">EGS</h4>
 
                             @if (isset($return_data['msg_alert']) && $return_data['msg_alert'] == 'green')
                                 <div class="alert alert-success" role="alert">

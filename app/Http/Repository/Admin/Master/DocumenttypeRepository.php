@@ -12,7 +12,8 @@ use App\Models\ {
 class DocumenttypeRepository{
 	public function getAll(){
         try {
-            return Documenttype::all();
+            // return Documenttype::all();
+            return Documenttype::paginate(10);
         } catch (\Exception $e) {
             return $e;
         }
