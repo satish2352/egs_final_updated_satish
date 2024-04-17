@@ -70,7 +70,7 @@ Route::group([
            Route::post('/list-document', [GramPanchayatDocumentController::class, 'getAllDocuments']);
            Route::post('/update-document', [GramPanchayatDocumentController::class, 'updateDocuments']);
            Route::post('/download-document', [GramPanchayatDocumentController::class, 'getDownloadDocument']);
-           Route::post('/list-document-officer', [GramPanchayatDocumentController::class, 'getAllDocumentsOfficer']);
+           Route::post('/list-document-officer', [GramPanchayatDocumentController::class, 'getAllDocumentsForOfficerFilterList']);
            Route::post('/count-gramsevak-document', [GramPanchayatDocumentController::class, 'countGramsevakDocument']);
             
            //  ===================Start OfficerGramDocAppNotAppController============
