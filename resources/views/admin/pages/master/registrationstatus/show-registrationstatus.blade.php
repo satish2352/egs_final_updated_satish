@@ -30,17 +30,9 @@
                                             <label>Title :</label>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4">
-                                            <label>{{ strip_tags($registrationstatus_data->registrationstatus) }}</label>
+                                            <label>{{ strip_tags($registrationstatus_data->status_name) }}</label>
                                         </div>
                                     </div>
-                                    <!-- <div class="row ">
-                                        <div class="col-lg-4 col-md-4 col-sm-4">g
-                                            <label>शीर्षक :</label>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-4">
-                                            <label>{{ strip_tags($registrationstatus_data->marathi_title) }}</label>
-                                        </div>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>

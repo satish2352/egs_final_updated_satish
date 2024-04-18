@@ -30,17 +30,17 @@
                                             <label>Title :</label>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4">
-                                            <label>{{ strip_tags($documenttype_data->documenttype) }}</label>
+                                            <label>{{ strip_tags($documenttype_data->document_type_name) }}</label>
                                         </div>
                                     </div>
-                                    <!-- <div class="row ">
-                                        <div class="col-lg-4 col-md-4 col-sm-4">g
-                                            <label>शीर्षक :</label>
+                                    <div class="row ">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label>Document Color :</label>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4">
-                                            <label>{{ strip_tags($documenttype_data->marathi_title) }}</label>
+                                            <label><div class="color-box" style="background-color: {{ $documenttype_data->doc_color }};width: 50px; height: 50px;"></div></label>
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
