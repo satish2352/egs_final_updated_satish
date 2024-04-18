@@ -13,7 +13,8 @@ class DocumenttypeRepository{
 	public function getAll(){
         try {
             // return Documenttype::all();
-            return Documenttype::paginate(10);
+            // return Documenttype::paginate(10);
+            return Documenttype::all();
         } catch (\Exception $e) {
             return $e;
         }

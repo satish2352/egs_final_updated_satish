@@ -60,7 +60,7 @@ class RelationRepository{
                 ];
             }
         // Store the previous image names
-            $relation_data->relation = $request['relation_title'];
+            $relation_data->relation_title = $request['relation_title'];
             // $gender_data->marathi_title = $request['marathi_title'];
             // $gender_data->url = $request['url'];
             $relation_data->save();        

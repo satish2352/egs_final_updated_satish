@@ -33,9 +33,9 @@ class ProjectServices
         try {
             $add_role = $this->repo->addProject($request);
             if ($add_role) {
-                return ['status' => 'success', 'msg' => 'Role Added Successfully.'];
+                return ['status' => 'success', 'msg' => 'Project Added Successfully.'];
             } else {
-                return ['status' => 'error', 'msg' => 'Role Not Added.'];
+                return ['status' => 'error', 'msg' => 'Project Not Added.'];
             }  
         } catch (Exception $e) {
             return ['status' => 'error', 'msg' => $e->getMessage()];

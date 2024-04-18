@@ -79,8 +79,8 @@ class RelationController extends Controller
     public function edit(Request $request)
     {
         $edit_data_id = base64_decode($request->edit_id);
-        $maritalstatus_data = $this->service->getById($edit_data_id);
-        return view('admin.pages.master.maritalstatus.edit-maritalstatus', compact('maritalstatus_data'));
+        $relation_data = $this->service->getById($edit_data_id);
+        return view('admin.pages.master.relation.edit-relation', compact('relation_data'));
    
     }
 
@@ -88,15 +88,15 @@ class RelationController extends Controller
 {
     $id = $request->input('id'); // Assuming the 'id' value is present in the request
     $rules = [
-        'maritalstatus' => ['required', 'max:255','regex:/^[a-zA-Z\s]+$/u', Rule::unique('maritalstatus', 'maritalstatus')->ignore($id, 'id')],
+        'relation_title' => ['required', 'max:255','regex:/^[a-zA-Z\s]+$/u', Rule::unique('relation', 'relation_title')->ignore($id, 'id')],
         // 'marathi_title' => ['required', 'max:255', Rule::unique('maritalstatus', 'marathi_title')->ignore($id, 'id')],
     ];
 
     $messages = [
-        'maritalstatus.required' => 'Please enter an title.',
-        'maritalstatus.regex' => 'Please  enter text only.',
-        'maritalstatus.max' => 'Please enter an  title with a maximum of 255 characters.',
-        'maritalstatus.unique' => 'The title already exists.',
+        'relation_title.required' => 'Please enter an title.',
+        'relation_title.regex' => 'Please  enter text only.',
+        'relation_title.max' => 'Please enter an  title with a maximum of 255 characters.',
+        'relation_title.unique' => 'The title already exists.',
         // 'marathi_title.required' => 'कृपया  शीर्षक प्रविष्ट करा.',
         // 'marathi_title.max' => 'कृपया २५५ अक्षरांपर्यंत  शीर्षक प्रविष्ट करा.',
         // 'marathi_title.unique' => 'शीर्षक आधीच अस्तित्वात आहे.',
@@ -117,7 +117,7 @@ class RelationController extends Controller
                 $status = $update_maritalstatus_data['status'];
 
                 if ($status == 'success') {
-                    return redirect('list-maritalstatus')->with(compact('msg', 'status'));
+                    return redirect('list-relation')->with(compact('msg', 'status'));
                 } else {
                     return redirect()->back()
                         ->withInput()
