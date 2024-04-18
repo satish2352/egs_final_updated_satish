@@ -9,7 +9,8 @@ use App\Models\ {
 	Labour,
     Project,
     GramPanchayatDocuments,
-    DistanceKM
+    DistanceKM,
+    LabourAttendanceMark
 };
 use Illuminate\Support\Facades\Config;
 class ProjectController extends Controller
@@ -64,6 +65,8 @@ class ProjectController extends Controller
     }
     public function filterDataProjectsLaboursMap(Request $request){
         try {
+            $date = date('Y-m-d'); 
+
             $user = auth()->user()->id;
             $userLatitude = $request->latitude; 
             $userLongitude = $request->longitude; 
@@ -76,17 +79,24 @@ class ProjectController extends Controller
             $lonE = $latLongArr['lonE'];
             $lonW = $latLongArr['lonW'];
 
-            $labourQuery = Labour::where('labour.user_id', $user)
+            $labourQuery =  LabourAttendanceMark::leftJoin('labour', 'tbl_mark_attendance.mgnrega_card_id', '=', 'labour.mgnrega_card_id')
+            ->leftJoin('users', 'tbl_mark_attendance.user_id', '=', 'users.id')    
+            ->where('labour.user_id', $user)
                 ->where('labour.is_approved', 2)
+                 ->whereDate('tbl_mark_attendance.updated_at', $date)
+                ->where('tbl_mark_attendance.is_deleted', 0)
                 ->when($request->has('mgnrega_card_id'), function($query) use ($request) {
                     $query->where('labour.mgnrega_card_id', 'like', '%' . $request->mgnrega_card_id . '%');
                 })
                 ->select(
-                    'labour.id',
+                    'tbl_mark_attendance.id',
                     'labour.full_name',
+                    User::raw("CONCAT(users.f_name, IFNULL(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
                     'labour.mgnrega_card_id',
                     'labour.latitude',
                     'labour.longitude',
+                    'tbl_mark_attendance.attendance_day',
+                    LabourAttendanceMark::raw("CONVERT_TZ(tbl_mark_attendance.updated_at, '+00:00', '+05:30') as updated_at"), 
                 )->distinct('labour.id')
                 ->orderBy('id', 'desc');
     
