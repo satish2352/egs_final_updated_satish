@@ -29,7 +29,7 @@ class GramPanchayatDocumentController extends Controller
         $validator = Validator::make($request->all(), $all_data_validation);
     
         if ($validator->fails()) {
-            return response()->json(['status' => 'error', 'message' => $validator->errors()->all()], 400);
+            return response()->json(['status' => 'false', 'message' => $validator->errors()->all()], 200);
         }
         try {
             $user = auth()->user();
@@ -208,6 +208,7 @@ class GramPanchayatDocumentController extends Controller
             return response()->json(['status' => 'false', 'message' => 'Document updated fail', 'error' => $e->getMessage()], 500);
         }
     }
+   
     public function getDownloadDocument(Request $request){
         try {
             $user = auth()->user()->id;

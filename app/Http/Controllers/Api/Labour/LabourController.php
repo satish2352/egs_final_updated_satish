@@ -68,7 +68,7 @@ class LabourController extends Controller
 
                 if ($validator->fails()) {
                     // return response()->json(['status' => 'error', 'message' => $validator->errors()->all()], 200);
-                    return response()->json(['status' => 'false', 'message' => 'All fields are required.', 'error' => $e->getMessage()], 200);
+                    return response()->json(['status' => 'false', 'message' => $validator->errors()->all()], 200);
                 }
 
                 $user = auth()->user();
