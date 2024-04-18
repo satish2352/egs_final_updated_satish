@@ -67,7 +67,8 @@ class LabourController extends Controller
                 $validator = Validator::make($request->all(), $all_data_validation);
 
                 if ($validator->fails()) {
-                    return response()->json(['status' => 'error', 'message' => $validator->errors()->all()], 200);
+                    // return response()->json(['status' => 'error', 'message' => $validator->errors()->all()], 200);
+                    return response()->json(['status' => 'false', 'message' => 'All fields are required.', 'error' => $e->getMessage()], 200);
                 }
 
                 $user = auth()->user();
