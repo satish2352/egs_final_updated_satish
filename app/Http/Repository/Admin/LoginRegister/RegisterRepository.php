@@ -21,6 +21,7 @@ class RegisterRepository
 							$join->on('users.role_id', '=', 'roles.id');
 						})
 						// ->where('users.is_active','=',true)
+						->where('users.role_id','<>','1')
 						->select('roles.role_name',
 								'users.email',
 								'users.f_name',
