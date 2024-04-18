@@ -49,6 +49,9 @@ class AuthController extends Controller
         if (!$user) {
             return response()->json(['status' => 'False','message' => 'User not found'], 200);
         }
+        if ($user->is_active != 1) {
+            return response()->json(['status' => 'False', 'message' => 'User is not active'], 200);
+        }
 
         if ($user->device_id != 'null' && $user->device_id != $device_id) {
             return response()->json(['status' => 'False', 'message' => 'This user is associated with another device please login with same'], 200);
@@ -61,8 +64,9 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['status' => 'False', 'message' => 'Invalid email or password. Please correct it'], 200);
         }
+        
 
         if ($user->device_id== 'null') {
             User::where('email', $email)->update(['device_id' => $device_id]);
