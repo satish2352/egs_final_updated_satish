@@ -34,6 +34,9 @@ class LabourController extends Controller
                 return response()->json("{'status' : 'false', 'message' : 'Mgnrega Card ID already exists'}", 200);
 
             } else {
+                 
+                
+
                 $all_data_validation = [
                     'full_name' => 'required',
                     'gender_id' => 'required',
@@ -50,12 +53,12 @@ class LabourController extends Controller
                     'mgnrega_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
                     'profile_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
                     'voter_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
-                    'family' => 'required|array',
-                    'family.*.fullName' => 'required',
-                    'family.*.genderId' => 'required',
-                    'family.*.relationId' => 'required',
-                    'family.*.maritalStatusId' => 'required',
-                    'family.*.dob' => 'required|date_format:d/m/Y|before_or_equal:today',
+                    // 'family' => 'required|array',
+                    // 'family.*.fullName' => 'required',
+                    // 'family.*.genderId' => 'required',
+                    // 'family.*.relationId' => 'required',
+                    // 'family.*.maritalStatusId' => 'required',
+                    // 'family.*.dob' => 'required|date_format:d/m/Y|before_or_equal:today',
                 ];
 
                 // if(isset($request->landline_number)) {
