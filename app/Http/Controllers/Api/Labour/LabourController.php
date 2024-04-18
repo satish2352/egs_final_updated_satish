@@ -50,12 +50,12 @@ class LabourController extends Controller
                     'mgnrega_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
                     'profile_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
                     'voter_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
-                    // 'family' => 'required|array',
-                    // 'family.*.fullName' => 'required',
-                    // 'family.*.genderId' => 'required',
-                    // 'family.*.relationId' => 'required',
-                    // 'family.*.maritalStatusId' => 'required',
-                    // 'family.*.dob' => 'required|date_format:d/m/Y|before_or_equal:today',
+                    'family' => 'required|array',
+                    'family.*.fullName' => 'required',
+                    'family.*.genderId' => 'required',
+                    'family.*.relationId' => 'required',
+                    'family.*.maritalStatusId' => 'required',
+                    'family.*.dob' => 'required|date_format:d/m/Y|before_or_equal:today',
                 ];
 
                 // if(isset($request->landline_number)) {
@@ -73,7 +73,7 @@ class LabourController extends Controller
                 $labour_data->user_id = $user->id;
                 $labour_data->full_name = $request->full_name;
                 $labour_data->gender_id = $request->gender_id;
-                $labour_data->date_of_birth = $request->date_of_birth;// Carbon::createFromFormat('d/m/Y', $request->date_of_birth)->format('Y-m-d');
+                $labour_data->date_of_birth = $request->date_of_birth;
                 $labour_data->district_id = $request->district_id;
                 $labour_data->taluka_id = $request->taluka_id;
                 $labour_data->village_id = $request->village_id;
@@ -105,7 +105,8 @@ class LabourController extends Controller
                 $labour_data->save();
 
                 $familyDetails = [];
-                $familyDetailNew = json_decode($request->family,true);
+                // $familyDetailNew = json_decode($request->family,true);
+                $familyDetailNew = $request->family;
                         
                 foreach ($familyDetailNew as $key => $familyMember) {
                     $familyDetail = new LabourFamilyDetails();
