@@ -9,7 +9,8 @@ use App\Models\ {
 	Labour,
     Project,
     GramPanchayatDocuments,
-    DistanceKM
+    DistanceKM,
+    LabourAttendanceMark
 };
 use Illuminate\Support\Facades\Config;
 class ProjectController extends Controller
@@ -41,14 +42,11 @@ class ProjectController extends Controller
         }
 
         $data_user_output = $data_user_output->get()->toArray(); 
-            // dd($data_user_output);
+        // dd($data_user_output); 
             $project = Project::leftJoin('users', 'projects.District', '=', 'users.user_district')  
               ->where('projects.end_date', '>=',date('Y-m-d'))
-              ->where('projects.District', $data_user_output)
-            //   ->where('projects.is_active', true)
-              ->when($request->has('project_name'), function($query) use ($request) {
-                $query->where('projects.project_name', 'like', '%' . $request->project_name . '%');
-            })             
+              ->whereIn('projects.District', $data_user_output)
+              ->where('projects.is_active', true)
               ->select(
                   'projects.id',
                   'projects.project_name',
@@ -59,14 +57,16 @@ class ProjectController extends Controller
               )->distinct('projects.id')
               ->orderBy('id', 'desc')
               ->get();
-            //   dd($project);
-            return response()->json(['status' => 'success', 'message' => 'All data retrieved successfully', 'data' => $project], 200);
+           
+            return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', 'data' => $project], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+            return response()->json(['status' => 'false', 'message' => 'Projects List Get Fail', 'error' => $e->getMessage()], 500);
         }
     }
     public function filterDataProjectsLaboursMap(Request $request){
         try {
+            $date = date('Y-m-d'); 
+
             $user = auth()->user()->id;
             $userLatitude = $request->latitude; 
             $userLongitude = $request->longitude; 
@@ -79,17 +79,24 @@ class ProjectController extends Controller
             $lonE = $latLongArr['lonE'];
             $lonW = $latLongArr['lonW'];
 
-            $labourQuery = Labour::where('labour.user_id', $user)
+            $labourQuery =  LabourAttendanceMark::leftJoin('labour', 'tbl_mark_attendance.mgnrega_card_id', '=', 'labour.mgnrega_card_id')
+            ->leftJoin('users', 'tbl_mark_attendance.user_id', '=', 'users.id')    
+            ->where('labour.user_id', $user)
                 ->where('labour.is_approved', 2)
+                 ->whereDate('tbl_mark_attendance.updated_at', $date)
+                ->where('tbl_mark_attendance.is_deleted', 0)
                 ->when($request->has('mgnrega_card_id'), function($query) use ($request) {
                     $query->where('labour.mgnrega_card_id', 'like', '%' . $request->mgnrega_card_id . '%');
                 })
                 ->select(
-                    'labour.id',
+                    'tbl_mark_attendance.id',
                     'labour.full_name',
+                    User::raw("CONCAT(users.f_name, IFNULL(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
                     'labour.mgnrega_card_id',
                     'labour.latitude',
                     'labour.longitude',
+                    'tbl_mark_attendance.attendance_day',
+                    LabourAttendanceMark::raw("CONVERT_TZ(tbl_mark_attendance.updated_at, '+00:00', '+05:30') as updated_at"), 
                 )->distinct('labour.id')
                 ->orderBy('id', 'desc');
     

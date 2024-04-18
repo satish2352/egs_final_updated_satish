@@ -230,10 +230,10 @@ class OfficerController extends Controller
                 foreach ($data_output as &$labour) { 
                     $labour['profile_image'] = Config::get('DocumentConstant.USER_LABOUR_VIEW') . $labour['profile_image'];
                 }
-                if(sizeof($data_output)>=1) {
+                if(sizeof($data_output)>=0) {
                     $totalPages = ceil($totalRecords/$rowperpage);
                 } else {
-                    $totalPages = 1;
+                    $totalPages = 0;
                 }
             return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', "totalRecords" => $totalRecords, "totalPages"=>$totalPages, 'page_no_to_hilight'=>$page, 'data' => $data_output], 200);
         } catch (\Exception $e) {

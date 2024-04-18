@@ -100,7 +100,7 @@ class LabourAttendanceMarkController extends Controller
                         return response()->json(['status' => 'false', 'message' => 'Attendance for this card ID half day already marked for today 1st half'], 200);
                     }    
                 } elseif((count($secondHalfWorkAttendance)>=1) && ($secondHalfWorkAttendance[0]['project_id'] == $request->project_id) ) {
-                    return response()->json(['status' => 'false', 'message' => 'Attendance cant be mark as half/full day because halday alreay present for today'], 200);
+                    return response()->json(['status' => 'false', 'message' => 'Attendance cant be mark as half/full day because half day alreay present for today'], 200);
                 
                 }
                 elseif ($existingEntry  && $existingEntry->attendance_day =='half_day') {
@@ -170,7 +170,7 @@ class LabourAttendanceMarkController extends Controller
                     if (sizeof($data_output) > 0) {
                     $totalPages = ceil($totalRecords/$rowperpage);
                 } else {
-                    $totalPages = 1;
+                    $totalPages = 0;
                 }
     
             return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', "totalRecords" => $totalRecords, "totalPages"=>$totalPages, 'page_no_to_hilight'=>$page, 'data' => $data_output], 200);

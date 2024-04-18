@@ -34,6 +34,9 @@ class LabourController extends Controller
                 return response()->json("{'status' : 'false', 'message' : 'Mgnrega Card ID already exists'}", 200);
 
             } else {
+                 
+                
+
                 $all_data_validation = [
                     'full_name' => 'required',
                     'gender_id' => 'required',
@@ -73,7 +76,7 @@ class LabourController extends Controller
                 $labour_data->user_id = $user->id;
                 $labour_data->full_name = $request->full_name;
                 $labour_data->gender_id = $request->gender_id;
-                $labour_data->date_of_birth = $request->date_of_birth;// Carbon::createFromFormat('d/m/Y', $request->date_of_birth)->format('Y-m-d');
+                $labour_data->date_of_birth = $request->date_of_birth;
                 $labour_data->district_id = $request->district_id;
                 $labour_data->taluka_id = $request->taluka_id;
                 $labour_data->village_id = $request->village_id;
@@ -106,6 +109,7 @@ class LabourController extends Controller
 
                 $familyDetails = [];
                 $familyDetailNew = json_decode($request->family,true);
+                // $familyDetailNew = $request->family;
                         
                 foreach ($familyDetailNew as $key => $familyMember) {
                     $familyDetail = new LabourFamilyDetails();
@@ -256,11 +260,11 @@ class LabourController extends Controller
                     ->where('tbl_history.labour_id', $labourhistory['id'])
                     ->get();
             }
-
-            if(sizeof($data_output)>=1) {
+            
+            if (sizeof($data_output) > 0) {
                 $totalPages = ceil($totalRecords/$rowperpage);
             } else {
-                $totalPages = 1;
+                $totalPages = 0;
             }
 
             return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', "totalRecords" => $totalRecords, "totalPages"=>$totalPages, 'page_no_to_hilight'=>$page, 'data' => $data_output], 200);

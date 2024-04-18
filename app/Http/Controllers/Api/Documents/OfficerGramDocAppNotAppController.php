@@ -18,6 +18,93 @@ use Illuminate\Support\Facades\Response;
 
 class OfficerGramDocAppNotAppController extends Controller
 {
+    public function getAllDocumentsForOfficerFilterList(Request $request){
+        try {
+            $user = auth()->user()->id;
+
+            $fromDate = date('Y-m-d', strtotime($request->input('from_date')));
+            $fromDate =  $fromDate.' 00:00:01';
+            $toDate = date('Y-m-d', strtotime($request->input('to_date')));
+            $toDate =  $toDate.' 23:59:59';
+
+            $page = isset($request["start"]) ? $request["start"] : Config::get('DocumentConstant.GRAM_DOCUMENT_DEFAULT_START') ;
+            $rowperpage = GRAM_DOCUMENT_DEFAULT_LENGTH;
+            $start = ($page - 1) * $rowperpage;
+
+            $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
+            ->where('users.id', $user)
+            ->first();
+
+            $utype=$data_output->user_type;
+            $user_working_dist=$data_output->user_district;
+            $user_working_tal=$data_output->user_taluka;
+            $user_working_vil=$data_output->user_village;
+
+            if($utype=='1')
+            {
+            $data_user_output = User::where('users.user_district', $user_working_dist)
+            ->select('id')
+                ->get()
+                ->toArray();
+            }else if($utype=='2')
+            {
+                $data_user_output = User::where('users.user_taluka', $user_working_tal)
+                ->select('id')
+                ->get()
+                ->toArray();
+            }else if($utype=='3')
+            {
+                $data_user_output = User::where('users.user_village', $user_working_vil)
+                ->select('id')
+                ->get()
+                ->toArray();
+            }         
+
+            $basic_query_object = GramPanchayatDocuments::leftJoin('documenttype as tbl_documenttype', 'tbl_gram_panchayat_documents.document_type_id', '=', 'tbl_documenttype.id')
+            ->leftJoin('users', 'tbl_gram_panchayat_documents.user_id', '=', 'users.id')
+                ->whereIn('tbl_gram_panchayat_documents.user_id',$data_user_output)
+                ->when($request->has('document_type_name'), function($query) use ($request) {
+                    $query->where('tbl_documenttype.document_type_name', 'like', '%' . $request->document_type_name . '%');
+                })
+                ->when($request->get('user_taluka'), function($query) use ($request) {
+                    $query->where('users.user_taluka', $request->user_taluka);
+                })  
+                ->when($request->get('user_village'), function($query) use ($request) {
+                    $query->where('users.user_village', $request->user_village);
+                })
+                ->when($request->get('from_date'), function($query) use ($fromDate, $toDate) {
+                    $query->whereBetween('tbl_gram_panchayat_documents.updated_at', [$fromDate, $toDate]);
+                });
+
+                $totalRecords = $basic_query_object->select('tbl_gram_panchayat_documents.id')->get()->count();
+                
+                $data_output  = $basic_query_object
+                ->select(
+                    'tbl_gram_panchayat_documents.id',
+                    User::raw("CONCAT(users.f_name, IFNULL(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
+                    'tbl_gram_panchayat_documents.document_name',
+                    'tbl_documenttype.document_type_name',
+                    'tbl_documenttype.doc_color',
+                    'tbl_gram_panchayat_documents.document_pdf',
+                    GramPanchayatDocuments::raw("CONVERT_TZ(tbl_gram_panchayat_documents.updated_at, '+00:00', '+05:30') as updated_at"),
+                )->skip($start)
+                ->take($rowperpage)
+                ->orderBy('id', 'desc')
+                ->get();
+                foreach ($data_output as $document_data) {
+                    $document_data->document_pdf = Config::get('DocumentConstant.GRAM_PANCHAYAT_DOC_VIEW') . $document_data->document_pdf;
+                }
+
+                if(sizeof($data_output)>=0) {
+                    $totalPages = ceil($totalRecords/$rowperpage);
+                } else {
+                    $totalPages = 0;
+                }
+            return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', "totalRecords" => $totalRecords, "totalPages"=>$totalPages, 'page_no_to_hilight'=>$page, 'data' => $data_output], 200);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'false', 'message' => 'Document List Get Fail', 'error' => $e->getMessage()], 500);
+        }
+    }
     public function getReceivedDocumentListForAppNotApp(Request $request){
         try {
             $user = auth()->user()->id;
@@ -132,10 +219,10 @@ class OfficerGramDocAppNotAppController extends Controller
                         ->where('tbl_doc_history.gram_document_id', $documenthistory['id'])
                         ->get();
                 }
-                if(sizeof($data_output)>=1) {
+                if(sizeof($data_output)>=0) {
                     $totalPages = ceil($totalRecords/$rowperpage);
                 } else {
-                    $totalPages = 1;
+                    $totalPages = 0;
                 }
             return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', "totalRecords" => $totalRecords, "totalPages"=>$totalPages, 'page_no_to_hilight'=>$page, 'data' => $data_output], 200);
         } catch (\Exception $e) {
