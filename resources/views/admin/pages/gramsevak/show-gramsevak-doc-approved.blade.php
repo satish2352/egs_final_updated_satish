@@ -100,7 +100,6 @@
                                                                                 </td>
                                                                                 <td>Approved</td>
                                                                                 <td>NA</td>
-                                                                                <td>NA</td>
                                                                             </tr>
                                                                         @elseif((session()->get('role_id')=='3' || session()->get('role_id')=='1'))
 

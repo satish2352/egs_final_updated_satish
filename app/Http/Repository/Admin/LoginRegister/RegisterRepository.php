@@ -131,7 +131,7 @@ class RegisterRepository
         $ipAddress = getIPAddress($request);
 		$user_data = User::where('id',$request['edit_id']) 
 						->update([
-							// 'u_uname' => $request['u_uname'],
+							'email' => $request['email'],
 							'role_id' => $request['role_id'],
 							'f_name' => $request['f_name'],
 							'm_name' => $request['m_name'],
