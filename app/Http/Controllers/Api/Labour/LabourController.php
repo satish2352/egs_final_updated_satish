@@ -70,15 +70,17 @@ class LabourController extends Controller
                 ];
 
 
-                if ($request->has('family')) {
-                    
-                    $all_data_validation['family'] = 'required|array';
-                    $all_data_validation['family.*.fullName'] = 'required|string';
-                    $all_data_validation['family.*.genderId'] = 'required|integer'; 
-                    $all_data_validation['family.*.relationId'] = 'required|integer'; 
-                    $all_data_validation['family.*.maritalStatusId'] = 'required|integer'; 
-                    $all_data_validation['family.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
-                }
+                
+                    if ($request->has('family')) {
+                        if (sizeof($request->family>0)) {    
+                            $all_data_validation['family'] = 'required|array';
+                            $all_data_validation['family.*.fullName'] = 'required|string';
+                            $all_data_validation['family.*.genderId'] = 'required|integer'; 
+                            $all_data_validation['family.*.relationId'] = 'required|integer'; 
+                            $all_data_validation['family.*.maritalStatusId'] = 'required|integer'; 
+                            $all_data_validation['family.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
+                        }
+                    }
 
                 // if ($request->has('family')) {
                 //     $all_data_validation['family'] = 'required|array';
@@ -137,19 +139,23 @@ class LabourController extends Controller
                 $labour_data->save();
 
                 $familyDetails = [];
-                // $familyDetailNew = json_decode($request->family,true);
-                $familyDetailNewInsert = $request->family;
-                        
-                foreach ($familyDetailNewInsert as $key => $familyMember) {
-                    $familyDetail = new LabourFamilyDetails();
-                    $familyDetail->labour_id = $labour_data->id;
-                    $familyDetail->full_name = $familyMember['fullName'];
-                    $familyDetail->gender_id = $familyMember['genderId'];
-                    $familyDetail->relationship_id = $familyMember['relationId'];
-                    $familyDetail->married_status_id = $familyMember['maritalStatusId'];
-                    $familyDetail->date_of_birth = $familyMember['dob'];
-                    $familyDetail->save();
-                    $familyDetails[] = $familyDetail; // Collect family details
+
+                if ($request->has('family')) {
+                    if (sizeof($request->family>0)) {    
+                        $familyDetailNewInsert = $request->family;
+                                
+                        foreach ($familyDetailNewInsert as $key => $familyMember) {
+                            $familyDetail = new LabourFamilyDetails();
+                            $familyDetail->labour_id = $labour_data->id;
+                            $familyDetail->full_name = $familyMember['fullName'];
+                            $familyDetail->gender_id = $familyMember['genderId'];
+                            $familyDetail->relationship_id = $familyMember['relationId'];
+                            $familyDetail->married_status_id = $familyMember['maritalStatusId'];
+                            $familyDetail->date_of_birth = $familyMember['dob'];
+                            $familyDetail->save();
+                            $familyDetails[] = $familyDetail; // Collect family details
+                        }
+                    }
                 }
 
                 return response()->json([
