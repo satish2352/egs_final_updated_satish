@@ -67,11 +67,11 @@ class LabourController extends Controller
                     $familyDetails = $request->family;
                     
                     foreach ($familyDetails as $key => $familyMember) {
-                        $all_data_validation['family.*.fullName'] = 'required|string';
-                        $all_data_validation['family.*.genderId'] = 'required|integer'; 
-                        $all_data_validation['family.*.relationId'] = 'required|integer'; 
-                        $all_data_validation['family.*.maritalStatusId'] = 'required|integer'; 
-                        $all_data_validation['family.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
+                        $all_data_validation['familyMember.*.fullName'] = 'required|string';
+                        $all_data_validation['familyMember.*.genderId'] = 'required|integer'; 
+                        $all_data_validation['familyMember.*.relationId'] = 'required|integer'; 
+                        $all_data_validation['familyMember.*.maritalStatusId'] = 'required|integer'; 
+                        $all_data_validation['familyMember.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
                     }
                     // foreach ($familyDetailNew as $key => $familyMember) {
                     //     $all_data_validation[$familyMember . $key . '.fullName'] = 'required|string';
