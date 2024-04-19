@@ -199,7 +199,7 @@ class LabourController extends Controller
                         }
                     }
                 }
-info ($familyDetails);
+
                 return response()->json([
                     'status' => 'true',
                     'message' => 'Labor added successfully',
@@ -434,7 +434,7 @@ info ($familyDetails);
                 $labour_data->mgnrega_card_id = $request->mgnrega_card_id;
             }
             $labour_data->save();
-
+            info ($labour_data);
             return response()->json(['status' => 'true', 'message' => 'Labour updated successfully', 'data' => $labour_data], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'false', 'message' => 'Labour update failed', 'error' => $e->getMessage()], 500);
@@ -503,26 +503,26 @@ info ($familyDetails);
 
 
 
-            if ($request->has('family')) {
-                if (sizeof($request->family)>0) {    
-                    $validatorRules['family'] = 'required|array';
-                    $validatorRules['family.*.fullName'] = 'required|string';
-                    $validatorRules['family.*.genderId'] = 'required|integer'; 
-                    $validatorRules['family.*.relationId'] = 'required|integer'; 
-                    $validatorRules['family.*.maritalStatusId'] = 'required|integer'; 
-                    $validatorRules['family.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
+            // if ($request->has('family')) {
+            //     if (sizeof($request->family)>0) {    
+            //         $validatorRules['family'] = 'required|array';
+            //         $validatorRules['family.*.fullName'] = 'required|string';
+            //         $validatorRules['family.*.genderId'] = 'required|integer'; 
+            //         $validatorRules['family.*.relationId'] = 'required|integer'; 
+            //         $validatorRules['family.*.maritalStatusId'] = 'required|integer'; 
+            //         $validatorRules['family.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
                     
-                    $customMessages['family.required'] = 'Family details are required.';
-                    $customMessages['family.array'] = 'Family details must be an array.';
-                    $customMessages['family.*.fullName.required'] = 'Full name of family member is required.';
-                    $customMessages['family.*.genderId.required'] = 'Gender of family member is required.';
-                    $customMessages['family.*.relationId.required'] = 'Relation of family member is required.';
-                    $customMessages['family.*.maritalStatusId.required'] = 'Marital status of family member is required.';
-                    $customMessages['family.*.dob.required'] = 'Date of birth of family member is required.';
-                    $customMessages['family.*.dob.date_format'] = 'Date of birth of family member must be in the format d/m/Y.';
-                    $customMessages['family.*.dob.before_or_equal'] = 'Date of birth of family member must be before or equal to today.';
-                }
-            }
+            //         $customMessages['family.required'] = 'Family details are required.';
+            //         $customMessages['family.array'] = 'Family details must be an array.';
+            //         $customMessages['family.*.fullName.required'] = 'Full name of family member is required.';
+            //         $customMessages['family.*.genderId.required'] = 'Gender of family member is required.';
+            //         $customMessages['family.*.relationId.required'] = 'Relation of family member is required.';
+            //         $customMessages['family.*.maritalStatusId.required'] = 'Marital status of family member is required.';
+            //         $customMessages['family.*.dob.required'] = 'Date of birth of family member is required.';
+            //         $customMessages['family.*.dob.date_format'] = 'Date of birth of family member must be in the format d/m/Y.';
+            //         $customMessages['family.*.dob.before_or_equal'] = 'Date of birth of family member must be before or equal to today.';
+            //     }
+            // }
     
             // $validator = Validator::make($request->all(), $validatorRules);
             $validator = Validator::make($request->all(), $validatorRules, $customMessages);
@@ -595,43 +595,43 @@ info ($familyDetails);
             // $labour_data->is_approved = 3;
             $labour_data->save();
 
-            // $familyDetails = [];
-        //     $familyDetailNew = json_decode($request->family,true);
+            $familyDetails = [];
+            $familyDetailNew = json_decode($request->family,true);
                 
-        //     if ($labour_data->id > 0) {
-        //     foreach ($familyDetailNew as $key => $familyMember) {
-        //         $familyDetail = new LabourFamilyDetails();
-        //         $familyDetail->labour_id = $labour_data->id;
-        //         $familyDetail->full_name = $familyMember['full_name'];
-        //         $familyDetail->gender_id = $familyMember['gender_id'];
-        //         $familyDetail->relationship_id = $familyMember['relationship_id'];
-        //         $familyDetail->married_status_id = $familyMember['married_status_id'];
-        //         $familyDetail->date_of_birth = $familyMember['date_of_birth'];           
-        //         $familyDetail->save();
-        //         $familyDetails[] = $familyDetail; // Collect family details
-        //     }
-        // }
+            if ($labour_data->id > 0) {
+            foreach ($familyDetailNew as $key => $familyMember) {
+                $familyDetail = new LabourFamilyDetails();
+                $familyDetail->labour_id = $labour_data->id;
+                $familyDetail->full_name = $familyMember['full_name'];
+                $familyDetail->gender_id = $familyMember['gender_id'];
+                $familyDetail->relationship_id = $familyMember['relationship_id'];
+                $familyDetail->married_status_id = $familyMember['married_status_id'];
+                $familyDetail->date_of_birth = $familyMember['date_of_birth'];           
+                $familyDetail->save();
+                $familyDetails[] = $familyDetail; // Collect family details
+            }
+        }
 
+info ($familyDetail);
+        // $familyDetails = [];
 
-        $familyDetails = [];
-
-                if ($request->has('family')) {
-                    if (sizeof($request->family)>0) {    
-                        $familyDetailNewInsert = $request->family;
+        //         if ($request->has('family')) {
+        //             if (sizeof($request->family)>0) {    
+        //                 $familyDetailNewInsert = $request->family;
                                 
-                        foreach ($familyDetailNewInsert as $key => $familyMember) {
-                            $familyDetail = new LabourFamilyDetails();
-                            $familyDetail->labour_id = $labour_data->id;
-                            $familyDetail->full_name = $familyMember['fullName'];
-                            $familyDetail->gender_id = $familyMember['genderId'];
-                            $familyDetail->relationship_id = $familyMember['relationId'];
-                            $familyDetail->married_status_id = $familyMember['maritalStatusId'];
-                            $familyDetail->date_of_birth = $familyMember['dob'];
-                            $familyDetail->save();
-                            $familyDetails[] = $familyDetail; // Collect family details
-                        }
-                    }
-                }
+        //                 foreach ($familyDetailNewInsert as $key => $familyMember) {
+        //                     $familyDetail = new LabourFamilyDetails();
+        //                     $familyDetail->labour_id = $labour_data->id;
+        //                     $familyDetail->full_name = $familyMember['fullName'];
+        //                     $familyDetail->gender_id = $familyMember['genderId'];
+        //                     $familyDetail->relationship_id = $familyMember['relationId'];
+        //                     $familyDetail->married_status_id = $familyMember['maritalStatusId'];
+        //                     $familyDetail->date_of_birth = $familyMember['dob'];
+        //                     $familyDetail->save();
+        //                     $familyDetails[] = $familyDetail; // Collect family details
+        //                 }
+        //             }
+        //         }
 
             return response()->json(['status' => 'true', 'message' => 'Labour updated successfully', 'data' => $labour_data], 200);
         } catch (\Exception $e) {
