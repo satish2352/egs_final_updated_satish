@@ -127,16 +127,11 @@ class LabourController extends Controller
                         }
                     }
 
-            
-
                 // if(isset($request->landline_number)) {
                     //     $all_data_validation['landline_number'] =  ['required', 'regex:/^[0-9]{8,}$/'];
-                    // }
-
-
-                   
+                    // }                   
                     
-                    info($customMessages);
+                 
                     $validator = Validator::make($request->all(), $all_data_validation, $customMessages);
       
 
@@ -358,21 +353,41 @@ class LabourController extends Controller
     public function updateLabourFirstForm(Request $request){
         try {
             $user = auth()->user();
-            $validator = Validator::make($request->all(), [
+            $all_data_validation = Validator::make($request->all(), [
                 'full_name' => 'required',
                 'gender_id' => 'required',
+                'date_of_birth' => 'required|date_format:d/m/Y|before_or_equal:today|before:-18 years',
                 'district_id' => 'required',
                 'taluka_id' => 'required',
                 'village_id' => 'required',
                 'skill_id' => 'required',
-                'mobile_number' => ['required', 'digits:10'],
-                'mgnrega_card_id' => ['required'],
+                'mobile_number' => ['required', 'digits:10', 'regex:/^[789]\d{9}$/'],
+                'mgnrega_card_id' => 'required',
             ]);
+            $customMessages = [
+                'full_name.required'=>'full name is required',
+                'gender_id.required'=>'Please select a Gender.',
+                'date_of_birth.required'=>'date of birth is required',
+                'date_of_birth.date_format'=>'date of birth must be in the format d/m/Y.',
+                'date_of_birth.before_or_equal'=>'date of birth must be before or equal to today and at least 18 years ago.',
+                'date_of_birth.before'=>'date of birth must be before today and at least 18 years ago.',
+                'district_id.required'=>'Please select a district.',
+                'taluka_id.required'=>'Please select a taluka.',
+                'village_id.required'=>'Please select a village.',
+                'skill_id.required'=>'Please select a skill.',
+                'mobile_number.required'=>'Mobile number is required.',
+                'mobile_number.digits'=>'Mobile number must be 10 digits.',
+                'mobile_number.regex' => 'Mobile number must start with 9, 7, or 8.',
+                'mgnrega_card_id.required'=>'mgnrega card id is required.',
+              
+           ];
+           $validator = Validator::make($request->all(), $all_data_validation, $customMessages);
+      
 
-            if ($validator->fails()) {
-                return response()->json(['status' => 'false', 'message' => $validator->errors()], 200);
-            }
-
+           if ($validator->fails()) {
+            return response()->json(['status' => 'false', 'message' => 'Validation Fail',  'error' => $validator->errors()->all()], 200);
+          }
+      
             // Find the labour data to update
             $labour_data = Labour::where('id', $request->id)->first();
 
@@ -429,31 +444,92 @@ class LabourController extends Controller
         try {
             $user = auth()->user();
 
+            if ($request->has('family')) {
+                $family = json_decode($request->family, true);
+                $request->merge(['family' => $family]);
+            }
+
             $validatorRules = [
                 'latitude' => ['required', 'between:-90,90'], 
                 'longitude' => ['required', 'between:-180,180'], 
             ];
-    
+            
+            $customMessages = [
+                'latitude.required'=>'latitude is required.',
+                'latitude.between'=>'latitude must be between -90 and 90',
+                'longitude.required'=>'longitude is required.',
+                'longitude.between'=>'longitude must be between -180 and 180',
+           ];
             if ($request->hasFile('aadhar_image')) {
                 $validatorRules['aadhar_image'] = 'required|image|mimes:jpeg,png,jpg|min:10|max:2048';
+
+                $customMessages['aadhar_image.required'] = 'Aadhar Image is required.';
+                $customMessages['aadhar_image.image'] = 'Aadhar Image must be an image file.';
+                $customMessages['aadhar_image.mimes'] = 'Aadhar Image must be a jpeg, png, or jpg file.';
+                $customMessages['aadhar_image.min'] = 'Aadhar Image must be at least 10 KB in size.';
+                $customMessages['aadhar_image.max'] = 'Aadhar Image must not exceed 2048 KB in size.';             
             }
     
             if ($request->hasFile('mgnrega_image')) {
                 $validatorRules['mgnrega_image'] = 'required|image|mimes:jpeg,png,jpg|min:10|max:2048';
+
+                $customMessages['mgnrega_image.required'] = 'MGNREGA Image is required.';
+                $customMessages['mgnrega_image.image'] = 'MGNREGA Image must be an image file.';
+                $customMessages['mgnrega_image.mimes'] = 'MGNREGA Image must be a jpeg, png, or jpg file.';
+                $customMessages['mgnrega_image.min'] = 'MGNREGA Image must be at least 10 KB in size.';
+                $customMessages['mgnrega_image.max'] = 'MGNREGA Image must not exceed 2048 KB in size.';
             }
     
             if ($request->hasFile('profile_image')) {
                 $validatorRules['profile_image'] = 'required|image|mimes:jpeg,png,jpg|min:10|max:2048';
+
+                $customMessages['profile_image.required'] = 'Profile Image is required.';
+                $customMessages['profile_image.image'] = 'Profile Image must be an image file.';
+                $customMessages['profile_image.mimes'] = 'Profile Image must be a jpeg, png, or jpg file.';
+                $customMessages['profile_image.min'] = 'Profile Image must be at least 10 KB in size.';
+                $customMessages['profile_image.max'] = 'Profile Image must not exceed 2048 KB in size.';
             }
     
             if ($request->hasFile('voter_image')) {
                 $validatorRules['voter_image'] = 'required|image|mimes:jpeg,png,jpg|min:10|max:2048';
+
+                $customMessages['voter_image.required'] = 'Voter Image is required.';
+                $customMessages['voter_image.image'] = 'Voter Image must be an image file.';
+                $customMessages['voter_image.mimes'] = 'Voter Image must be a jpeg, png, or jpg file.';
+                $customMessages['voter_image.min'] = 'Voter Image must be at least 10 KB in size.';
+                $customMessages['voter_image.max'] = 'Voter Image must not exceed 2048 KB in size.';
+
+            }
+
+
+
+            if ($request->has('family')) {
+                if (sizeof($request->family)>0) {    
+                    $validatorRules['family'] = 'required|array';
+                    $validatorRules['family.*.fullName'] = 'required|string';
+                    $validatorRules['family.*.genderId'] = 'required|integer'; 
+                    $validatorRules['family.*.relationId'] = 'required|integer'; 
+                    $validatorRules['family.*.maritalStatusId'] = 'required|integer'; 
+                    $validatorRules['family.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
+                    
+                    $customMessages['family.required'] = 'Family details are required.';
+                    $customMessages['family.array'] = 'Family details must be an array.';
+                    $customMessages['family.*.fullName.required'] = 'Full name of family member is required.';
+                    $customMessages['family.*.genderId.required'] = 'Gender of family member is required.';
+                    $customMessages['family.*.relationId.required'] = 'Relation of family member is required.';
+                    $customMessages['family.*.maritalStatusId.required'] = 'Marital status of family member is required.';
+                    $customMessages['family.*.dob.required'] = 'Date of birth of family member is required.';
+                    $customMessages['family.*.dob.date_format'] = 'Date of birth of family member must be in the format d/m/Y.';
+                    $customMessages['family.*.dob.before_or_equal'] = 'Date of birth of family member must be before or equal to today.';
+                }
             }
     
-            $validator = Validator::make($request->all(), $validatorRules);
+            // $validator = Validator::make($request->all(), $validatorRules);
+            $validator = Validator::make($request->all(), $validatorRules, $customMessages);
     
             if ($validator->fails()) {
-                return response()->json(['status' => 'false', 'message' => $validator->errors()], 200);
+                // return response()->json(['status' => 'false', 'message' => $validator->errors()], 200);
+                return response()->json(['status' => 'false', 'message' => 'Validation Fail',  'error' => $validator->errors()->all()], 200);
             }
 
             // Find the labour data to update
@@ -520,21 +596,42 @@ class LabourController extends Controller
             $labour_data->save();
 
             // $familyDetails = [];
-            $familyDetailNew = json_decode($request->family,true);
+        //     $familyDetailNew = json_decode($request->family,true);
                 
-            if ($labour_data->id > 0) {
-            foreach ($familyDetailNew as $key => $familyMember) {
-                $familyDetail = new LabourFamilyDetails();
-                $familyDetail->labour_id = $labour_data->id;
-                $familyDetail->full_name = $familyMember['full_name'];
-                $familyDetail->gender_id = $familyMember['gender_id'];
-                $familyDetail->relationship_id = $familyMember['relationship_id'];
-                $familyDetail->married_status_id = $familyMember['married_status_id'];
-                $familyDetail->date_of_birth = $familyMember['date_of_birth'];           
-                $familyDetail->save();
-                $familyDetails[] = $familyDetail; // Collect family details
-            }
-        }
+        //     if ($labour_data->id > 0) {
+        //     foreach ($familyDetailNew as $key => $familyMember) {
+        //         $familyDetail = new LabourFamilyDetails();
+        //         $familyDetail->labour_id = $labour_data->id;
+        //         $familyDetail->full_name = $familyMember['full_name'];
+        //         $familyDetail->gender_id = $familyMember['gender_id'];
+        //         $familyDetail->relationship_id = $familyMember['relationship_id'];
+        //         $familyDetail->married_status_id = $familyMember['married_status_id'];
+        //         $familyDetail->date_of_birth = $familyMember['date_of_birth'];           
+        //         $familyDetail->save();
+        //         $familyDetails[] = $familyDetail; // Collect family details
+        //     }
+        // }
+
+
+        $familyDetails = [];
+
+                if ($request->has('family')) {
+                    if (sizeof($request->family)>0) {    
+                        $familyDetailNewInsert = $request->family;
+                                
+                        foreach ($familyDetailNewInsert as $key => $familyMember) {
+                            $familyDetail = new LabourFamilyDetails();
+                            $familyDetail->labour_id = $labour_data->id;
+                            $familyDetail->full_name = $familyMember['fullName'];
+                            $familyDetail->gender_id = $familyMember['genderId'];
+                            $familyDetail->relationship_id = $familyMember['relationId'];
+                            $familyDetail->married_status_id = $familyMember['maritalStatusId'];
+                            $familyDetail->date_of_birth = $familyMember['dob'];
+                            $familyDetail->save();
+                            $familyDetails[] = $familyDetail; // Collect family details
+                        }
+                    }
+                }
 
             return response()->json(['status' => 'true', 'message' => 'Labour updated successfully', 'data' => $labour_data], 200);
         } catch (\Exception $e) {
