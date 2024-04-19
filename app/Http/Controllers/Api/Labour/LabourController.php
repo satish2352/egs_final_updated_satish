@@ -64,9 +64,12 @@ class LabourController extends Controller
 
                 if ($request->has('family')) {
                     // $familyDetailNew = json_decode($request->family, true);
-                    // $familyDetails = $request->family;
+                    $familyDetails = $request->family;
+                    info(typeof($familyDetails));
+                    info($familyDetails);
                     
-                    foreach ($request->family as $key => $familyMember) {
+
+                    foreach ($familyDetails as $key => $familyMember) {
                         $all_data_validation['familyMember.*.fullName'] = 'required|string';
                         $all_data_validation['familyMember.*.genderId'] = 'required|integer'; 
                         $all_data_validation['familyMember.*.relationId'] = 'required|integer'; 
