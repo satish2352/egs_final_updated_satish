@@ -13,6 +13,7 @@ use App\Models\ {
     HistoryModel,
     GramPanchayatDocuments
 };
+use App\Http\Requests\UpdateFormRequest;
 use Illuminate\Support\Facades\Config;
 use Storage;
 use Carbon\Carbon;
@@ -422,7 +423,7 @@ class LabourController extends Controller
     //         return response()->json(['status' => 'false', 'message' => 'Labour update failed', 'error' => $e->getMessage()], 500);
     //     }
     // }
-    public function updateLabourFirstForm(Request $request){
+    public function updateLabourFirstForm(UpdateFormRequest $request){
         try {
             $user = auth()->user();
             $all_data_validation = Validator::make($request->all(), [
