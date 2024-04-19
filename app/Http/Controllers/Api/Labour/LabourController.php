@@ -65,7 +65,7 @@ class LabourController extends Controller
                 if ($request->has('family')) {
                     $familyDetailNew = json_decode($request->family, true);
                     // $familyDetailNew = $request->family;
-                    if (is_array($familyDetailNew)) {
+                    
                     foreach ($familyDetailNew as $key => $familyMember) {
                         $all_data_validation[$key . '.fullName'] = 'required|string';
                         $all_data_validation[$key . '.genderId'] = 'required|integer'; 
@@ -73,7 +73,6 @@ class LabourController extends Controller
                         $all_data_validation[$key . '.maritalStatusId'] = 'required|integer'; 
                         $all_data_validation[$key . '.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
                     }
-                }
                     // foreach ($familyDetailNew as $key => $familyMember) {
                     //     $all_data_validation[$familyMember . $key . '.fullName'] = 'required|string';
                     //     $all_data_validation[$familyMember . $key . '.genderId'] = 'required|integer'; 
