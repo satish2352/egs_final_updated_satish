@@ -57,10 +57,10 @@ class LabourController extends Controller
                     'mgnrega_card_id' => 'required',
                     'latitude' => ['required', 'between:-90,90'],
                     'longitude' => ['required', 'between:-180,180'],
-                    'aadhar_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
-                    'mgnrega_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
-                    'profile_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
-                    'voter_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
+                    // 'aadhar_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
+                    // 'mgnrega_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
+                    // 'profile_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
+                    // 'voter_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
                     // 'family' => 'required|array',
                     // 'family.*.fullName' => 'required',
                     // 'family.*.genderId' => 'required',
@@ -94,6 +94,37 @@ class LabourController extends Controller
                 // if(isset($request->landline_number)) {
                     //     $all_data_validation['landline_number'] =  ['required', 'regex:/^[0-9]{8,}$/'];
                     // }
+
+
+                    // $customMessages = [
+                    //      'full_name.required'=>'full name is required',
+                    //      'gender_id.required'=>'Gender Id required',
+                    //      'date_of_birth.required'=>'date of birth is required',
+                    //      'date_of_birth.date_format'=>'date of birth must be in the format d/m/Y.',
+                    //      'date_of_birth.before_or_equal'=>'date of birth must be before or equal to today and at least 18 years ago.',
+
+
+
+
+                    //     'required' => 'The :attribute field is required.',
+                    //     'date_format' => 'The :attribute must be in the format d/m/Y.',
+                    //     'before_or_equal' => 'The :attribute must be before or equal to today and at least 18 years ago.',
+                    //     'before' => 'The :attribute must be before today and at least 18 years ago.',
+                    //     'digits' => 'The :attribute must be :digits digits.',
+                    //     'between' => 'The :attribute must be between :min and :max.',
+                    //     'image' => 'The :attribute must be an image.',
+                    //     'mimes' => 'The :attribute must be a file of type: :values.',
+                    //     'min' => 'The :attribute must be at least :min kilobytes.',
+                    //     'max' => 'The :attribute may not be greater than :max kilobytes.',
+                    //     'string' => 'The :attribute must be a string.',
+                    //     'integer' => 'The :attribute must be an integer.',
+                    //     'array' => 'The :attribute must be an array.',
+                    //     'regex' => 'The :attribute format is invalid.',
+                    // ];
+                    
+                    // $validator = Validator::make($request->all(), $all_data_validation, $customMessages);
+
+
                 $validator = Validator::make($request->all(), $all_data_validation);
 
                 if ($validator->fails()) {
