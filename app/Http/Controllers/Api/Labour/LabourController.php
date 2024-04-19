@@ -21,6 +21,14 @@ class LabourController extends Controller
 {
     public function add(Request $request){
         try {
+
+            if ($request->has('family')) {
+                $family = json_decode($request->family, true);
+                $request->merge(['family' => $family]);
+
+            }
+
+
             $request->validate([
                 'mgnrega_card_id' => 'required',
             ]);
