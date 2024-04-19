@@ -63,10 +63,10 @@ class LabourController extends Controller
 
 
                 if ($request->has('family')) {
-                    $familyDetailNew = json_decode($request->family, true);
+                    $family = json_decode($request->family, true);
                     $familyDetails = $request->family;
                     // info(typeof($familyDetails));
-                    info($familyDetailNew);
+                    info($family);
                     
 
                     // foreach ($familyDetails as $key => $familyMember) {
@@ -77,12 +77,12 @@ class LabourController extends Controller
                         // $all_data_validation['familyMember.*.maritalStatusId'] = 'required|integer'; 
                         // $all_data_validation['familyMember.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
 
-                            $all_data_validation['familyDetailNew'] = 'required|array';
-                    $all_data_validation['familyDetailNew.*.fullName'] = 'required|string';
-                    $all_data_validation['familyDetailNew.*.genderId'] = 'required|integer'; 
-                    $all_data_validation['familyDetailNew.*.relationId'] = 'required|integer'; 
-                    $all_data_validation['familyDetailNew.*.maritalStatusId'] = 'required|integer'; 
-                    $all_data_validation['familyDetailNew.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
+                            $all_data_validation['family'] = 'required|array';
+                    $all_data_validation['family.*.fullName'] = 'required|string';
+                    $all_data_validation['family.*.genderId'] = 'required|integer'; 
+                    $all_data_validation['family.*.relationId'] = 'required|integer'; 
+                    $all_data_validation['family.*.maritalStatusId'] = 'required|integer'; 
+                    $all_data_validation['family.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
 
 
                     // }
