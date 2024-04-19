@@ -72,7 +72,7 @@ class LabourController extends Controller
 
                 
                     if ($request->has('family')) {
-                        if (sizeof($request->family>0)) {    
+                        if (sizeof($request->family)>0) {    
                             $all_data_validation['family'] = 'required|array';
                             $all_data_validation['family.*.fullName'] = 'required|string';
                             $all_data_validation['family.*.genderId'] = 'required|integer'; 
@@ -141,7 +141,7 @@ class LabourController extends Controller
                 $familyDetails = [];
 
                 if ($request->has('family')) {
-                    if (sizeof($request->family>0)) {    
+                    if (sizeof($request->family)>0) {    
                         $familyDetailNewInsert = $request->family;
                                 
                         foreach ($familyDetailNewInsert as $key => $familyMember) {
