@@ -69,13 +69,25 @@ class LabourController extends Controller
                     info($familyDetailNew);
                     
 
-                    foreach ($familyDetails as $key => $familyMember) {
-                        $all_data_validation['familyMember.*.fullName'] = 'required|string';
-                        $all_data_validation['familyMember.*.genderId'] = 'required|integer'; 
-                        $all_data_validation['familyMember.*.relationId'] = 'required|integer'; 
-                        $all_data_validation['familyMember.*.maritalStatusId'] = 'required|integer'; 
-                        $all_data_validation['familyMember.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
-                    }
+                    // foreach ($familyDetails as $key => $familyMember) {
+
+                        // $all_data_validation['familyMember.*.fullName'] = 'required|string';
+                        // $all_data_validation['familyMember.*.genderId'] = 'required|integer'; 
+                        // $all_data_validation['familyMember.*.relationId'] = 'required|integer'; 
+                        // $all_data_validation['familyMember.*.maritalStatusId'] = 'required|integer'; 
+                        // $all_data_validation['familyMember.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
+
+                            $all_data_validation['familyDetailNew'] = 'required|array';
+                    $all_data_validation['familyDetailNew.*.fullName'] = 'required|string';
+                    $all_data_validation['familyDetailNew.*.genderId'] = 'required|integer'; 
+                    $all_data_validation['familyDetailNew.*.relationId'] = 'required|integer'; 
+                    $all_data_validation['familyDetailNew.*.maritalStatusId'] = 'required|integer'; 
+                    $all_data_validation['familyDetailNew.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
+
+
+                    // }
+
+
                     // foreach ($familyDetailNew as $key => $familyMember) {
                     //     $all_data_validation[$familyMember . $key . '.fullName'] = 'required|string';
                     //     $all_data_validation[$familyMember . $key . '.genderId'] = 'required|integer'; 
