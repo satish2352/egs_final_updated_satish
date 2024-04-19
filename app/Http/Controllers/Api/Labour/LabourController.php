@@ -64,9 +64,9 @@ class LabourController extends Controller
 
                 if ($request->has('family')) {
                     // $familyDetailNew = json_decode($request->family, true);
-                    $familyDetailNew = $request->family;
+                    $familyDetails = $request->family;
                     
-                    foreach ($familyDetailNew as $key => $familyMember) {
+                    foreach ($familyDetails as $key => $familyMember) {
                         $all_data_validation[$key . '.fullName'] = 'required|string';
                         $all_data_validation[$key . '.genderId'] = 'required|integer'; 
                         $all_data_validation[$key . '.relationId'] = 'required|integer'; 
@@ -160,7 +160,8 @@ class LabourController extends Controller
                 ]);
             }
         } catch (\Exception $e) {
-            return response()->json(['status' => 'false', 'message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+            return response()->json(['status' => 'false', 'message' => 'An error occurred', 'data' => $familyDetails,
+             'error' => $e->getMessage()], 500);
         }
     }
     public function getAllLabourList(Request $request){
