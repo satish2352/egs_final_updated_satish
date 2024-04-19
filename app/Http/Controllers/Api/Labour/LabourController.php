@@ -97,8 +97,9 @@ class LabourController extends Controller
                 $validator = Validator::make($request->all(), $all_data_validation);
 
                 if ($validator->fails()) {
-                    // return response()->json(['status' => 'error', 'message' => $validator->errors()->all()], 200);
-                    return response()->json(['status' => 'false', 'message' => $validator->errors()->all()], 200);
+                    return response()->json(['status' => 'error', 'message' => 'Validation Fail',  'error' => $validator->errors()->all()], 200);
+                   
+                    // return response()->json("{'status' : 'false', 'error' : $validator->errors()->all()}", 200);
                 }
 
                 $user = auth()->user();
