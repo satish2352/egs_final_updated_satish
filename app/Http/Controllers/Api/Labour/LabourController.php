@@ -63,10 +63,10 @@ class LabourController extends Controller
 
 
                 if ($request->has('family')) {
-                    // $familyDetailNew = json_decode($request->family, true);
+                    $familyDetailNew = json_decode($request->family, true);
                     $familyDetails = $request->family;
                     // info(typeof($familyDetails));
-                    info($familyDetails);
+                    info($familyDetailNew);
                     
 
                     foreach ($familyDetails as $key => $familyMember) {
