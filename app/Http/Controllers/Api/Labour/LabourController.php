@@ -354,6 +354,7 @@ class LabourController extends Controller
     public function updateLabourFirstForm(Request $request){
         try {
             $user = auth()->user();
+            
             $all_data_validation = Validator::make($request->all(), [
                 'full_name' => 'required',
                 'gender_id' => 'required',
@@ -382,7 +383,9 @@ class LabourController extends Controller
                 'mgnrega_card_id.required'=>'mgnrega card id is required.',
               
            ];
-           $validator = Validator::make($request->all(), $all_data_validation, $customMessages);
+        //    $validator = Validator::make($request->all(), $all_data_validation, $customMessages);
+           $validator = Validator::make($request->all(), $all_data_validation->rules(), $customMessages);
+
       
 
             if ($validator->fails()) {
@@ -435,7 +438,7 @@ class LabourController extends Controller
                 $labour_data->mgnrega_card_id = $request->mgnrega_card_id;
             }
             $labour_data->save();
-info ($labour_data);
+
             return response()->json(['status' => 'true', 'message' => 'Labour updated successfully', 'data' => $labour_data], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'false', 'message' => 'Labour update failed', 'error' => $e->getMessage()], 500);
