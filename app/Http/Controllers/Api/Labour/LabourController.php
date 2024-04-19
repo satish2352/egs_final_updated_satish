@@ -27,8 +27,6 @@ class LabourController extends Controller
                 $request->merge(['family' => $family]);
             }
 
-           
-
             $request->validate([
                 'mgnrega_card_id' => 'required',
             ]);
@@ -43,8 +41,6 @@ class LabourController extends Controller
 
             } else {
                  
-                
-
                 $all_data_validation = [
                     'full_name' => 'required',
                     'gender_id' => 'required',
@@ -53,17 +49,61 @@ class LabourController extends Controller
                     'taluka_id' => 'required',
                     'village_id' => 'required',
                     'skill_id' => 'required',
-                    'mobile_number' => ['required', 'digits:10'],
+                    'mobile_number' => ['required', 'digits:10', 'regex:/^[789]\d{9}$/'],
                     'mgnrega_card_id' => 'required',
                     'latitude' => ['required', 'between:-90,90'],
                     'longitude' => ['required', 'between:-180,180'],
-                    // 'aadhar_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
-                    // 'mgnrega_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
-                    // 'profile_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
-                    // 'voter_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
-                 
+                    'aadhar_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
+                    'mgnrega_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
+                    'profile_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
+                    'voter_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
                 ];
 
+                $customMessages = [
+                    'full_name.required'=>'full name is required',
+                    'gender_id.required'=>'Please select a Gender.',
+                    'date_of_birth.required'=>'date of birth is required',
+                    'date_of_birth.date_format'=>'date of birth must be in the format d/m/Y.',
+                    'date_of_birth.before_or_equal'=>'date of birth must be before or equal to today and at least 18 years ago.',
+                    'date_of_birth.before'=>'date of birth must be before today and at least 18 years ago.',
+                    'district_id.required'=>'Please select a district.',
+                    'taluka_id.required'=>'Please select a taluka.',
+                    'village_id.required'=>'Please select a village.',
+                    'skill_id.required'=>'Please select a skill.',
+                    'mobile_number.required'=>'Mobile number is required.',
+                    'mobile_number.digits'=>'Mobile number must be 10 digits.',
+                    'mobile_number.regex' => 'Mobile number must start with 9, 7, or 8.',
+                    'mgnrega_card_id.required'=>'mgnrega card id is required.',
+                    'latitude.required'=>'latitude is required.',
+                    'latitude.between'=>'latitude must be between -90 and 90',
+                    'longitude.required'=>'longitude is required.',
+                    'longitude.between'=>'longitude must be between -180 and 180',
+
+                    'aadhar_image.required' => 'Aadhar Image is required',
+                    'aadhar_image.image' => 'Aadhar Image must be an image file',
+                    'aadhar_image.mimes' => 'Aadhar Image must be a jpeg, png, or jpg file',
+                    'aadhar_image.min' => 'Aadhar Image must be at least 10 KB in size',
+                    'aadhar_image.max' => 'Aadhar Image must not exceed 2048 KB in size',
+                    
+                    'mgnrega_image.required' => 'MGNREGA Image is required',
+                    'mgnrega_image.image' => 'MGNREGA Image must be an image file',
+                    'mgnrega_image.mimes' => 'MGNREGA Image must be a jpeg, png, or jpg file',
+                    'mgnrega_image.min' => 'MGNREGA Image must be at least 10 KB in size',
+                    'mgnrega_image.max' => 'MGNREGA Image must not exceed 2048 KB in size',
+                    
+                    'profile_image.required' => 'Profile Image is required',
+                    'profile_image.image' => 'Profile Image must be an image file',
+                    'profile_image.mimes' => 'Profile Image must be a jpeg, png, or jpg file',
+                    'profile_image.min' => 'Profile Image must be at least 10 KB in size',
+                    'profile_image.max' => 'Profile Image must not exceed 2048 KB in size',
+                    
+                    'voter_image.required' => 'Voter Image is required',
+                    'voter_image.image' => 'Voter Image must be an image file',
+                    'voter_image.mimes' => 'Voter Image must be a jpeg, png, or jpg file',
+                    'voter_image.min' => 'Voter Image must be at least 10 KB in size',
+                    'voter_image.max' => 'Voter Image must not exceed 2048 KB in size',
+                  
+               ];
 
                 
                     if ($request->has('family')) {
@@ -74,6 +114,16 @@ class LabourController extends Controller
                             $all_data_validation['family.*.relationId'] = 'required|integer'; 
                             $all_data_validation['family.*.maritalStatusId'] = 'required|integer'; 
                             $all_data_validation['family.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
+                            
+                            $customMessages['family.required'] = 'Family details are required.';
+                            $customMessages['family.array'] = 'Family details must be an array.';
+                            $customMessages['family.*.fullName.required'] = 'Full name of family member is required.';
+                            $customMessages['family.*.genderId.required'] = 'Gender of family member is required.';
+                            $customMessages['family.*.relationId.required'] = 'Relation of family member is required.';
+                            $customMessages['family.*.maritalStatusId.required'] = 'Marital status of family member is required.';
+                            $customMessages['family.*.dob.required'] = 'Date of birth of family member is required.';
+                            $customMessages['family.*.dob.date_format'] = 'Date of birth of family member must be in the format d/m/Y.';
+                            $customMessages['family.*.dob.before_or_equal'] = 'Date of birth of family member must be before or equal to today.';
                         }
                     }
 
@@ -84,26 +134,7 @@ class LabourController extends Controller
                     // }
 
 
-                    $customMessages = [
-                         'full_name.required'=>'full name is required',
-                         'gender_id.required'=>'Gender Id required',
-                         'date_of_birth.required'=>'date of birth is required',
-                         'date_of_birth.date_format'=>'date of birth must be in the format d/m/Y.',
-                         'date_of_birth.before_or_equal'=>'date of birth must be before or equal to today and at least 18 years ago.',
-                         'date_of_birth.before'=>'date of birth must be before today and at least 18 years ago.',
-                         'district_id.required'=>'Please select a district.',
-                         'taluka_id.required'=>'Please select a taluka.',
-                         'village_id.required'=>'Please select a village.',
-                         'skill_id.required'=>'Please select a skill.',
-                         'mobile_number.required'=>'mobile number is required.',
-                         'mobile_number.digits'=>'mobile number must be 10 digits.',
-                         'mgnrega_card_id.required'=>'mgnrega card id is required.',
-                         'latitude.required'=>'latitude is required.',
-                         'latitude.between'=>'latitude must be between -90 and 90',
-                         'longitude.required'=>'latitude is required.',
-                         'longitude.between'=>'longitude must be between -180 and 180',
-                       
-                    ];
+                   
                     
                     info($customMessages);
                     $validator = Validator::make($request->all(), $all_data_validation, $customMessages);
