@@ -383,8 +383,8 @@ class LabourController extends Controller
                 'mgnrega_card_id.required'=>'mgnrega card id is required.',
               
            ];
-        //    $validator = Validator::make($request->all(), $all_data_validation, $customMessages);
-           $validator = Validator::make($request->all(), $all_data_validation->rules(), $customMessages);
+           $validator = Validator::make($request->all(), $all_data_validation, $customMessages);
+        //    $validator = Validator::make($request->all(), $all_data_validation->rules(), $customMessages);
 
       
 
@@ -529,7 +529,8 @@ class LabourController extends Controller
             }
     
             // $validator = Validator::make($request->all(), $validatorRules);
-            $validator = Validator::make($request->all(), $validatorRules, $customMessages);
+            // $validator = Validator::make($request->all(), $validatorRules, $customMessages);
+            $validator = Validator::make($request->all(), $all_data_validation->rules(), $customMessages);
     
             if ($validator->fails()) {
                 // return response()->json(['status' => 'false', 'message' => $validator->errors()], 200);
