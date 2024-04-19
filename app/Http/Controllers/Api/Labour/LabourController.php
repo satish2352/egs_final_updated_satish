@@ -199,7 +199,7 @@ class LabourController extends Controller
                         }
                     }
                 }
-
+info ($familyDetails);
                 return response()->json([
                     'status' => 'true',
                     'message' => 'Labor added successfully',
