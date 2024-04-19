@@ -62,34 +62,36 @@ class LabourController extends Controller
                 ];
 
 
-                if ($request->has('family')) {
-                    // $familyDetailNew = json_decode($request->family, true);
-                    $familyDetails = $request->family;
-                    
-                    foreach ($familyDetails as $key => $familyMember) {
-                        $all_data_validation[$key . '.fullName'] = 'required|string';
-                        $all_data_validation[$key . '.genderId'] = 'required|integer'; 
-                        $all_data_validation[$key . '.relationId'] = 'required|integer'; 
-                        $all_data_validation[$key . '.maritalStatusId'] = 'required|integer'; 
-                        $all_data_validation[$key . '.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
-                    }
-                    // foreach ($familyDetailNew as $key => $familyMember) {
-                    //     $all_data_validation[$familyMember . $key . '.fullName'] = 'required|string';
-                    //     $all_data_validation[$familyMember . $key . '.genderId'] = 'required|integer'; 
-                    //     $all_data_validation[$familyMember . $key . '.relationId'] = 'required|integer'; 
-                    //     $all_data_validation[$familyMember . $key . '.maritalStatusId'] = 'required|integer'; 
-                    //     $all_data_validation[$familyMember . $key . '.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
-                    // }
-                }
-
                 // if ($request->has('family')) {
-                //     $all_data_validation['family'] = 'required|array';
-                //     $all_data_validation['family.*.fullName'] = 'required|string';
-                //     $all_data_validation['family.*.genderId'] = 'required|integer'; 
-                //     $all_data_validation['family.*.relationId'] = 'required|integer'; 
-                //     $all_data_validation['family.*.maritalStatusId'] = 'required|integer'; 
-                //     $all_data_validation['family.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
+                //     // $familyDetailNew = json_decode($request->family, true);
+                //     $familyDetails = $request->family;
+                    
+                //     foreach ($familyDetails as $key => $familyMember) {
+                //         $all_data_validation[$key . '.fullName'] = 'required|string';
+                //         $all_data_validation[$key . '.genderId'] = 'required|integer'; 
+                //         $all_data_validation[$key . '.relationId'] = 'required|integer'; 
+                //         $all_data_validation[$key . '.maritalStatusId'] = 'required|integer'; 
+                //         $all_data_validation[$key . '.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
+                //     }
+                //     // foreach ($familyDetailNew as $key => $familyMember) {
+                //     //     $all_data_validation[$familyMember . $key . '.fullName'] = 'required|string';
+                //     //     $all_data_validation[$familyMember . $key . '.genderId'] = 'required|integer'; 
+                //     //     $all_data_validation[$familyMember . $key . '.relationId'] = 'required|integer'; 
+                //     //     $all_data_validation[$familyMember . $key . '.maritalStatusId'] = 'required|integer'; 
+                //     //     $all_data_validation[$familyMember . $key . '.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
+                //     // }
+
+                 
                 // }
+
+                if ($request->has('family')) {
+                    $all_data_validation['family'] = 'required|array';
+                    $all_data_validation['family.*.fullName'] = 'required|string';
+                    $all_data_validation['family.*.genderId'] = 'required|integer'; 
+                    $all_data_validation['family.*.relationId'] = 'required|integer'; 
+                    $all_data_validation['family.*.maritalStatusId'] = 'required|integer'; 
+                    $all_data_validation['family.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
+                }
 
                 // if(isset($request->landline_number)) {
                     //     $all_data_validation['landline_number'] =  ['required', 'regex:/^[0-9]{8,}$/'];
@@ -153,6 +155,7 @@ class LabourController extends Controller
                     $familyDetail->save();
                     $familyDetails[] = $familyDetail; // Collect family details
                 }
+                dd($familyDetailNew);
 
                 return response()->json([
                     'status' => 'true',
@@ -160,7 +163,7 @@ class LabourController extends Controller
                 ]);
             }
         } catch (\Exception $e) {
-            return response()->json(['status' => 'false', 'message' => 'An error occurred', 'data' => $familyDetails,
+            return response()->json(['status' => 'false', 'message' => 'An error occurred',
              'error' => $e->getMessage()], 500);
         }
     }
