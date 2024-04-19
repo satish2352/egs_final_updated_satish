@@ -27,7 +27,7 @@ class LabourController extends Controller
                 $request->merge(['family' => $family]);
             }
 
-            info($request->family);
+           
 
             $request->validate([
                 'mgnrega_card_id' => 'required',
@@ -105,8 +105,9 @@ class LabourController extends Controller
                        
                     ];
                     
+                    info($customMessages);
                     $validator = Validator::make($request->all(), $all_data_validation, $customMessages);
-
+      
 
                 // $validator = Validator::make($request->all(), $all_data_validation);
 
