@@ -49,7 +49,7 @@ class LabourController extends Controller
                     'taluka_id' => 'required',
                     'village_id' => 'required',
                     'skill_id' => 'required',
-                    'mobile_number' => ['required', 'digits:10', 'regex:/^[789]\d{9}$/'],
+                    'mobile_number' => ['required', 'digits:10', 'regex:/^[6789]\d{9}$/'],
                     'mgnrega_card_id' => 'required',
                     'latitude' => ['required', 'between:-90,90'],
                     'longitude' => ['required', 'between:-180,180'],
@@ -72,7 +72,7 @@ class LabourController extends Controller
                     'skill_id.required'=>'Please select a skill.',
                     'mobile_number.required'=>'Mobile number is required.',
                     'mobile_number.digits'=>'Mobile number must be 10 digits.',
-                    'mobile_number.regex' => 'Mobile number must start with 9, 7, or 8.',
+                    'mobile_number.regex' => 'Mobile number must start with 9, 8, 7 or 6.',
                     'mgnrega_card_id.required'=>'mgnrega card id is required.',
                     'latitude.required'=>'latitude is required.',
                     'latitude.between'=>'latitude must be between -90 and 90',
@@ -353,20 +353,47 @@ class LabourController extends Controller
     public function updateLabourFirstForm(Request $request){
         try {
             $user = auth()->user();
-            $validator = Validator::make($request->all(), [
+
+            $all_data_validation = [
                 'full_name' => 'required',
+                'date_of_birth' => 'required|date_format:d/m/Y|before_or_equal:today|before:-18 years',
                 'gender_id' => 'required',
                 'district_id' => 'required',
                 'taluka_id' => 'required',
                 'village_id' => 'required',
                 'skill_id' => 'required',
-                'mobile_number' => ['required', 'digits:10'],
+                'mobile_number' => ['required', 'digits:10', 'regex:/^[6789]\d{9}$/'],
                 'mgnrega_card_id' => ['required'],
-            ]);
+            ];
+    
+            $customMessages = [
+                'full_name.required'=>'full name is required',
+                'gender_id.required'=>'Please select a Gender.',
+                'date_of_birth.required'=>'date of birth is required',
+                'date_of_birth.date_format'=>'date of birth must be in the format d/m/Y.',
+                'date_of_birth.before_or_equal'=>'date of birth must be before or equal to today and at least 18 years ago.',
+                'date_of_birth.before'=>'date of birth must be before today and at least 18 years ago.',
+                'district_id.required'=>'Please select a district.',
+                'taluka_id.required'=>'Please select a taluka.',
+                'village_id.required'=>'Please select a village.',
+                'skill_id.required'=>'Please select a skill.',
+                'mobile_number.required'=>'Mobile number is required.',
+                'mobile_number.digits'=>'Mobile number must be 10 digits.',
+                'mobile_number.regex' => 'Mobile number must start with 9, 8,7, or 6.',
+                'mgnrega_card_id.required'=>'mgnrega card id is required.',
+              
+            ];
+            $validator = Validator::make($request->all(), $all_data_validation, $customMessages);
 
             if ($validator->fails()) {
-                return response()->json(['status' => 'false', 'message' => $validator->errors()], 200);
+                $errors = $validator->errors()->all();
+                return response()->json([
+                    'status' => 'false',
+                    'message' => 'Validation Fail',
+                    'error' => $errors
+                ], 200);
             }
+         
 
             // Find the labour data to update
             $labour_data = Labour::where('id', $request->id)->first();
