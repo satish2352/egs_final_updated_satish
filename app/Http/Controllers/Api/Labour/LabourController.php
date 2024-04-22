@@ -455,6 +455,13 @@ class LabourController extends Controller
                 'latitude' => ['required', 'between:-90,90'], 
                 'longitude' => ['required', 'between:-180,180'], 
             ];
+
+
+            // $all_data_validation = [
+            //     'latitude' => ['required', 'between:-90,90'], 
+            //     'longitude' => ['required', 'between:-180,180'], 
+            // ];
+
     
             if ($request->hasFile('aadhar_image')) {
                 $validatorRules['aadhar_image'] = 'required|image|mimes:jpeg,png,jpg|min:10|max:2048';
@@ -477,6 +484,14 @@ class LabourController extends Controller
             if ($validator->fails()) {
                 return response()->json(['status' => 'false', 'message' => $validator->errors()], 200);
             }
+
+
+
+
+
+
+
+
 
             // Find the labour data to update
             $labour_data = Labour::where('id', $request->id)->first();

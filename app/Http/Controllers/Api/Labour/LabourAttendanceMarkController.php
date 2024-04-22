@@ -258,15 +258,25 @@ class LabourAttendanceMarkController extends Controller
                         }                        
                          elseif($existingEntry->attendance_day == 'half_day'){
 
-                            if($mgnregaCardCount <= 3 && $existingEntry->created_at <  date('Y-m-d').' 13:00:00' && $existingEntry->project_id == $request->project_id){
-                                        $existingEntry->attendance_day = 'full_day';
-                                        $existingEntry->save();
+                            if($mgnregaCardCount <= 3  && $existingEntry->project_id == $request->project_id){
+                                $existingEntry->attendance_day = 'full_day';
+                                $existingEntry->save();
 
-                                        LabourAttendanceMark::where('mgnrega_card_id', $existingEntry->mgnrega_card_id)
-                                        ->where('id', '!=', $existingEntry->id)
-                                        ->update(['is_deleted' => 1]);
+                                LabourAttendanceMark::where('mgnrega_card_id', $existingEntry->mgnrega_card_id)
+                                ->where('id', '!=', $existingEntry->id)
+                                ->update(['is_deleted' => 1]);
 
-                                }
+                        }
+
+                            // if($mgnregaCardCount <= 3 && $existingEntry->created_at <  date('Y-m-d').' 13:00:00' && $existingEntry->project_id == $request->project_id){
+                            //             $existingEntry->attendance_day = 'full_day';
+                            //             $existingEntry->save();
+
+                            //             LabourAttendanceMark::where('mgnrega_card_id', $existingEntry->mgnrega_card_id)
+                            //             ->where('id', '!=', $existingEntry->id)
+                            //             ->update(['is_deleted' => 1]);
+
+                            //     }
 
                                 else{
                                         return response()->json(['status' => 'false', 'message' => 'Please slecte 1st half project for update attedance full day'], 200);

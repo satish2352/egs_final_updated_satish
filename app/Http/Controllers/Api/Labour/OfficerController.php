@@ -246,6 +246,7 @@ class OfficerController extends Controller
                 // Validate the incoming request
             $validator = Validator::make($request->all(), [
                 'mgnrega_card_id' => 'required',
+                // 'labour_id'=> 'required',
             ]);
     
             if ($validator->fails()) {
@@ -253,6 +254,7 @@ class OfficerController extends Controller
             }
             
             $existingRecord = Labour::where('mgnrega_card_id', $request->mgnrega_card_id)
+            // ->where('id', $request->labour_id)
             ->where('is_approved', 2)
             ->first();
 
