@@ -602,42 +602,42 @@ class LabourController extends Controller
             // $labour_data->is_approved = 3;
             $labour_data->save();
 
-            // $familyDetails = [];
-        //     $familyDetailNew = json_decode($request->family,true);
+            $familyDetails = [];
+            $familyDetailNew = json_decode($request->family,true);
                 
-        //     if ($labour_data->id > 0) {
-        //     foreach ($familyDetailNew as $key => $familyMember) {
-        //         $familyDetail = new LabourFamilyDetails();
-        //         $familyDetail->labour_id = $labour_data->id;
-        //         $familyDetail->full_name = $familyMember['full_name'];
-        //         $familyDetail->gender_id = $familyMember['gender_id'];
-        //         $familyDetail->relationship_id = $familyMember['relationship_id'];
-        //         $familyDetail->married_status_id = $familyMember['married_status_id'];
-        //         $familyDetail->date_of_birth = $familyMember['date_of_birth'];           
-        //         $familyDetail->save();
-        //         $familyDetails[] = $familyDetail; // Collect family details
-        //     }
-        // }
-
-        $familyDetails = [];
-
-        if ($request->has('family')) {
-            if (sizeof($request->family)>0) {    
-                $familyDetailNewInsert = $request->family;
-                        
-                foreach ($familyDetailNewInsert as $key => $familyMember) {
-                    $familyDetail = new LabourFamilyDetails();
-                    $familyDetail->labour_id = $labour_data->id;
-                    $familyDetail->full_name = $familyMember['fullName'];
-                    $familyDetail->gender_id = $familyMember['genderId'];
-                    $familyDetail->relationship_id = $familyMember['relationId'];
-                    $familyDetail->married_status_id = $familyMember['maritalStatusId'];
-                    $familyDetail->date_of_birth = $familyMember['dob'];
-                    $familyDetail->save();
-                    $familyDetails[] = $familyDetail; // Collect family details
-                }
+            if ($labour_data->id > 0) {
+            foreach ($familyDetailNew as $key => $familyMember) {
+                $familyDetail = new LabourFamilyDetails();
+                $familyDetail->labour_id = $labour_data->id;
+                $familyDetail->full_name = $familyMember['full_name'];
+                $familyDetail->gender_id = $familyMember['gender_id'];
+                $familyDetail->relationship_id = $familyMember['relationship_id'];
+                $familyDetail->married_status_id = $familyMember['married_status_id'];
+                $familyDetail->date_of_birth = $familyMember['date_of_birth'];           
+                $familyDetail->save();
+                $familyDetails[] = $familyDetail; // Collect family details
             }
         }
+
+        // $familyDetails = [];
+
+        // if ($request->has('family')) {
+        //     if (sizeof($request->family)>0) {    
+        //         $familyDetailNewInsert = $request->family;
+                        
+        //         foreach ($familyDetailNewInsert as $key => $familyMember) {
+        //             $familyDetail = new LabourFamilyDetails();
+        //             $familyDetail->labour_id = $labour_data->id;
+        //             $familyDetail->full_name = $familyMember['fullName'];
+        //             $familyDetail->gender_id = $familyMember['genderId'];
+        //             $familyDetail->relationship_id = $familyMember['relationId'];
+        //             $familyDetail->married_status_id = $familyMember['maritalStatusId'];
+        //             $familyDetail->date_of_birth = $familyMember['dob'];
+        //             $familyDetail->save();
+        //             $familyDetails[] = $familyDetail; // Collect family details
+        //         }
+        //     }
+        // }
 
             return response()->json(['status' => 'true', 'message' => 'Labour updated successfully', 'data' => $labour_data], 200);
         } catch (\Exception $e) {
