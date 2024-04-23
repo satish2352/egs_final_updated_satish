@@ -464,6 +464,11 @@ class LabourController extends Controller
         try {
             $user = auth()->user();
 
+            if ($request->has('family')) {
+                $family = json_decode($request->family, true);
+                $request->merge(['family' => $family]);
+            }
+            
             $validatorRules = [
                 'latitude' => ['required', 'between:-90,90'], 
                 'longitude' => ['required', 'between:-180,180'], 
