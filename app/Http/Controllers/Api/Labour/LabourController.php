@@ -468,7 +468,7 @@ class LabourController extends Controller
                 $family = json_decode($request->family, true);
                 $request->merge(['family' => $family]);
             }
-            
+
             $validatorRules = [
                 'latitude' => ['required', 'between:-90,90'], 
                 'longitude' => ['required', 'between:-180,180'], 
@@ -487,26 +487,26 @@ class LabourController extends Controller
                 'longitude.between'=>'longitude must be between -180 and 180',
            ];
 
-           if ($request->has('family')) {
-            if (sizeof($request->family)>0) {    
-                $validatorRules['family'] = 'required|array';
-                $validatorRules['family.*.fullName'] = 'required|string';
-                $validatorRules['family.*.genderId'] = 'required|integer'; 
-                $validatorRules['family.*.relationId'] = 'required|integer'; 
-                $validatorRules['family.*.maritalStatusId'] = 'required|integer'; 
-                $validatorRules['family.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
+        //    if ($request->has('family')) {
+        //     if (sizeof($request->family)>0) {    
+        //         $validatorRules['family'] = 'required|array';
+        //         $validatorRules['family.*.fullName'] = 'required|string';
+        //         $validatorRules['family.*.genderId'] = 'required|integer'; 
+        //         $validatorRules['family.*.relationId'] = 'required|integer'; 
+        //         $validatorRules['family.*.maritalStatusId'] = 'required|integer'; 
+        //         $validatorRules['family.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
                 
-                $customMessages['family.required'] = 'Family details are required.';
-                $customMessages['family.array'] = 'Family details must be an array.';
-                $customMessages['family.*.fullName.required'] = 'Full name of family member is required.';
-                $customMessages['family.*.genderId.required'] = 'Gender of family member is required.';
-                $customMessages['family.*.relationId.required'] = 'Relation of family member is required.';
-                $customMessages['family.*.maritalStatusId.required'] = 'Marital status of family member is required.';
-                $customMessages['family.*.dob.required'] = 'Date of birth of family member is required.';
-                $customMessages['family.*.dob.date_format'] = 'Date of birth of family member must be in the format d/m/Y.';
-                $customMessages['family.*.dob.before_or_equal'] = 'Date of birth of family member must be before or equal to today.';
-            }
-        }
+        //         $customMessages['family.required'] = 'Family details are required.';
+        //         $customMessages['family.array'] = 'Family details must be an array.';
+        //         $customMessages['family.*.fullName.required'] = 'Full name of family member is required.';
+        //         $customMessages['family.*.genderId.required'] = 'Gender of family member is required.';
+        //         $customMessages['family.*.relationId.required'] = 'Relation of family member is required.';
+        //         $customMessages['family.*.maritalStatusId.required'] = 'Marital status of family member is required.';
+        //         $customMessages['family.*.dob.required'] = 'Date of birth of family member is required.';
+        //         $customMessages['family.*.dob.date_format'] = 'Date of birth of family member must be in the format d/m/Y.';
+        //         $customMessages['family.*.dob.before_or_equal'] = 'Date of birth of family member must be before or equal to today.';
+        //     }
+        // }
 
             if ($request->hasFile('aadhar_image')) {
                 $validatorRules['aadhar_image'] = 'required|image|mimes:jpeg,png,jpg|min:10|max:2048';
