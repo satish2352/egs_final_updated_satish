@@ -464,10 +464,10 @@ class LabourController extends Controller
         try {
             $user = auth()->user();
 
-            if ($request->has('family')) {
-                $family = json_decode($request->family, true);
-                $request->merge(['family' => $family]);
-            }
+            // if ($request->has('family')) {
+            //     $family = json_decode($request->family, true);
+            //     $request->merge(['family' => $family]);
+            // }
 
             $validatorRules = [
                 'latitude' => ['required', 'between:-90,90'], 
@@ -527,18 +527,18 @@ class LabourController extends Controller
             // $validator = Validator::make($request->all(), $validatorRules);
             $validator = Validator::make($request->all(), $validatorRules, $customMessages);
     
-            // if ($validator->fails()) {
-            //     return response()->json(['status' => 'false', 'message' => $validator->errors()], 200);
-            // }
-
             if ($validator->fails()) {
-                $errors = implode(', ', $validator->errors()->all());
-                return response()->json([
-                    'status' => 'false',
-                    'message' => 'Validation Fail',
-                    'error' => $errors
-                ], 200);
+                return response()->json(['status' => 'false', 'message' => $validator->errors()], 200);
             }
+
+            // if ($validator->fails()) {
+            //     $errors = implode(', ', $validator->errors()->all());
+            //     return response()->json([
+            //         'status' => 'false',
+            //         'message' => 'Validation Fail',
+            //         'error' => $errors
+            //     ], 200);
+            // }
             // Find the labour data to update
             $labour_data = Labour::where('id', $request->id)->first();
 
