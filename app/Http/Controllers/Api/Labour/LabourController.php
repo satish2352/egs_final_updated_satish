@@ -152,9 +152,7 @@ class LabourController extends Controller
                 if ($validator->fails()) {
                     $errors = $validator->errors()->all();
                     $errorMessage = '';
-                    foreach ($errors as $error) {
-                        $errorMessage .= $error . ' ';
-                    }
+                    $errorMessage = implode(" \n", $validator->errors()->all());
                     return response()->json([
                         'status' => 'false',
                         'message' => 'Validation Fail: ' . $errorMessage,
@@ -416,9 +414,7 @@ class LabourController extends Controller
             if ($validator->fails()) {
                 $errors = $validator->errors()->all();
                 $errorMessage = '';
-                foreach ($errors as $error) {
-                    $errorMessage .= $error . ' ';
-                }
+                $errorMessage = implode(" \n", $validator->errors()->all());
                 return response()->json([
                     'status' => 'false',
                     'message' => 'Validation Fail: ' . $errorMessage,
@@ -560,9 +556,7 @@ class LabourController extends Controller
             if ($validator->fails()) {
                 $errors = $validator->errors()->all();
                 $errorMessage = '';
-                foreach ($errors as $error) {
-                    $errorMessage .= $error . ' ';
-                }
+                $errorMessage = implode(" \n", $validator->errors()->all());
                 return response()->json([
                     'status' => 'false',
                     'message' => 'Validation Fail: ' . $errorMessage,
