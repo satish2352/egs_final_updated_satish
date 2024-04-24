@@ -490,21 +490,21 @@ class LabourController extends Controller
            if ($request->has('family')) {
             if (sizeof($request->family)>0) {    
                 $validatorRules['family'] = 'required|array';
-                $validatorRules['family.*.fullName'] = 'required|string';
-                $validatorRules['family.*.genderId'] = 'required|integer'; 
-                $validatorRules['family.*.relationId'] = 'required|integer'; 
-                $validatorRules['family.*.maritalStatusId'] = 'required|integer'; 
-                $validatorRules['family.*.dob'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
+                $validatorRules['family.*.full_name'] = 'required|string';
+                $validatorRules['family.*.gender_id'] = 'required|integer'; 
+                $validatorRules['family.*.relationship_id'] = 'required|integer'; 
+                $validatorRules['family.*.married_status_id'] = 'required|integer'; 
+                $validatorRules['family.*.date_of_birth'] = 'required|date_format:d/m/Y|before_or_equal:today'; 
                 
                 $customMessages['family.required'] = 'Family details are required.';
                 $customMessages['family.array'] = 'Family details must be an array.';
-                $customMessages['family.*.fullName.required'] = 'Full name of family member is required.';
-                $customMessages['family.*.genderId.required'] = 'Gender of family member is required.';
-                $customMessages['family.*.relationId.required'] = 'Relation of family member is required.';
-                $customMessages['family.*.maritalStatusId.required'] = 'Marital status of family member is required.';
-                $customMessages['family.*.dob.required'] = 'Date of birth of family member is required.';
-                $customMessages['family.*.dob.date_format'] = 'Date of birth of family member must be in the format d/m/Y.';
-                $customMessages['family.*.dob.before_or_equal'] = 'Date of birth of family member must be before or equal to today.';
+                $customMessages['family.*.full_name.required'] = 'Full name of family member is required.';
+                $customMessages['family.*.gender_id.required'] = 'Gender of family member is required.';
+                $customMessages['family.*.relationship_id.required'] = 'Relation of family member is required.';
+                $customMessages['family.*.married_status_id.required'] = 'Marital status of family member is required.';
+                $customMessages['family.*.date_of_birth.required'] = 'Date of birth of family member is required.';
+                $customMessages['family.*.date_of_birth.date_format'] = 'Date of birth of family member must be in the format d/m/Y.';
+                $customMessages['family.*.date_of_birth.before_or_equal'] = 'Date of birth of family member must be before or equal to today.';
             }
         }
 
