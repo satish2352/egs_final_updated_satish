@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\Documents\GramPanchayatDocumentController;
 use App\Http\Controllers\Api\Documents\OfficerGramDocAppNotAppController;
 use App\Http\Controllers\Api\Labour\OfficerController;
 use App\Http\Controllers\Api\Labour\AttendanceMarkVisibleForOfficerController;
-
+use App\Http\Controllers\Api\UserProfile\UserProfileController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -87,6 +87,8 @@ Route::group([
            Route::post('/list-particular-officer-labour-details', [OfficerController::class, 'getParticularLabourOfficer']);
            Route::post('/list-attendance-marked-visible-for-officer', [AttendanceMarkVisibleForOfficerController::class, 'getAllAttendanceMarkedLabourForOfficer']);
           
+           Route::post('/particular-user-profile', [UserProfileController::class, 'getParticularUserProfile']);
+           
            Route::post('logout', [AuthController::class, 'logout']);
        });
 });
