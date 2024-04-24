@@ -140,14 +140,27 @@ class LabourController extends Controller
                 // if ($validator->fails()) {
                 //     return response()->json(['status' => 'false', 'message' => 'Validation Fail',  'error' => $validator->errors()->all()], 200);
                 // }
+                // if ($validator->fails()) {
+                //     $errors = implode(', ', $validator->errors()->all());
+                //     return response()->json([
+                //         'status' => 'false',
+                //         'message' => 'Validation Fail',
+                //         'error' => $errors
+                //     ], 200);
+                // }
+
                 if ($validator->fails()) {
                     $errors = $validator->errors()->all();
+                    $errorMessage = '';
+                    foreach ($errors as $error) {
+                        $errorMessage .= $error . ' ';
+                    }
                     return response()->json([
                         'status' => 'false',
-                        'message' => 'Validation Fail',
-                        'error' => $errors
+                        'message' => 'Validation Fail: ' . $errorMessage,
                     ], 200);
                 }
+                
 
                 $user = auth()->user();
 
