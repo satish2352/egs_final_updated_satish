@@ -240,43 +240,91 @@ class OfficerController extends Controller
             return response()->json(['status' => 'false', 'message' => 'Document List Get Fail', 'error' => $e->getMessage()], 500);
         }
     }
+    // public function updateLabourStatusApproved(Request $request){
+    //     try {
+    //         $user = auth()->user()->id;
+    //             // Validate the incoming request
+    //         $validator = Validator::make($request->all(), [
+    //             // 'mgnrega_card_id' => 'required',
+    //             'labour_id'=> 'required',
+    //         ]);
+    
+    //         if ($validator->fails()) {
+    //             return response()->json(['status' => 'false', 'message' => 'Validation failed', 'errors' => $validator->errors()], 200);
+    //         }
+            
+    //         $existingRecord = Labour::where('mgnrega_card_id', $request->mgnrega_card_id)
+    //         ->where('id', $request->labour_id)
+    //         ->where('is_approved', 2)
+    //         ->first();
+
+    //         if ($existingRecord) {
+    //             return response()->json(['status' => 'false', 'message' => 'MGNREGA card ID already exists with approved. Please change the MGNREGA card ID.'], 200);
+    //         }
+
+    //         $updated = Labour::where('mgnrega_card_id', $request->mgnrega_card_id)
+    //             ->where('is_approved', 1)
+    //             ->update(['is_approved' => 2,'is_resubmitted'=> 0]); 
+                
+    
+    //         if ($updated) {
+    //             return response()->json(['status' => 'true', 'message' => 'Labour status updated successfully'], 200);
+    //         } else {
+    //             return response()->json(['status' => 'false', 'message' => 'No labour found with the provided MGNREGA card Id'], 200);
+    //         }
+    
+    //     } catch (\Exception $e) {
+    //         return response()->json(['status' => 'false', 'message' => 'Update failed','error' => $e->getMessage()], 500);
+    //     }
+    // }
     public function updateLabourStatusApproved(Request $request){
         try {
-            $user = auth()->user()->id;
-                // Validate the incoming request
+            $user = auth()->user();
+            $labour_id = $request->input('labour_id'); 
+            $mgnrega_card_id = $request->input('mgnrega_card_id'); 
+    
             $validator = Validator::make($request->all(), [
+                'labour_id' => 'required',
                 'mgnrega_card_id' => 'required',
-                // 'labour_id'=> 'required',
             ]);
     
             if ($validator->fails()) {
-                return response()->json(['status' => 'false', 'message' => 'Validation failed', 'errors' => $validator->errors()], 200);
+                return response()->json(['status' => 'false', 'message' => 'Validation failed', 'errors' => $validator->errors()], 422);
             }
             
-            $existingRecord = Labour::where('mgnrega_card_id', $request->mgnrega_card_id)
-            // ->where('id', $request->labour_id)
-            ->where('is_approved', 2)
-            ->first();
-
-            if ($existingRecord) {
-                return response()->json(['status' => 'false', 'message' => 'MGNREGA card ID already exists with approved. Please change the MGNREGA card ID.'], 200);
-            }
-
-            $updated = Labour::where('mgnrega_card_id', $request->mgnrega_card_id)
-                ->where('is_approved', 1)
-                ->update(['is_approved' => 2,'is_resubmitted'=> 0]); 
-                
+            $existingRecord = Labour::where('mgnrega_card_id', $mgnrega_card_id)
+                ->where('is_approved', 2)
+                ->first();
     
-            if ($updated) {
-                return response()->json(['status' => 'true', 'message' => 'Labour status updated successfully'], 200);
-            } else {
-                return response()->json(['status' => 'false', 'message' => 'No labour found with the provided MGNREGA card Id'], 200);
+            if ($existingRecord) {
+                return response()->json(['status' => 'false', 'message' => 'MGNREGA card ID already exists with approved status. Please change the MGNREGA card ID.'], 200);
             }
+    
+            $labour = Labour::find($labour_id);
+    
+            if (!$labour) {
+                return response()->json(['status' => 'false', 'message' => 'No labour found with the provided ID'], 200);
+            }
+    
+            if ($labour->mgnrega_card_id !== $mgnrega_card_id) {
+                return response()->json(['status' => 'false', 'message' => 'Mismatch in provided labour ID and MGNREGA card ID'], 200);
+            }
+    
+            if ($labour->is_approved === 2) {
+                return response()->json(['status' => 'false', 'message' => 'Labour record is already approved'], 200);
+            }
+    
+            $labour->is_approved = 2;
+            $labour->is_resubmitted = 0;
+            $labour->save();
+    
+            return response()->json(['status' => 'true', 'message' => 'Labour status updated successfully'], 200);
     
         } catch (\Exception $e) {
-            return response()->json(['status' => 'false', 'message' => 'Update failed','error' => $e->getMessage()], 500);
+            return response()->json(['status' => 'false', 'message' => 'Update failed', 'error' => $e->getMessage()], 500);
         }
     }
+    
     public function updateLabourStatusNotApproved(Request $request) {
         try {
             $user = auth()->user();
