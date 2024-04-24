@@ -404,8 +404,9 @@ class LabourController extends Controller
             ];
             $validator = Validator::make($request->all(), $all_data_validation, $customMessages);
 
+         
             // if ($validator->fails()) {
-            //     $errors = $validator->errors()->all();
+            //     $errors = implode(', ', $validator->errors()->all());
             //     return response()->json([
             //         'status' => 'false',
             //         'message' => 'Validation Fail',
@@ -413,11 +414,14 @@ class LabourController extends Controller
             //     ], 200);
             // }
             if ($validator->fails()) {
-                $errors = implode(', ', $validator->errors()->all());
+                $errors = $validator->errors()->all();
+                $errorMessage = '';
+                foreach ($errors as $error) {
+                    $errorMessage .= $error . ' ';
+                }
                 return response()->json([
                     'status' => 'false',
-                    'message' => 'Validation Fail',
-                    'error' => $errors
+                    'message' => 'Validation Fail: ' . $errorMessage,
                 ], 200);
             }
 
@@ -544,12 +548,24 @@ class LabourController extends Controller
             //     return response()->json(['status' => 'false', 'message' => $validator->errors()], 200);
             // }
 
+            // if ($validator->fails()) {
+            //     $errors = implode(', ', $validator->errors()->all());
+            //     return response()->json([
+            //         'status' => 'false',
+            //         'message' => 'Validation Fail',
+            //         'error' => $errors
+            //     ], 200);
+            // }
+
             if ($validator->fails()) {
-                $errors = implode(', ', $validator->errors()->all());
+                $errors = $validator->errors()->all();
+                $errorMessage = '';
+                foreach ($errors as $error) {
+                    $errorMessage .= $error . ' ';
+                }
                 return response()->json([
                     'status' => 'false',
-                    'message' => 'Validation Fail',
-                    'error' => $errors
+                    'message' => 'Validation Fail: ' . $errorMessage,
                 ], 200);
             }
             // Find the labour data to update
