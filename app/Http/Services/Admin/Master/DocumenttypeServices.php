@@ -28,6 +28,7 @@ class DocumenttypeServices{
     public function addAll($request) {
         try {
             $add_Documenttype = $this->repo->addAll($request);
+            // dd($add_Documenttype);
             if ($add_Documenttype) {
                 return ['status' => 'success', 'msg' => 'Document Type Added Successfully.'];
             } else {

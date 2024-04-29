@@ -92,7 +92,7 @@ class MaritalstatusController extends Controller
     ];
 
     $messages = [
-        'maritalstatus.required' => 'Please enter an title.',
+        'maritalstatus.required' => 'Please enter the title.',
         'maritalstatus.regex' => 'Please  enter text only.',
         'maritalstatus.max' => 'Please enter an  title with a maximum of 255 characters.',
         'maritalstatus.unique' => 'The title already exists.',

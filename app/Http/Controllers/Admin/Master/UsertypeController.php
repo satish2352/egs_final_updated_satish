@@ -138,7 +138,7 @@ class UsertypeController extends Controller
     ];
 
     $messages = [
-        'usertype_name.required' => 'Please enter an title.',
+        'usertype_name.required' => 'Please enter the title.',
         'usertype_name.regex' => 'Please  enter text only.',
         'usertype_name.max' => 'Please enter an  title with a maximum of 255 characters.',
         'usertype_name.unique' => 'The title already exists.',

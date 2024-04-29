@@ -65,7 +65,7 @@
                 var form = $("#regForm");
                 var validator = form.validate({
                     rules: {
-                        registrationstatus: {
+                        status_name: {
                             required: true,
                         },
                         // marathi_title: {
@@ -73,7 +73,7 @@
                         // },
                     },
                     messages: {
-                        registrationstatus: {
+                        status_name: {
                             required: "Please Enter the Title",
                         },
                         // marathi_title: {

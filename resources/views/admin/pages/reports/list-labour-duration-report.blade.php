@@ -24,88 +24,14 @@
                         <div class="card-body">
                           <div class="row">
 
-                            {{-- <div class="col-lg-3 col-md-3 col-sm-3">
-                                <div class="form-group">
-                                    <select class="form-control" name="district" id="district">
-                                        <option value="">Select District</option>
-                                        <option value="1">Nashik</option>
-                                        <option value="2">Pune</option>
-                                        <option value="3">Mumbai</option>
-                                    </select>
-                                    @if ($errors->has('district'))
-                                        <span class="red-text"><?php //echo $errors->first('district', ':message'); ?></span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                <div class="form-group">
-                                    <select class="form-control" name="taluka" id="taluka">
-                                        <option value="">Select Taluka</option>
-                                        <option value="11">Nashik</option>
-                                        <option value="22">Sinnar</option>
-                                        <option value="33">Igatpuri</option>
-                                        <option value="44">Pune</option>
-                                        <option value="55">Haveli</option>
-                                        <option value="66">Maval</option>
-                                    </select>
-                                    @if ($errors->has('taluka'))
-                                        <span class="red-text"><?php //echo $errors->first('taluka', ':message'); ?></span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                <div class="form-group">
-                                    <select class="form-control" name="village" id="village">
-                                        <option value="">Select Village</option>
-                                        <option value="Aadgav">Aadgav</option>
-                                        <option value="Adgaon">Adgaon</option>
-                                        <option value="Ahergaon">Ahergaon</option>
-                                        <option value="Ahilyapur">Ahilyapur</option>
-                                        <option value="Akole">Akole</option>
-                                        <option value="Akrale">Akrale</option>
-                                        <option value="Ambad">Ambad</option>
-                                        <option value="Ane">Ane</option>
-                                        <option value="Anjaneri">Anjaneri</option>
-                                        <option value="Antroli">Antroli</option>
-                                    </select>
-                                    @if ($errors->has('village'))
-                                        <span class="red-text"><?php //echo $errors->first('village', ':message'); ?></span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                <div class="form-group">
-                                    <select class="form-control" name="skill_id" id="skill_id">
-                                        <option value="">Select Skill</option>
-                                        <option value="">Select Skill</option>
-                                        <option value="Carpentry">Carpentry</option>
-                                        <option value="Plumbing">Plumbing</option>
-                                        <option value="Electrician">Electrician</option>
-                                        <option value="Masonry">Masonry</option>
-                                        <option value="Painting">Painting</option>
-                                        <option value="Welding">Welding</option>
-                                    </select>
-                                    @if ($errors->has('skill_id'))
-                                        <span class="red-text"><?php //echo $errors->first('skill_id', ':message'); ?></span>
-                                    @endif
-                                </div>
-                            </div> --}}
+                            
                             <div class="col-lg-3 col-md-3 col-sm-3">
                                 <div class="form-group">
                                     <select class="form-control" name="month_id" id="month_id">
-                                        <option value="">Select Month</option>
-                                        <option value="January">January</option>
-                                        <option value="February">February</option>
-                                        <option value="March">March</option>
-                                        <option value="April">April</option>
-                                        <option value="May">May</option>
-                                        <option value="June">June</option>
-                                        <option value="July">July</option>
-                                        <option value="August">August</option>
-                                        <option value="September">September</option>
-                                        <option value="October">October</option>
-                                        <option value="November">November</option>
-                                        <option value="December">December</option>
+                                    <option value="">Select Month</option>
+                                    @for ($i = 1; $i <= 12; $i++)
+                                        <option value="{{ $i }}">{{ date('F', mktime(0, 0, 0, $i, 1)) }}</option>
+                                    @endfor
                                     </select>
                                     @if ($errors->has('skill_id'))
                                         <span class="red-text"><?php //echo $errors->first('skill_id', ':message'); ?></span>
@@ -116,10 +42,9 @@
                                 <div class="form-group">
                                     <select class="form-control" name="year_id" id="year_id">
                                         <option value="">Select Year</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2022">2022</option>
-                                        <option value="2023">2023</option>
-                                        <option value="2024">2024</option>
+                                        @for ($i = date('Y'); $i >= 2010; $i--)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
                                     </select>
                                     @if ($errors->has('skill_id'))
                                         <span class="red-text"><?php //echo $errors->first('skill_id', ':message'); ?></span>
@@ -155,41 +80,66 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-sm btn-success" id="submitButton">
+                                        Search1
+                                    </button>
+                                </div>
+                            </div>
                           </div>
                             
                             <div class="row">
                                 <div class="col-12">
                                     @include('admin.layout.alert')
                                     <div class="table-responsive">
-                                        <table id="order-listing" class="table table-bordered">
+                                    <table id="order-listing" class="table table-bordered">
                                             <thead>
                                                 <tr>
+                                                <input type="hidden" class="form-control" name="is_approved_val" id="is_approved_val"
+                                                placeholder="" value="">
                                                     <th>Sr. No.</th>
-                                                    <th>Name</th>
-                                                    <th>Gender</th>
-                                                    <th>Date of Birth</th>
+                                                    <th>User Name</th>
+                                                    <th>Labour Name</th>
                                                     <th>Mobile Number</th>
-                                                    <th>Landline Number</th>
-                                                    <th>Mgnrega Card Id</th>
-                                                    <th>Latitude</th>
-                                                    <th>Longitude</th>
-                                                    
+                                                    <th>Mgnrega ID</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {{-- @foreach ($getOutput as $item)
+                                                
+                                                @foreach ($labours as $item)
+                                                
                                                     <tr>
+                                                    
                                                         <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ strip_tags($item->full_name) }}</td>
-                                                        <td>{{ strip_tags($item->name) }}</td> 
-                                                      <td>{{ strip_tags($item->date_of_birth) }}</td> 
-                                                      <td>{{ strip_tags($item->mobile_number) }}</td> 
-                                                      <td>{{ strip_tags($item->landline_number) }}</td> 
-                                                      <td>{{ strip_tags($item->mgnrega_card_id) }}</td> 
-                                                      <td>{{ strip_tags($item->latitude) }}</td> 
-                                                      <td>{{ strip_tags($item->longitude) }}</td> 
+                                                        <td>{{ $item->f_name }} {{ $item->m_name }} {{ $item->l_name }}</td>
+                                                        <td>{{ $item->full_name }}</td>
+                                                        <td>{{ $item->mobile_number }}</td>
+                                                        <td>{{ $item->mgnrega_card_id }}</td>
+                                                        <td>
+                                                        
+                                                            @if ($item->is_approved=='1')
+                                                                Received For Approval
+                                                            @elseif($item->is_approved=='2')
+                                                                Approved
+                                                            @elseif($item->is_approved=='3')
+                                                                Send For Correction
+                                                            @endif
+                                                        </td>
+                                                        <td class="d-flex">
+                                                       
+
+                                                            <a data-id="{{ $item->id }}"
+                                                                class="show-btn btn btn-sm btn-outline-primary m-1"><i
+                                                                    class="fas fa-eye"></i></a>
+                                                           
+
+                                                        </td>
                                                     </tr>
-                                                @endforeach --}}
+                                                @endforeach
 
                                             </tbody>
                                         </table>
@@ -210,6 +160,84 @@
                         $('#skill_id').prop('disabled', true);
                     } else {
                         $('#skill_id').prop('disabled', false);
+                    }
+                });
+            });
+        </script>
+
+<script>
+            $(document).ready(function() {
+alert('jjjjjjjjjjjjjj');
+                $('#submitButton').click(function(e) {
+                    e.preventDefault();
+                    // var districtId = $('#district_id').val()
+                    // if(districtId==undefined){
+                    //     districtId="";
+                    // }
+                    // var talukaId = $('#taluka_id').val();
+                    // var villageId = $('#village_id').val();
+
+                    var monthId=$('#month_id').val();
+                    var yearId=$('#year_id').val();
+
+                    if($('#skillorunskill_id').val()=='skill')
+                    {
+                    var SkillId = $('#skill_id').val();
+                    }else if($('#skillorunskill_id').val()=='unskill')
+                    {
+                    var SkillId = '1';
+                    }
+                    var IsApprovedId = $('#is_approved_val').val();
+
+                    if (monthId !== '' || yearId !== '' || SkillId !== '') {
+                        $.ajax({
+                            // url: '{{ route('export-location-report') }}',
+                            url: '{{ route('list-labour-duration-filter-report') }}',
+                            type: 'GET',
+                            data: {
+                                // districtId: districtId,
+                                // talukaId: talukaId,
+                                // villageId: villageId,
+                                SkillId: SkillId,
+                                monthId: monthId,
+                                yearId: yearId,
+                            },
+                            // headers: {
+                            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            // },
+                            success: function(response) {
+                                console.log(response.labour_ajax_data);
+                                if (response.labour_ajax_data.length > 0) {
+                                    // $('#order-listing tbody').empty();
+                                    var table = $('#order-listing').DataTable();
+                                    table.clear().draw();
+                                    
+                                    $.each(response.labour_ajax_data, function(index, labour_data) {
+                                        index++;
+                                        var statusText = "";
+                                        if (labour_data.is_approved == '1') {
+                                            statusText = "Received For Approval";
+                                        } else if (labour_data.is_approved == '2') {
+                                            statusText = "Approved";
+                                        } else if (labour_data.is_approved == '3') {
+                                            statusText = "Send For Correction";
+                                        }
+
+                                        table.row.add([ index,
+                                            labour_data.f_name + ' ' + labour_data.m_name + ' ' + labour_data.l_name,
+                                            labour_data.full_name,
+                                            labour_data.mobile_number,
+                                            labour_data.mgnrega_card_id,
+                                            statusText,
+                                            '<a onClick="getData(' + labour_data.id + ')" class="show-btn btn btn-sm btn-outline-primary m-1"><i class="fas fa-eye"></i></a>']).draw(false);
+                                    });
+                                }else{
+                                    $('#order-listing tbody').empty();
+                                    $('#order-listing tbody').append('<tr><td colspan="7" style="text-align:center;"><b>No Record Found</b></td></tr>');
+                                }
+
+                            }
+                        });
                     }
                 });
             });

@@ -138,7 +138,7 @@ class GenderController extends Controller
     ];
 
     $messages = [
-        'gender_name.required' => 'Please enter an title.',
+        'gender_name.required' => 'Please enter the title.',
         'gender_name.regex' => 'Please  enter text only.',
         'gender_name.max' => 'Please enter an  title with a maximum of 255 characters.',
         'gender_name.unique' => 'The title already exists.',

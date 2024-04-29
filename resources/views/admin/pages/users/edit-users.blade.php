@@ -126,7 +126,8 @@
                                         <div class="form-group">
                                             <label for="aadhar_no">Aadhar No</label>&nbsp<span class="red-text">*</span>
                                             <input type="text" class="form-control mb-2" name="aadhar_no" id="aadhar_no"
-                                                placeholder="" value="{{ $user_data['data_users']['aadhar_no'] }}">
+                                                placeholder="" value="{{ $user_data['data_users']['aadhar_no'] }}"
+                                                onkeyup="formatAadharNumber(this)">
                                             @if ($errors->has('aadhar_no'))
                                                 <span class="red-text"><?php echo $errors->first('aadhar_no', ':message'); ?></span>
                                             @endif
@@ -292,9 +293,23 @@
             </div>
         </div>
 
+
+        <script>
+            function formatAadharNumber(input) {
+                let value = input.value.replace(/\s/g, ''); // Remove existing spaces
+                value = value.replace(/\D/g, ''); // Remove non-numeric characters
+                let formattedInput = '';
+                for (let i = 0; i < value.length; i++) {
+                    formattedInput += value[i];
+                    if ((i + 1) % 4 === 0 && i !== value.length - 1) {
+                        formattedInput += ' ';
+                    }
+                }
+                input.value = formattedInput;
+            }
+        </script>
         <script>
             
-
             function getState(stateId) {
                 $('#state').html('<option value="">Select State</option>');
                 if (stateId !== '') {
@@ -659,6 +674,7 @@
                         },
                         aadhar_no: {
                             required: true,
+                            number:true,
                             // aadharValidation: true,
                         },
                         address: {

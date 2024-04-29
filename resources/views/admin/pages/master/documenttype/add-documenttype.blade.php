@@ -82,17 +82,11 @@
                         document_type_name: {
                             required: true,
                         },
-                        // marathi_title: {
-                        //     required: true,
-                        // },
                     },
                     messages: {
                         document_type_name: {
                             required: "Please Enter the Title",
                         },
-                        // marathi_title: {
-                        //     required: "कृपया शीर्षक प्रविष्ट करा",
-                        // },
                     },
                 });
             });
