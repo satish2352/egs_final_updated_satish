@@ -89,17 +89,13 @@ class RelationController extends Controller
     $id = $request->input('id'); // Assuming the 'id' value is present in the request
     $rules = [
         'relation_title' => ['required', 'max:255','regex:/^[a-zA-Z\s]+$/u', Rule::unique('relation', 'relation_title')->ignore($id, 'id')],
-        // 'marathi_title' => ['required', 'max:255', Rule::unique('maritalstatus', 'marathi_title')->ignore($id, 'id')],
     ];
 
     $messages = [
-        'relation_title.required' => 'Please enter an title.',
+        'relation_title.required' => 'Please enter the title.',
         'relation_title.regex' => 'Please  enter text only.',
         'relation_title.max' => 'Please enter an  title with a maximum of 255 characters.',
         'relation_title.unique' => 'The title already exists.',
-        // 'marathi_title.required' => 'कृपया  शीर्षक प्रविष्ट करा.',
-        // 'marathi_title.max' => 'कृपया २५५ अक्षरांपर्यंत  शीर्षक प्रविष्ट करा.',
-        // 'marathi_title.unique' => 'शीर्षक आधीच अस्तित्वात आहे.',
     ];
 
     try {

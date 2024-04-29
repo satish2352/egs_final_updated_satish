@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin\Reports;
-
+// use Maatwebsite\Excel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\{
@@ -20,6 +20,12 @@ use App\Models\{
 use Illuminate\Validation\Rule;
 use App\Http\Services\Admin\Reports\ReportsServices;
 use Validator;
+// use PhpOffice\PhpSpreadsheet\Spreadsheet;
+// use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\LabourExport;
+use Carbon\Carbon;
+// use Maatwebsite\Excel\Concerns\FromCollection;
 class ReportsController extends Controller
 {
 
@@ -66,9 +72,8 @@ class ReportsController extends Controller
     public function getAllLabourDuration()
     {
         try {
-            // $getOutput = $this->service->getAllLabourLocation();
-            // dd($getOutput);
-            return view('admin.pages.reports.list-labour-duration-report');
+            $labours = $this->service->getAllLabourLocation();
+            return view('admin.pages.reports.list-labour-duration-report',compact('labours'));
         } catch (\Exception $e) {
             return $e;
         }
@@ -446,4 +451,189 @@ class ReportsController extends Controller
             // }
 
     }
+
+    public function getExportLabourLocation(Request $request)
+{
+    $districtId = $request->input('districtId');
+    $talukaId = $request->input('talukaId');
+    $villageId = $request->input('villageId');
+    $SkillId = $request->input('SkillId');
+    $RegistrationStatusId = $request->input('RegistrationStatusId');
+
+    $query = Labour::leftJoin('tbl_area as district_labour', 'labour.district_id', '=', 'district_labour.location_id')
+        ->leftJoin('tbl_area as taluka_labour', 'labour.taluka_id', '=', 'taluka_labour.location_id')
+        ->leftJoin('tbl_area as village_labour', 'labour.village_id', '=', 'village_labour.location_id')
+        ->leftJoin('gender as gender_labour', 'labour.gender_id', '=', 'gender_labour.id')
+        ->leftJoin('users', 'labour.user_id', '=', 'users.id')
+        ->leftJoin('tbl_mark_attendance', 'labour.mgnrega_card_id', '=', 'tbl_mark_attendance.mgnrega_card_id')
+        ->join('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
+        ->when($SkillId, function($query) use ($SkillId) {
+            $query->where('labour.skill_id', $SkillId);
+        })  
+        ->select(
+            'labour.id',
+            'labour.full_name',
+            'labour.date_of_birth',
+            'gender_labour.gender_name as gender_name',
+            'district_labour.name as district_id',
+            'taluka_labour.name as taluka_id',
+            'village_labour.name as village_id',
+            'labour.mobile_number',
+            'labour.landline_number',
+            'labour.mgnrega_card_id',
+            'labour.aadhar_image',
+            'labour.mgnrega_image', 
+            'labour.profile_image', 
+            'labour.voter_image', 
+            'labour.is_active',
+            'labour.is_approved',
+            'labour.skill_id',
+            'users.f_name',
+            'users.m_name',
+            'users.l_name',
+        );
+
+    if ($districtId) {
+        $query->where('users.user_district', $districtId);
+    }
+    if ($talukaId) {
+        $query->where('users.user_taluka', $talukaId);
+    }
+    if ($villageId) {
+        $query->where('users.user_village', $villageId);
+    }
+
+    $data_output = $query->get();
+
+    return Excel::download(new LabourExport($data_output), 'labour_data.xlsx');
+}
+
+public function getFilterLaboursdurationReport(Request $request)
+{
+    $sess_user_id=session()->get('user_id');
+    $sess_user_type=session()->get('user_type');
+    $sess_user_role=session()->get('role_id');
+    $sess_user_working_dist=session()->get('working_dist');
+
+//    $districtId = $request->input('districtId');
+//     $talukaId = $request->input('talukaId');
+//     $villageId = $request->input('villageId');
+    $SkillId = $request->input('SkillId');
+    $monthId = $request->input('monthId');
+    $yearId = $request->input('yearId');
+
+    $startDate = Carbon::createFromFormat('Y-m', $yearId . '-' . $monthId)->startOfMonth();
+    $endDate = $startDate->copy()->endOfMonth();
+
+        if($sess_user_role=='1')
+    {
+        
+
+    $query = Labour::leftJoin('tbl_mark_attendance', 'labour.mgnrega_card_id', '=', 'tbl_mark_attendance.mgnrega_card_id')
+    // ->leftJoin('tbl_area as taluka_labour', 'labour.taluka_id', '=', 'taluka_labour.location_id')
+    // ->leftJoin('tbl_area as village_labour', 'labour.village_id', '=', 'village_labour.location_id')
+    // ->leftJoin('gender as gender_labour', 'labour.gender_id', '=', 'gender_labour.id')
+    ->leftJoin('users', 'labour.user_id', '=', 'users.id')
+    
+    // ->when($request->get('districtId') || $request->get('talukaId') || $request->get('villageId'), function($query) use ($request, $data_user_output) {
+    //     $query->whereIn('labour.user_id',$data_user_output);
+    // })
+    ->whereBetween('tbl_mark_attendance.created_at', [$startDate, $endDate])
+    ->when($request->get('SkillId'), function($query) use ($request) {
+        $query->where('labour.skill_id', $request->SkillId);
+    })  
+
+    // ->when($request->get('RegistrationStatusId'), function($query) use ($request) {
+    //     $query->where('labour.is_approved', $request->RegistrationStatusId);
+    // }) 
+      ->select(
+        'labour.id',
+        'labour.full_name',
+        'labour.date_of_birth',
+        // 'gender_labour.gender_name as gender_name',
+        // 'district_labour.name as district_id',
+        // 'taluka_labour.name as taluka_id',
+        // 'village_labour.name as village_id',
+        'labour.mobile_number',
+        'labour.landline_number',
+        'labour.mgnrega_card_id',
+        'labour.aadhar_image',
+        'labour.mgnrega_image', 
+        'labour.profile_image', 
+        'labour.voter_image', 
+        'labour.is_active',
+        'labour.is_approved',
+        'labour.skill_id',
+        'users.f_name',
+        'users.m_name',
+        'users.l_name',
+      );
+
+      $data_output = $query->get();
+    //   dd($data_output);
+      }else if($sess_user_role=='2')
+      {
+        
+
+        $query_user= User::where('users.role_id','3');
+        if ($request->filled('talukaId')) {
+            $query_user->where('users.user_taluka',$talukaId);
+        }
+        if ($request->filled('villageId')) {
+            $query_user->where('users.user_village',$villageId);
+        }
+            
+            $data_user_output=$query_user->select('id')->get();
+
+            $query = Labour::leftJoin('registrationstatus', 'labour.is_approved', '=', 'registrationstatus.id')
+            ->leftJoin('gender as gender_labour', 'labour.gender_id', '=', 'gender_labour.id')
+            ->leftJoin('skills as skills_labour', 'labour.gender_id', '=', 'skills_labour.id')
+            ->leftJoin('tbl_area as district_labour', 'labour.district_id', '=', 'district_labour.location_id')
+            ->leftJoin('tbl_area as taluka_labour', 'labour.taluka_id', '=', 'taluka_labour.location_id')
+            ->leftJoin('tbl_area as village_labour', 'labour.village_id', '=', 'village_labour.location_id')
+            ->leftJoin('users', 'labour.user_id', '=', 'users.id')
+            ->where('registrationstatus.is_active', true)
+            ->when($request->get('RegistrationStatusId'), function($query) use ($request) {
+                $query->where('labour.is_approved', $request->RegistrationStatusId);
+            })
+    
+            ->when($request->get('districtId') || $request->get('talukaId') || $request->get('villageId'), function($query) use ($request, $data_user_output) {
+                $query->whereIn('labour.user_id',$data_user_output);
+            })
+            ->when($request->get('SkillId'), function($query) use ($request) {
+                $query->where('labour.skill_id', $request->SkillId);
+            })  
+            ->select(
+                'labour.id',
+                'labour.full_name',
+                'labour.date_of_birth',
+                // 'gender_labour.gender_name as gender_name',
+                'skills_labour.skills as skills',
+                // 'district_labour.name as district_id',
+                // 'taluka_labour.name as taluka_id',
+                // 'village_labour.name as village_id',
+                'labour.mobile_number',
+                'labour.landline_number',
+                'labour.mgnrega_card_id',
+                'labour.latitude',
+                'labour.longitude',
+                'labour.profile_image',
+                // 'registrationstatus.status_name',
+                'labour.is_approved',
+                'users.f_name',
+                'users.m_name',
+                'users.l_name',
+            );
+
+           
+           $data_output = $query->get();
+
+        }
+            return response()->json(['labour_ajax_data' => $data_output]);
+
+        // } catch (\Exception $e) {
+        //     return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+        // }
+
+}
 }

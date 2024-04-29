@@ -66,9 +66,9 @@ class PermissionsSeeder extends Seeder
                 [
                     'created_at' => \Carbon\Carbon::now(),
                     'updated_at' => \Carbon\Carbon::now(),
-                    'route_name' => 'Registarion Status',
+                    'route_name' => 'Registartion Status',
                     'url' => 'list-registrationstatus',
-                    'permission_name' => 'Registarion Status',
+                    'permission_name' => 'Registartion Status',
                 ]);
                 Permissions::create(
                     [
@@ -90,25 +90,25 @@ class PermissionsSeeder extends Seeder
                 [
                     'created_at' => \Carbon\Carbon::now(),
                     'updated_at' => \Carbon\Carbon::now(),
-                    'route_name' => 'Users Managment',
+                    'route_name' => 'Users Management',
                     'url' => 'list-users',
-                    'permission_name' => 'Users Managment',
+                    'permission_name' => 'Users Management',
                 ]);
                 Permissions::create(
                     [
                         'created_at' => \Carbon\Carbon::now(),
                         'updated_at' => \Carbon\Carbon::now(),
-                        'route_name' => 'Projects Managment',
+                        'route_name' => 'Projects Management',
                         'url' => 'list-projects',
-                        'permission_name' => 'Projects Managment',
+                        'permission_name' => 'Projects Management',
                     ]);
                 Permissions::create(
                     [
                         'created_at' => \Carbon\Carbon::now(),
                         'updated_at' => \Carbon\Carbon::now(),
-                        'route_name' => 'Labours Managment',
+                        'route_name' => 'Labours Management',
                         'url' => 'list-labours',
-                        'permission_name' => 'Labours Managment',
+                        'permission_name' => 'Labours Management',
                     ]);
                 Permissions::create(
                     [

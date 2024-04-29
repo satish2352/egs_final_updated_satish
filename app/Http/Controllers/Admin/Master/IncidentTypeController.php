@@ -138,7 +138,7 @@ class IncidentTypeController extends Controller
     ];
 
     $messages = [
-        'english_title.required' => 'Please enter an title.',
+        'english_title.required' => 'Please enter the title.',
         'english_title.regex' => 'Please  enter text only.',
         'english_title.max' => 'Please enter an  title with a maximum of 255 characters.',
         'english_title.unique' => 'The title already exists.',

@@ -138,7 +138,7 @@ class SkillsController extends Controller
     ];
 
     $messages = [
-        'skills.required' => 'Please enter an title.',
+        'skills.required' => 'Please enter the title.',
         'skills.regex' => 'Please  enter text only.',
         'skills.max' => 'Please enter an  title with a maximum of 255 characters.',
         'skills.unique' => 'The title already exists.',

@@ -133,18 +133,14 @@ class RegistrationstatusController extends Controller
 {
     $id = $request->input('id'); // Assuming the 'id' value is present in the request
     $rules = [
-        'registrationstatus' => ['required', 'max:255','regex:/^[a-zA-Z\s]+$/u', Rule::unique('registrationstatus', 'registrationstatus')->ignore($id, 'id')],
-        // 'marathi_title' => ['required', 'max:255', Rule::unique('registrationstatus', 'marathi_title')->ignore($id, 'id')],
+        'status_name' => ['required', 'max:255','regex:/^[a-zA-Z\s]+$/u', Rule::unique('registrationstatus', 'status_name')->ignore($id, 'id')],
     ];
 
     $messages = [
-        'registrationstatus.required' => 'Please enter an title.',
-        'registrationstatus.regex' => 'Please  enter text only.',
-        'registrationstatus.max' => 'Please enter an  title with a maximum of 255 characters.',
-        'registrationstatus.unique' => 'The title already exists.',
-        // 'marathi_title.required' => 'कृपया  शीर्षक प्रविष्ट करा.',
-        // 'marathi_title.max' => 'कृपया २५५ अक्षरांपर्यंत  शीर्षक प्रविष्ट करा.',
-        // 'marathi_title.unique' => 'शीर्षक आधीच अस्तित्वात आहे.',
+        'status_name.required' => 'Please enter the title.',
+        'status_name.regex' => 'Please  enter text only.',
+        'status_name.max' => 'Please enter an  title with a maximum of 255 characters.',
+        'status_name.unique' => 'The title already exists.',
     ];
 
     try {

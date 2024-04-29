@@ -136,7 +136,7 @@ class RegisterController extends Controller {
         // return view('admin.pages.users.users-list',compact('user_data'));
 
         $rules = [
-            // 'email' => 'required',
+            'email' => 'required|regex:/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z])+\.)+([a-zA-Z0-9]{2,4})+$/',
             // 'u_uname' => 'required',
             // 'password' => 'required',
             'role_id' => 'required',
@@ -158,7 +158,9 @@ class RegisterController extends Controller {
          ];       
 
         $messages = [   
-                        // 'email.required' => 'Please enter email.',
+                        'email.required' => 'Please enter email.',
+                        // 'email.unique' => 'Your email is already exist.',
+                        'email.regex' => 'Enter valid email.',
                         // 'email.email' => 'Please enter valid email.',
                         // 'u_uname.required' => 'Please enter user uname.',
                         // 'password.required' => 'Please enter password.',

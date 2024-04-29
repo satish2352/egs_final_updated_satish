@@ -393,18 +393,20 @@
                 $('input,textarea, select').on('input change',
                     checkFormValidity);
 
-                //     $.validator.addMethod("number", function(value, element) {
-                //     return this.optional(element) || /^[0-9]{10}$/.test(value);
-                // }, "Please enter a valid 10-digit number.");
+                     // Custom validation method for latitude (-90 to 90)
+                     $.validator.addMethod("latitude", function(value, element) {
+                        var latitude = parseFloat(value);
+                        return latitude >= -90 && latitude <= 90;
+                    }, "Please enter a valid latitude (-90 to 90)");
 
-                // $.validator.addMethod("email", function(value, element) {
-                //     // Regular expression for email validation
-                //     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                //     return this.optional(element) || emailRegex.test(value);
-                // }, "Please enter a valid email address.");
+                    // Custom validation method for longitude (-180 to 180)
+                    $.validator.addMethod("longitude", function(value, element) {
+                        var longitude = parseFloat(value);
+                        return longitude >= -180 && longitude <= 180;
+                    }, "Please enter a valid longitude (-180 to 180)");
 
                 // Initialize the form validation
-                $("#regForm").validate({
+                $("#frm_register").validate({
                     rules: {
                         project_name: {
                             required: true,
@@ -420,9 +422,11 @@
                         },
                         latitude: {
                             required: true,
+                            latitude: true,
                         },
                         longitude: {
                             required: true,
+                            longitude: true,
                         },
                         start_date: {
                             required: true,
