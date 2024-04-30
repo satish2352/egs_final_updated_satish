@@ -429,7 +429,7 @@ class RegisterRepository
 	{
 		$user_detail = User::where('is_active', true)
 			->where('id', session()->get('user_id'))
-			->select('id', 'f_name', 'm_name', 'l_name', 'email', 'password', 'number', 'designation','user_profile')
+			->select('id', 'f_name', 'm_name', 'l_name', 'email', 'password', 'number','user_profile')
 			->first();
 		return $user_detail;
 	}
@@ -447,7 +447,7 @@ class RegisterRepository
 				'f_name' => $request->f_name,
 				'm_name' => $request->m_name,
 				'l_name' => $request->l_name,
-				'designation' => $request->designation,
+				
 			];
 			
 			if (isset($return_data['user_profile'])) {

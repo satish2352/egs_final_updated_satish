@@ -139,7 +139,7 @@
                                             @endif
                                         </div>
                                     </div> --}}
-                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                    {{-- <div class="col-lg-6 col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label for="designation">Designation</label>&nbsp<span
                                                 class="red-text">*</span>
@@ -148,10 +148,10 @@
                                                 value="@if (old('designation')) {{ old('designation') }}@else{{ $user_data->designation }} @endif"
                                                 oninput="this.value = this.value.replace(/[^a-zA-Z\s.]/g, '').replace(/(\..*)\./g, '$1');">
                                             @if ($errors->has('designation'))
-                                                <span class="red-text"><?php echo $errors->first('designation', ':message'); ?></span>
+                                                <span class="red-text"><?php //echo $errors->first('designation', ':message'); ?></span>
                                             @endif
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-6 col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label for="number">Mobile Number</label>&nbsp<span
@@ -239,7 +239,7 @@
                     const m_name = $('#m_name').val();
                     const l_name = $('#l_name').val();
                     const number = $('#number').val();
-                    const designation = $('#designation').val();
+                  
                     const english_image = $('#english_image').val();
 
                      // Remove spaces from the number input
@@ -295,9 +295,7 @@
                             digits: true, // Validate as digits only
                              minlength: 10, // Minimum length of 10 digits
                         },
-                        designation: {
-                            required: true,
-                        },
+                       
                         english_image: {
                             validImage: true,
                             fileSize: [4, 200], // Min 180KB and Max 2MB (2 * 1024 KB)
@@ -319,9 +317,7 @@
                             digits: "Please enter a valid 10-digit number",
                             minlength: "Please enter at least 10 digits",
                         },
-                        designation: {
-                            required: "Please Enter the Designation",
-                        },
+                       
                         english_image: {
                             validImage: "Only JPG, JPEG, PNG images are allowed.",
                             fileSize: "The file size must be between 4 KB and 200 KB.",
