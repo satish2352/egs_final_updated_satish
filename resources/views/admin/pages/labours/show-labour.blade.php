@@ -286,13 +286,12 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>Sr. No.</th>
-                                                                    <th>Registartion Status</th>
-                                                                    <th>Not Aproved Reason</th>
+                                                                    <th>Registration Status</th>
+                                                                    <th>Not Approved Reason</th>
                                                                     <th>Remark</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <!-- <?php //dd($labour_detail['data_family_users']); ?> -->
                                                             @foreach ($labour_detail['data_verification_history'] as $history_item)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
@@ -333,8 +332,8 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>Sr. No.</th>
-                                                                    <th>Registartion Status</th>
-                                                                    <th>Not Aproved Reason</th>
+                                                                    <th>Registration Status</th>
+                                                                    <th>Not Approved Reason</th>
                                                                     <th>Remark</th>
                                                                 </tr>
                                                             </thead>
@@ -379,7 +378,7 @@
                                         <div class="row">
                                             <div class="col-lg-3 col-md-3 col-sm-3">
                                                 <div class="form-group">
-                                                    <label for="is_approved">Registartion Status</label>&nbsp<span class="red-text">*</span>
+                                                    <label for="is_approved">Registration Status</label>&nbsp<span class="red-text">*</span>
                                                     <select class="form-control" name="is_approved" id="is_approved">
                                                         <option value="">Select Status</option>
 
@@ -395,7 +394,7 @@
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3" id="reason_div">
                                                 <div class="form-group">
-                                                    <label for="reason_id">Not Aprove Reasons</label>&nbsp<span class="red-text">*</span>
+                                                    <label for="reason_id">Not Approve Reasons</label>&nbsp<span class="red-text">*</span>
                                                     <select class="form-control" name="reason_id" id="reason_id">
                                                         <option value="">Select Reason</option>
                                                        
@@ -445,7 +444,7 @@
                                         <div class="row">
                                             <div class="col-lg-3 col-md-3 col-sm-3">
                                                 <div class="form-group">
-                                                    <label for="is_approved">Registartion Status</label>&nbsp<span class="red-text">*</span>
+                                                    <label for="is_approved">Registration Status</label>&nbsp<span class="red-text">*</span>
                                                     <select class="form-control" name="is_approved" id="is_approved">
                                                         <option value="">Select Status</option>
 
@@ -462,7 +461,7 @@
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3" id="reason_div">
                                                 <div class="form-group">
-                                                    <label for="reason_id">Not Aprove Reasons</label>&nbsp<span class="red-text">*</span>
+                                                    <label for="reason_id">Not Approve Reasons</label>&nbsp<span class="red-text">*</span>
                                                     <select class="form-control" name="reason_id" id="reason_id">
                                                         <option value="">Select Reason</option>
                                                         @if($labour_detail['data_users_data']['reason_id']=='1001')
@@ -515,7 +514,7 @@
 
                                             <div class="col-lg-3 col-md-3 col-sm-3">
                                                 <div class="form-group">
-                                                    <label for="is_approved">Registartion Status</label>&nbsp<span class="red-text">*</span>
+                                                    <label for="is_approved">Registration Status</label>&nbsp<span class="red-text">*</span>
                                                     <select class="form-control" name="is_approved" id="is_approved" disabled>
                                                         <option value="">Select Status</option>
 
@@ -534,7 +533,7 @@
                                         @if($labour_detail['data_users_data']['is_approved']=='3')
                                             <div class="col-lg-3 col-md-3 col-sm-3" id="reason_div">
                                                 <div class="form-group">
-                                                    <label for="reason_id">Not Aprove Reasons</label>&nbsp<span class="red-text">*</span>
+                                                    <label for="reason_id">Not Approve Reasons</label>&nbsp<span class="red-text">*</span>
                                                     <select class="form-control" name="reason_id" id="reason_id" disabled>
                                                         <option value="">Select Reason</option>
                                                         @if($labour_detail['data_users_data']['reason_id']=='1001')

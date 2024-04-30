@@ -25,12 +25,12 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6">
                                         <div class="form-group">
-                                            <label for="relation">Relation</label>&nbsp<span class="red-text">*</span>
+                                            <label for="relation_title">Relation</label>&nbsp<span class="red-text">*</span>
                                             <input class="form-control mb-2" name="relation_title" id="relation"
                                                 placeholder="Enter the Title"
                                                 value="@if (old('relation_title')) {{ old('relation_title') }}@else{{ $relation_data->relation_title }} @endif">
-                                            @if ($errors->has('relation'))
-                                                <span class="red-text"><?php echo $errors->first('relation', ':message'); ?></span>
+                                            @if ($errors->has('relation_title'))
+                                                <span class="red-text"><?php echo $errors->first('relation_title', ':message'); ?></span>
                                             @endif
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@
                 var form = $("#regForm");
                 var validator = form.validate({
                     rules: {
-                        relation: {
+                        relation_title: {
                             required: true,
                         },
                         // marathi_title: {
@@ -84,7 +84,7 @@
                         // },
                     },
                     messages: {
-                        relation: {
+                        relation_title: {
                             required: "Please Enter the Title",
                         },
                         // marathi_title: {

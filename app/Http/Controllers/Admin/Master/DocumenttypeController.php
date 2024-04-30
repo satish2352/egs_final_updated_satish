@@ -31,17 +31,12 @@ class DocumenttypeController extends Controller
 
     public function store(Request $request) {
         $rules = [
-            'document_type_name' => 'required|unique:documenttype|max:255'
-            // 'marathi_title' => 'required|unique:documenttype|max:255',
+            'document_type_name' => 'required|unique:documenttype|max:255',
          ];
         $messages = [   
             'document_type_name'       =>  'Please enter title.',
             'document_type_name.unique' => 'Title already exist.',
-            // 'marathi_title.unique' => 'शीर्षक आधीच अस्तित्वात आहे.',
-            'document_type_name.max'   => 'Please  enter text length upto 255 character only.',
-            // 'marathi_title.required'       =>'कृपया शीर्षक प्रविष्ट करा.',
-            // 'marathi_title.unique'  =>  'तुमचा घटना शीर्षक आधीपासून अस्तित्वात आहे .',
-            // 'marathi_title.max'   => 'कृपया केवळ २५५ वर्णांपर्यंत मजकूराची लांबी प्रविष्ट करा.',            
+            'document_type_name.max'   => 'Please  enter text length upto 255 character only.',          
         ];
 
         try {
@@ -51,6 +46,7 @@ class DocumenttypeController extends Controller
                 return redirect('add-documenttype')
                     ->withInput()
                     ->withErrors($validation);
+                    dd('iiiiffffff');
             }
             else
             {
@@ -88,16 +84,12 @@ class DocumenttypeController extends Controller
     $id = $request->input('id'); // Assuming the 'id' value is present in the request
     $rules = [
         'document_type_name' => ['required', 'max:255', Rule::unique('documenttype', 'document_type_name')->ignore($id, 'id')],
-        // 'marathi_title' => ['required', 'max:255', Rule::unique('documenttype', 'marathi_title')->ignore($id, 'id')],
     ];
 
     $messages = [
-        'document_type_name.required' => 'Please enter an title.',
+        'document_type_name.required' => 'Please enter the title.',
         'document_type_name.max' => 'Please enter an  title with a maximum of 255 characters.',
         'document_type_name.unique' => 'The title already exists.',
-        // 'marathi_title.required' => 'कृपया  शीर्षक प्रविष्ट करा.',
-        // 'marathi_title.max' => 'कृपया २५५ अक्षरांपर्यंत  शीर्षक प्रविष्ट करा.',
-        // 'marathi_title.unique' => 'शीर्षक आधीच अस्तित्वात आहे.',
     ];
 
     try {

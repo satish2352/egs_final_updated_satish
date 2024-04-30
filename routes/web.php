@@ -230,7 +230,11 @@ Route::post('/update-one-usertype', ['as' => 'update-one-usertype', 'uses' => 'A
 
 // Reports======================
 Route::get('/list-location-report', ['as' => 'list-location-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getAllLabourLocation']);
+Route::get('/export-location-report', ['as' => 'export-location-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getExportLabourLocation']);
+
 Route::get('/list-labour-duration-report', ['as' => 'list-labour-duration-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getAllLabourDuration']);
+Route::get('/list-labour-duration-filter-report', ['as' => 'list-labour-duration-filter-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getFilterLaboursdurationReport']);
+
 Route::get('/list-project-report', ['as' => 'list-project-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getAllProjects']);
 Route::get('/list-project-and-location-report', ['as' => 'list-project-and-location-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getAllProjectLocation']);
 

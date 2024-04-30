@@ -580,19 +580,19 @@
 
         <!--  -->
         <script>
-function formatAadharNumber(input) {
-    let value = input.value.replace(/\s/g, ''); // Remove existing spaces
-    value = value.replace(/\D/g, ''); // Remove non-numeric characters
-    let formattedInput = '';
-    for (let i = 0; i < value.length; i++) {
-        formattedInput += value[i];
-        if ((i + 1) % 4 === 0 && i !== value.length - 1) {
-            formattedInput += ' ';
-        }
-    }
-    input.value = formattedInput;
-}
-</script>
+            function formatAadharNumber(input) {
+                let value = input.value.replace(/\s/g, ''); // Remove existing spaces
+                value = value.replace(/\D/g, ''); // Remove non-numeric characters
+                let formattedInput = '';
+                for (let i = 0; i < value.length; i++) {
+                    formattedInput += value[i];
+                    if ((i + 1) % 4 === 0 && i !== value.length - 1) {
+                        formattedInput += ' ';
+                    }
+                }
+                input.value = formattedInput;
+            }
+        </script>
 
         <script>
             $(document).ready(function() {
