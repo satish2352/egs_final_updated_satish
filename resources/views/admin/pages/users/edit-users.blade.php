@@ -45,12 +45,12 @@
                                     </div> --}}
                                     {{-- <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="u_password">Password</label>&nbsp<span class="red-text">*</span>
-                                        <input type="text" class="form-control" name="u_password" id="u_password"
-                                            placeholder="" value="{{decrypt($user_data['data_users']['u_password'])}}">
-                                        @if ($errors->has('u_password'))
+                                        <label for="password">Password</label>&nbsp<span class="red-text">*</span>
+                                        <input type="text" class="form-control" name="password" id="password"
+                                            placeholder="" value="{{decrypt($user_data['data_users']['password'])}}">
+                                        @if ($errors->has('password'))
                                         <span
-                                            class="red-text"><?php echo $errors->first('u_password', ':message'); ?></span>
+                                            class="red-text"><?php echo $errors->first('password', ':message'); ?></span>
                                         @endif
                                     </div>
                                 </div> --}}
@@ -569,7 +569,7 @@
                 $("#frm_register1").validate({
                     rules: {
 
-                        u_password: {
+                        password: {
                             //required: true,
                             minlength: 6,
                             mypassword: true
@@ -577,11 +577,11 @@
                         },
                         password_confirmation: {
                             //required: true,
-                            equalTo: "#u_password"
+                            equalTo: "#password"
                         },
                     },
                     messages: {
-                        u_password: {
+                        password: {
                             required: "Please enter your new password",
                             minlength: "Password should be minimum 8 characters"
                         },

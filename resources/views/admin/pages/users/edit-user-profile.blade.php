@@ -95,13 +95,13 @@
 
                                     <div class="col-lg-6 col-md-6 col-sm-6">
                                         <div class="form-group">
-                                            <label for="u_password">Password</label>
-                                            <input type="password" class="password form-control mb-2" name="u_password"
-                                                id="u_password" placeholder=""
-                                                value="@if (old('u_password')) {{ old('u_password') }} @endif">
+                                            <label for="password">Password</label>
+                                            <input type="password" class="password form-control mb-2" name="password"
+                                                id="password" placeholder=""
+                                                value="@if (old('password')) {{ old('password') }} @endif">
 
-                                            @if ($errors->has('u_password'))
-                                                <span class="red-text"><?php echo $errors->first('u_password', ':message'); ?></span>
+                                            @if ($errors->has('password'))
+                                                <span class="red-text"><?php echo $errors->first('password', ':message'); ?></span>
                                             @endif
                                             <span id="togglePassword" class="togglePpassword password-toggle"
                                                 onclick="togglePasswordVisibility()">
@@ -129,17 +129,17 @@
                                     </div>
                                     {{-- <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="u_password">Password</label>&nbsp<span class="red-text">*</span>
-                                            <input type="password" class="form-control" name="u_password" id="u_password"
+                                            <label for="password">Password</label>&nbsp<span class="red-text">*</span>
+                                            <input type="password" class="form-control" name="password" id="password"
                                                 placeholder=""
-                                                value="@if (old('u_password')) {{ old('u_password') }}@endif">
-                                            @if ($errors->has('u_password'))
-                                                <span class="red-text"><?php //echo $errors->first('u_password', ':message');
+                                                value="@if (old('password')) {{ old('password') }}@endif">
+                                            @if ($errors->has('password'))
+                                                <span class="red-text"><?php //echo $errors->first('password', ':message');
                                                 ?></span>
                                             @endif
                                         </div>
                                     </div> --}}
-                                    
+                                  
                                     <div class="col-lg-6 col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label for="number">Mobile Number</label>&nbsp<span
@@ -227,7 +227,6 @@
                     const m_name = $('#m_name').val();
                     const l_name = $('#l_name').val();
                     const number = $('#number').val();
-                   
                     const english_image = $('#english_image').val();
 
                      // Remove spaces from the number input
@@ -283,7 +282,7 @@
                             digits: true, // Validate as digits only
                              minlength: 10, // Minimum length of 10 digits
                         },
-                       
+                      
                         english_image: {
                             validImage: true,
                             fileSize: [4, 200], // Min 180KB and Max 2MB (2 * 1024 KB)
@@ -305,6 +304,7 @@
                             digits: "Please enter a valid 10-digit number",
                             minlength: "Please enter at least 10 digits",
                         },
+                     
                         english_image: {
                             validImage: "Only JPG, JPEG, PNG images are allowed.",
                             fileSize: "The file size must be between 4 KB and 200 KB.",
