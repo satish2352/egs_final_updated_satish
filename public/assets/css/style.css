@@ -29494,13 +29494,18 @@ table.table-bordered.dataTable { border-spacing: inherit !important;}
 table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td { color: #000; border-bottom-width: 1px !important; text-align: justify; }
 
 /*  */
-
+.dash-height .card-body{
+  height:200px !important;
+}
 .dash_card_title {
     width: 100%;
-    white-space: nowrap;
+    /* white-space: nowrap; */
     overflow: hidden !important;
     text-overflow: ellipsis;
     color: #fff !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    
 }
 .dash_count{
   color: #fff !important;

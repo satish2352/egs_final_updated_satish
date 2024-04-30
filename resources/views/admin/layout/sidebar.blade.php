@@ -27,7 +27,7 @@
                           </p>                      </div>
                   </div>
               </li>
-              @if (in_array('dashboard', $data_for_url))
+              {{-- @if (in_array('dashboard', $data_for_url)) --}}
               <li
               class="{{request()->is('dashboard*')
                     ? 'nav-item active' : 'nav-item' }}">
@@ -37,7 +37,7 @@
                       <span class="menu-title">Dashboard</span>
                   </a>
               </li>    
-              @endif
+              {{-- @endif --}}
               @if (in_array('list-role', $data_for_url) || in_array('list-maritalstatus', $data_for_url) || in_array('list-relation', $data_for_url) ||
                       in_array('list-gender', $data_for_url) || in_array('list-skills', $data_for_url) || in_array('list-registrationstatus', $data_for_url)
                       || in_array('list-documenttype', $data_for_url))
@@ -98,18 +98,18 @@
                   </li>
              @endif
 
-             <li class="{{request()->is('list-role*')
+             <li class="{{request()->is('list-district*')
                     ? 'nav-item active' : 'nav-item' }}">
-                      <a class="{{request()->is('list-role*')
-                                    ? 'nav-link active' : 'nav-link' }}" data-toggle="collapse" href="#master" aria-expanded="false"
-                          aria-controls="master">
+                      <a class="{{request()->is('list-district*')
+                                    ? 'nav-link active' : 'nav-link' }}" data-toggle="collapse" href="#area" aria-expanded="false"
+                          aria-controls="area">
                           <i class="fa fa-th-large menu-icon"></i>
                           <span class="menu-title">Area</span>
                           <i class="menu-arrow"></i>
                       </a>
-                      <div class="collapse" id="master">
+                      <div class="collapse" id="area">
                           <ul class="nav flex-column sub-menu">
-                              <!-- @if (in_array('list-role', $data_for_url)) -->
+                              <!-- @if (in_array('list-district', $data_for_url)) -->
                                   <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-district*')
                                     ? 'nav-link active' : 'nav-link' }}"
                                           href="{{ route('list-district') }}">District</a></li>
@@ -131,14 +131,14 @@
                   </li>
 
             <li class="nav-item">
-                <a class="{{request()->is('list-role*')
-                            ? 'nav-link active' : 'nav-link' }}" data-toggle="collapse" href="#master" aria-expanded="false"
-                    aria-controls="master">
+                <a class="{{request()->is('list-labours*')
+                            ? 'nav-link active' : 'nav-link' }}" data-toggle="collapse" href="#labourmanagment" aria-expanded="false"
+                    aria-controls="labourmanagment">
                     <i class="fa fa-th-large menu-icon"></i>
                     <span class="menu-title">Labour Managment</span>
                     <i class="menu-arrow"></i>
                 </a>
-                <div class="collapse" id="master">
+                <div class="collapse" id="labourmanagment">
                     <ul class="nav flex-column sub-menu">
                     @if (in_array('list-labours', $data_for_url))
                         @if(session()->get('role_id')=='1' || session()->get('role_id')=='2')
@@ -222,14 +222,14 @@
 
             @if(session()->get('role_id')=='1' || session()->get('role_id')=='2')
             <li class="nav-item">
-                <a class="{{request()->is('list-role*')
-                            ? 'nav-link active' : 'nav-link' }}" data-toggle="collapse" href="#master" aria-expanded="false"
-                    aria-controls="master">
+                <a class="{{request()->is('list-grampanchayt-doc-new*')
+                            ? 'nav-link active' : 'nav-link' }}" data-toggle="collapse" href="#grampanchayt" aria-expanded="false"
+                    aria-controls="grampanchayt">
                     <i class="fa fa-th-large menu-icon"></i>
                     <span class="menu-title">Grampanchayt Documents</span>
                     <i class="menu-arrow"></i>
                 </a>
-                <div class="collapse" id="master">
+                <div class="collapse" id="grampanchayt">
                     <ul class="nav flex-column sub-menu">
                     <!-- @if (in_array('list-labours', $data_for_url)) -->
                         <!-- @if(session()->get('role_id')=='1' || session()->get('role_id')=='2') -->
@@ -266,16 +266,16 @@
 
         @if(session()->get('role_id')=='3')
         <li class="nav-item">
-                <a class="{{request()->is('list-role*')
-                            ? 'nav-link active' : 'nav-link' }}" data-toggle="collapse" href="#master" aria-expanded="false"
-                    aria-controls="master">
+                <a class="{{request()->is('list-grampanchayt-doc-new*')
+                            ? 'nav-link active' : 'nav-link' }}" data-toggle="collapse" href="#gdocument" aria-expanded="false"
+                    aria-controls="gdocument">
                     <i class="fa fa-th-large menu-icon"></i>
                     <span class="menu-title">Grampanchayt Documents</span>
                     <i class="menu-arrow"></i>
                 </a>
-                <div class="collapse" id="master">
+                <div class="collapse" id="gdocument">
                     <ul class="nav flex-column sub-menu">
-                    <!-- @if (in_array('list-labours', $data_for_url)) -->
+                    <!-- @if (in_array('list-grampanchayt-doc-new', $data_for_url)) -->
                         <!-- @if(session()->get('role_id')=='1' || session()->get('role_id')=='2')
                             <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-grampanchayt-doc-new*')
                             ? 'nav-link active' : 'nav-link' }}"
@@ -324,9 +324,9 @@
             </li> -->
         @endif    
 
-            <li class="{{request()->is('list-role*') 
+            <li class="{{request()->is('list-location-report*') 
                 ? 'nav-item active' : 'nav-item' }}">
-                  <a class="{{request()->is('list-role*')
+                  <a class="{{request()->is('list-location-report*')
                                 ? 'nav-link active' : 'nav-link' }}" data-toggle="collapse" href="#report" aria-expanded="false"
                       aria-controls="report">
                       <i class="fas fa-window-restore menu-icon"></i>
@@ -335,7 +335,7 @@
                   </a>
                   <div class="collapse" id="report">
                       <ul class="nav flex-column sub-menu">
-                          {{-- @if (in_array('list-role', $data_for_url)) --}}
+                          {{-- @if (in_array('list-location-report', $data_for_url)) --}}
                               <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-location-report*')
                                 ? 'nav-link active' : 'nav-link' }}"
                                       href="{{ route('list-location-report') }}">Location Report</a></li>

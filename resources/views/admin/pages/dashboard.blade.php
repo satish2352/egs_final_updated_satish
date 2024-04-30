@@ -2,6 +2,7 @@
 @section('content')
     <style>
         @import url("https://fonts.google.com/specimen/Titillium+Web");
+
         .card {
             background-color: #fff;
             border-radius: 10px;
@@ -68,108 +69,132 @@
             background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
             color: #fff;
         }
-        .homeIcon1{
-            font-size:2.5rem;
-            color:#ec671f;
+
+        .homeIcon1 {
+            font-size: 2.5rem;
+            color: #ec671f;
         }
-        .dashboard_Card1{
+
+        .dashboard_Card1 {
             background: darksalmon;
             border-radius: 10px;
         }
-        .homeIcon2{
-            font-size:2.5rem;
-            color:#ec671f;
+
+        .homeIcon2 {
+            font-size: 2.5rem;
+            color: #ec671f;
         }
-        .dashboard_Card2{
+
+        .dashboard_Card2 {
             background: #c9bcff;
             border-radius: 10px;
         }
-        .homeIcon3{
-            font-size:2.5rem;
-            color:#ec671f;
+
+        .homeIcon3 {
+            font-size: 2.5rem;
+            color: #ec671f;
         }
-        .dashboard_Card3{
+
+        .dashboard_Card3 {
             background: #ec8ca3;
             border-radius: 10px;
         }
-        .homeIcon4{
-            font-size:2.5rem;
-            color:#ec671f;
+
+        .homeIcon4 {
+            font-size: 2.5rem;
+            color: #ec671f;
         }
-        .dashboard_Card4{
+
+        .dashboard_Card4 {
             background: #d2ec8c;
             border-radius: 10px;
         }
-        .homeIcon5{
-            font-size:2.5rem;
-            color:#ec671f;
+
+        .homeIcon5 {
+            font-size: 2.5rem;
+            color: #ec671f;
         }
-        .dashboard_Card5{
+
+        .dashboard_Card5 {
             background: #8cecbf;
             border-radius: 10px;
         }
-        .homeIcon6{
-            font-size:2.5rem;
-            color:#ec671f;
+
+        .homeIcon6 {
+            font-size: 2.5rem;
+            color: #ec671f;
         }
-        .dashboard_Card6{
+
+        .dashboard_Card6 {
             background: #ec8cdb;
             border-radius: 10px;
         }
-        .homeIcon7{
-            font-size:2.5rem;
-            color:#ec671f;
+
+        .homeIcon7 {
+            font-size: 2.5rem;
+            color: #ec671f;
         }
-        .dashboard_Card7{
+
+        .dashboard_Card7 {
             background: #8cecdb;
             border-radius: 10px;
         }
-        .homeIcon8{
-            font-size:2.5rem;
-            color:#ec671f;
+
+        .homeIcon8 {
+            font-size: 2.5rem;
+            color: #ec671f;
         }
-        .dashboard_Card8{
+
+        .dashboard_Card8 {
             background: #8cec93;
             border-radius: 10px;
         }
-        .homeIcon9{
-            font-size:2.5rem;
-            color:#ec671f;
+
+        .homeIcon9 {
+            font-size: 2.5rem;
+            color: #ec671f;
         }
-        .dashboard_Card9{
+
+        .dashboard_Card9 {
             background: #e0dfeb;
             border-radius: 10px;
         }
-        .homeIcon10{
-            font-size:2.5rem;
-            color:#ec671f;
+
+        .homeIcon10 {
+            font-size: 2.5rem;
+            color: #ec671f;
         }
-        .dashboard_Card10{
+
+        .dashboard_Card10 {
             background: #85edc5;
             border-radius: 10px;
         }
-        .homeIcon11{
-            font-size:2.5rem;
-            color:#ec671f;
+
+        .homeIcon11 {
+            font-size: 2.5rem;
+            color: #ec671f;
         }
-        .dashboard_Card11{
+
+        .dashboard_Card11 {
             background: #add8f6;
             border-radius: 10px;
         }
-        .media-body{
+
+        .media-body {
             text-align: right !important;
             font-size: 24px;
             font-family: "Anta", sans-serif;
             /* font-family: titillium -webkit-body; */
         }
-        .media-body h3{
+
+        .media-body h3 {
             text-align: right !important;
             font-size: 24px;
             font-family: "Anta", sans-serif;
             /* font-family: titillium -webkit-body; */
         }
     </style>
-<?php $data_for_url = session('data_for_url'); ?>
+    <?php $data_for_url = session('data_for_url'); ?>
     <div class="main-panel">
         <div class="content-wrapper mt-6">
             <div class="page-header">
@@ -185,62 +210,243 @@
             </div>
 
             <div class="row">
-              @if (isset($status) && $return_data['status'] == 'success')
-                <div class="alert alert-success" role="alert">
-                    {{ $return_data['msg'] }}
-                </div>
+                @if (isset($status) && $return_data['status'] == 'success')
+                    <div class="alert alert-success" role="alert">
+                        {{ $return_data['msg'] }}
+                    </div>
                 @endif
+
                 <div class="col-12 grid-margin">
                     <div class="card">
                         <div class="card-body">
-                            <div class="container">
+                            <div class="container dash-height">
                                 <div class="col-md-12">
-                                    <div class="row ">
-
-                                        @forelse($return_data as $key => $dashboard)
-                                            @if (in_array($dashboard['url'], $data_for_url))
-                                                <div class="col-xl-3 col-lg-6">
-                                                    <a href="{{ url($dashboard['url']) }}">
-                                                        <div class="card"
+                                    {{-- @if (session('sess_user_type') == 1 && session('sess_user_type') == 2) --}}
+                                    {{-- @if ($sess_user_role == 1 || $sess_user_role == 2) --}}
+                                    @if ($sess_user_role == '1' || $sess_user_role == '2')
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <a href="{{ route('list-users') }}">
+                                                    <div class="card">
+                                                        <div class="card-body"
                                                             style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
                                                             <div class="card-statistic-3 p-4">
-                                                                <div class="card-icon card-icon-large"></div>
                                                                 <div class="mb-4">
-                                                                    <h6 class="mb-0 dash_card_title">
-                                                                        {{ mb_substr($dashboard['permission_name'], 0, 18)}}</h6>
+                                                                    <h6 class="mb-0 dash_card_title">User Count</h6>
                                                                 </div>
                                                                 <div class="row align-items-center mb-2 d-flex">
                                                                     <div class="col-8">
-                                                                        <h2 class="d-flex align-items-center mb-0 dash_count">
-                                                                            {{ $dashboard['count'] }}
-                                                                        </h2>
+                                                                        <h2
+                                                                            class="d-flex align-items-center mb-0 dash_count">
+                                                                            {{ $return_data['user_count'] }}</h2>
                                                                     </div>
-                                                                    {{-- <div class="col-4 text-right">
-                                                                    <span>12.5% <i class="fa fa-arrow-up"></i></span>
-                                                                </div> --}}
                                                                 </div>
-                                                               
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a href="{{ route('list-approved-labours') }}">
+                                                    <div class="card">
+                                                        <div class="card-body"
+                                                            style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
+                                                            <div class="card-statistic-3 p-4">
+                                                                <div class="mb-4">
+                                                                    <h6 class="mb-0 dash_card_title">Today's Count</h6>
+                                                                </div>
+                                                                <div class="row align-items-center mb-2 d-flex">
+                                                                    <div class="col-8">
+                                                                        <h2
+                                                                            class="d-flex align-items-center mb-0 dash_count">
+                                                                            {{ $return_data['today_count'] }}</h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card">
+                                                    <a href="{{ route('list-approved-labours') }}">
+                                                        <div class="card-body"
+                                                            style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
+                                                            <div class="card-statistic-3 p-4">
+                                                                <div class="mb-4">
+                                                                    <h6 class="mb-0 dash_card_title">Current Year's Count
+                                                                    </h6>
+                                                                </div>
+                                                                <div class="row align-items-center mb-2 d-flex">
+                                                                    <div class="col-8">
+                                                                        <h2
+                                                                            class="d-flex align-items-center mb-0 dash_count">
+                                                                            {{ $return_data['current_year_count'] }}</h2>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </a>
                                                 </div>
-                                            @endif
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card">
+                                                    <a href="{{ route('list-projects') }}">
+                                                        <div class="card-body"
+                                                            style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
+                                                            <div class="card-statistic-3 p-4">
+                                                                <div class="mb-4">
+                                                                    <h6 class="mb-0 dash_card_title">Project Count</h6>
+                                                                </div>
+                                                                <div class="row align-items-center mb-2 d-flex">
+                                                                    <div class="col-8">
+                                                                        <h2
+                                                                            class="d-flex align-items-center mb-0 dash_count">
+                                                                            {{ $return_data['project_count'] }}</h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="card">
+                                                    <a href="{{ route('list-approved-labours') }}">
+                                                        <div class="card-body"
+                                                            style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
+                                                            <div class="card-statistic-3 p-4">
+                                                                <div class="mb-4">
+                                                                    <h6 class="mb-0 dash_card_title">Today's Count</h6>
+                                                                </div>
+                                                                <div class="row align-items-center mb-2 d-flex">
+                                                                    <div class="col-8">
+                                                                        <h2
+                                                                            class="d-flex align-items-center mb-0 dash_count">
+                                                                            {{ $return_data['today_count'] }}</h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card">
+                                                    <a href="{{ route('list-approved-labours') }}">
+                                                        <div class="card-body"
+                                                            style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
+                                                            <div class="card-statistic-3 p-4">
+                                                                <div class="mb-4">
+                                                                    <h6 class="mb-0 dash_card_title">Current Year's Count
+                                                                    </h6>
+                                                                </div>
+                                                                <div class="row align-items-center mb-2 d-flex">
+                                                                    <div class="col-8">
+                                                                        <h2
+                                                                            class="d-flex align-items-center mb-0 dash_count">
+                                                                            {{ $return_data['current_year_count'] }}</h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card">
+                                                    <a href="{{ route('list-projects') }}">
+                                                        <div class="card-body"
+                                                            style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
+                                                            <div class="card-statistic-3 p-4">
+                                                                <div class="mb-4">
+                                                                    <h6 class="mb-0 dash_card_title">Project Count</h6>
+                                                                </div>
+                                                                <div class="row align-items-center mb-2 d-flex">
+                                                                    <div class="col-8">
+                                                                        <h2
+                                                                            class="d-flex align-items-center mb-0 dash_count">
+                                                                            {{ $return_data['project_count'] }}</h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    <div class="row">
+                                        @forelse($return_data['counts'] as $key => $count)
+                                            <div class="col-xl-3 col-lg-6">
+                                                @php
+                                                    $route = '';
+                                                    switch ($key) {
+                                                        case 'sent_for_approval_count':
+                                                            $route = route('list-labours');
+                                                            break;
+                                                        case 'approved_count':
+                                                            $route = route('list-approved-labours');
+                                                            break;
+                                                        case 'not_approved_count':
+                                                            $route = route('list-disapproved-labours');
+                                                            break;
+                                                        case 'resubmitted_labour_count':
+                                                            $route = route('list-resubmitted-labours');
+                                                            break;
+                                                        case 'sent_for_approval_document_count':
+                                                            $route = route('list-grampanchayt-doc-new');
+                                                            break;
+                                                        case 'approved_document_count':
+                                                            $route = route('list-grampanchayt-doc-approved');
+                                                            break;
+                                                        case 'not_approved_document_count':
+                                                            $route = route('list-grampanchayt-doc-not-approved');
+                                                            break;
+                                                        case 'resubmitted_document_count':
+                                                            $route = route('list-grampanchayt-doc-resubmitted');
+                                                            break;
+                                                        default:
+                                                            $route = '#'; // Default route if $key doesn't match any case
+                                                    }
+                                                @endphp
+
+                                                <a href="{{ $route }}">
+                                                    <div class="card">
+                                                        <div class="card-body"
+                                                            style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
+                                                            <div class="card-statistic-3 p-4">
+                                                                <div class="mb-4">
+                                                                    <h6 class="mb-0 dash_card_title">
+                                                                        {{ ucwords(str_replace('_', ' ', $key)) }}</h6>
+                                                                </div>
+                                                                <div class="row align-items-center mb-2 d-flex">
+                                                                    <div class="col-8">
+                                                                        <h2
+                                                                            class="d-flex align-items-center mb-0 dash_count">
+                                                                            {{ $count }}</h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
                                         @empty
                                             <h4>No Data Found For Dashboard</h4>
                                         @endforelse
-
-
-                                        
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            
-           
+
+
+            </div>
         @endsection
