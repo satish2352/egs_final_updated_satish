@@ -32,318 +32,6 @@ class DashboardController extends Controller {
         // $this->service = new DashboardServices();
     }
 
-    // public function index()
-    // {
-    //     $return_data = array();
-    //     $dashboard_data = Permissions::where("is_active",'=',true)->get()->toArray();
-       
-    //     $sess_user_id = session()->get('user_id');
-    //     $sess_user_type = session()->get('user_type');
-    //     $sess_user_role = session()->get('role_id');
-    //     $sess_user_working_dist = session()->get('working_dist');
-        
-    //     $district_data = TblArea::where('parent_id', '2')
-    //         ->orderBy('name', 'asc')
-    //         ->get(['location_id', 'name']);
-        
-    //     $taluka_data = TblArea::where('parent_id', $sess_user_working_dist)
-    //         ->orderBy('name', 'asc')
-    //         ->get(['location_id', 'name']);
-        
-    //     $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
-    //         ->where('users.id', $sess_user_id)
-    //         ->first();
-        
-    //     $utype = $data_output->user_type;
-    //     $user_working_dist = $data_output->user_district;
-    //     $user_working_tal = $data_output->user_taluka;
-    //     $user_working_vil = $data_output->user_village;
-        
-    //     $query = Labour::where('is_active', 1);
-                
-    //     $approved_count_2 = $query->where('is_approved', 2)->count();
-    //     $approved_count_3 = $query->where('is_approved', 3)->count();
-    //     $total_count = $approved_count_2 + $approved_count_3;
-       
-      
-        
-
-    //     // ===========================
-    //     foreach ($dashboard_data as $value) {
-
-    //         if($value['url'] == 'list-users') {
-    //             $data_dashboard['url'] =  $value['url'];
-    //             $data_dashboard['permission_name'] =  $value['permission_name'];
-    //             $users = User::all();
-    //             $data_dashboard['count'] = $users->count();
-    //             array_push($return_data, $data_dashboard);
-    //         }
-
-    //         if($value['url'] == 'list-projects') {
-    //             $data_dashboard['url'] =  $value['url'];
-    //             $data_dashboard['permission_name'] =  $value['permission_name'];
-    //             $projects = Project::all();
-    //             $data_dashboard['count'] = $projects->count();
-    //             array_push($return_data, $data_dashboard);
-    //         }
-
-           
-    //     }
-
-    //     return view('admin.pages.dashboard',compact('return_data'));
-    // }
-
-   
-//     public function index(Request $request)
-// {
-//     // try {
-//         $user = $request->session()->get('user_id');
-//         // dd($user);
-     
-
-
-//         $sess_user_id = session()->get('user_id');
-//         $sess_user_type = session()->get('user_type');
-//         $sess_user_role = session()->get('role_id');
-//         $sess_user_working_dist = session()->get('working_dist');
-
-//              $district_data = TblArea::where('parent_id', '2')
-//             ->orderBy('name', 'asc')
-//             ->get(['location_id', 'name']);
-        
-//         $taluka_data = TblArea::where('parent_id', $sess_user_working_dist)
-//             ->orderBy('name', 'asc')
-//             ->get(['location_id', 'name']);
-        
-//         $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
-//             ->where('users.id', $sess_user_id)
-//             ->first();
-        
-//         $utype = $data_output->user_type;
-//         $user_working_dist = $data_output->user_district;
-//         $user_working_tal = $data_output->user_taluka;
-//         $user_working_vil = $data_output->user_village;
-
-//         if (!$user) {
-//             throw new \Exception('User not authenticated.');
-//         }
-
-
-
-//         $fromDate = date('Y-m-d').' 00:00:01';
-//         $toDate = date('Y-m-d').' 23:59:59';
-
-//         // Initialize counts
-//         $counts = [
-//             'sent_for_approval_count' => 0,
-//             'approved_count' => 0,
-//             'not_approved_count' => 0,
-//             'resubmitted_labour_count' => 0,
-//             'sent_for_approval_document_count' => 0,
-//             'approved_document_count' => 0,
-//             'not_approved_document_count' => 0,
-//             'resubmitted_document_count' => 0
-//         ];
-
-       
-
-//         $labourCounts = Labour::where('user_id', $user)
-//         ->selectRaw('is_approved, COUNT(*) as count')
-//         ->where('is_resubmitted', 0)
-//         ->groupBy('is_approved')
-//         ->get();
-
-
-     
-//         foreach ($labourCounts as $count) {
-//             if ($count->is_approved == 1) {
-//                 $counts['sent_for_approval_count'] += $count->count;
-//             } elseif ($count->is_approved == 2) {
-//                 $counts['approved_count'] += $count->count;
-//             } elseif ($count->is_approved == 3) {
-//                 $counts['not_approved_count'] += $count->count;
-//             }
-//         }
-//         dd( $labourCounts);
-//         // Get relevant GramPanchayatDocuments counts
-//         $documentCounts = GramPanchayatDocuments::where('user_id', $user_working_vil)
-//             ->selectRaw('is_approved, COUNT(*) as count')
-//             ->where('is_resubmitted', 0)
-//             ->groupBy('is_approved')
-//             ->get();
-
-//         foreach ($documentCounts as $countdoc) {
-//             if ($countdoc->is_approved == 1) {
-//                 $counts['sent_for_approval_document_count'] += $countdoc->count;
-//             } elseif ($countdoc->is_approved == 2) {
-//                 $counts['approved_document_count'] += $countdoc->count;
-//             } elseif ($countdoc->is_approved == 3) {
-//                 $counts['not_approved_document_count'] += $countdoc->count;
-//             }
-//         }
-
-//         // Get counts for Document resubmissions
-//         $counts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $user_working_vil)
-//             ->where('is_resubmitted', 1)
-//             ->where('is_approved', 1)
-//             ->count();
-
-//         // Prepare data to be sent to the view
-//         $return_data = [
-//             'status' => 'true',
-//             'message' => 'Counts retrieved successfully',
-//             'counts' => $counts
-//         ];
-//         dd($return_data);
-
-//         // Return the counts to the view
-//         return view('admin.pages.dashboard', compact('return_data'));
-
-//     // } catch (\Exception $e) {
-//     //     // Return error if any exception occurs
-//     //     return response()->json(['status' => 'false', 'message' => 'Error occurred', 'error' => $e->getMessage()], 500);
-//     // }
-// }
-
-
-// public function index(Request $request)
-// {
-//     try {
-//         $sess_user_id = session()->get('user_id');
-//         $sess_user_type = session()->get('user_type');
-//         $sess_user_role = session()->get('role_id');
-//         $sess_user_working_dist = session()->get('working_dist');
-
-//         $district_data = TblArea::where('parent_id', '2')
-//             ->orderBy('name', 'asc')
-//             ->get(['location_id', 'name']);
-
-//         $taluka_data = TblArea::where('parent_id', $sess_user_working_dist)
-//             ->orderBy('name', 'asc')
-//             ->get(['location_id', 'name']);
-
-//         $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
-//             ->where('users.id', $sess_user_id)
-//             ->first();
-
-//         $utype = $data_output->user_type;
-//         $user_working_dist = $data_output->user_district;
-//         $user_working_tal = $data_output->user_taluka;
-//         $user_working_vil = $data_output->user_village;
-
-//         $sess_user_working_dist = session()->get('working_dist');
-//         $sess_user_working_vil = session()->get('working_vil');
-
-//         if (!$sess_user_id) {
-//             throw new \Exception('User not authenticated.');
-//         }
-
-//         $counts = [
-//             'sent_for_approval_count' => 0,
-//             'approved_count' => 0,
-//             'not_approved_count' => 0,
-//             'resubmitted_labour_count' => 0,
-//             'sent_for_approval_document_count' => 0,
-//             'approved_document_count' => 0,
-//             'not_approved_document_count' => 0,
-//             'resubmitted_document_count' => 0
-//         ];
-
-//         if ($sess_user_type == 1) {
-
-//             $labourCounts = Labour::where('user_id', $sess_user_id)
-//                 ->selectRaw('is_approved, COUNT(*) as count')
-//                 ->where('is_resubmitted', 0)
-//                 ->groupBy('is_approved')
-//                 ->get();
-
-//             foreach ($labourCounts as $count) {
-//                 if ($count->is_approved == 1) {
-//                     $counts['sent_for_approval_count'] += $count->count;
-//                 } elseif ($count->is_approved == 2) {
-//                     $counts['approved_count'] += $count->count;
-//                 } elseif ($count->is_approved == 3) {
-//                     $counts['not_approved_count'] += $count->count;
-//                 }
-//             }
-
-//             $documentCounts = GramPanchayatDocuments::where('user_id', $user_working_dist)
-//                 ->selectRaw('is_approved, COUNT(*) as count')
-//                 ->where('is_resubmitted', 0)
-//                 ->groupBy('is_approved')
-//                 ->get();
-
-//             foreach ($documentCounts as $countdoc) {
-//                 if ($countdoc->is_approved == 1) {
-//                     $counts['sent_for_approval_document_count'] += $countdoc->count;
-//                 } elseif ($countdoc->is_approved == 2) {
-//                     $counts['approved_document_count'] += $countdoc->count;
-//                 } elseif ($countdoc->is_approved == 3) {
-//                     $counts['not_approved_document_count'] += $countdoc->count;
-//                 }
-//             }
-
-//             $counts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $user_working_dist)
-//                 ->where('is_resubmitted', 1)
-//                 ->where('is_approved', 1)
-//                 ->count();
-
-//             $return_data = [
-//                 'status' => 'true',
-//                 'message' => 'Counts retrieved successfully',
-//                 'counts' => $counts
-//             ];
-//         } elseif ($sess_user_type == 3) {
-//             $labourCounts = Labour::where('user_id', $sess_user_id)
-//                 ->selectRaw('is_approved, COUNT(*) as count')
-//                 ->where('is_resubmitted', 0)
-//                 ->groupBy('is_approved')
-//                 ->get();
-//             //   dd( $labourCounts);
-//             foreach ($labourCounts as $count) {
-//                 if ($count->is_approved == 1) {
-//                     $counts['sent_for_approval_count'] += $count->count;
-//                 } elseif ($count->is_approved == 2) {
-//                     $counts['approved_count'] += $count->count;
-//                 } elseif ($count->is_approved == 3) {
-//                     $counts['not_approved_count'] += $count->count;
-//                 }
-//             }
-
-//             $documentCounts = GramPanchayatDocuments::where('user_id', $user_working_dist)
-//                 ->selectRaw('is_approved, COUNT(*) as count')
-//                 ->where('is_resubmitted', 0)
-//                 ->groupBy('is_approved')
-//                 ->get();
-
-//             foreach ($documentCounts as $countdoc) {
-//                 if ($countdoc->is_approved == 1) {
-//                     $counts['sent_for_approval_document_count'] += $countdoc->count;
-//                 } elseif ($countdoc->is_approved == 2) {
-//                     $counts['approved_document_count'] += $countdoc->count;
-//                 } elseif ($countdoc->is_approved == 3) {
-//                     $counts['not_approved_document_count'] += $countdoc->count;
-//                 }
-//             }
-
-//             $counts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $user_working_dist)
-//                 ->where('is_resubmitted', 1)
-//                 ->where('is_approved', 1)
-//                 ->count();
-
-//         } else {
-//             throw new \Exception('Invalid user type.');
-//         }
-
-//         return view('admin.pages.dashboard', compact('return_data'));
-
-//     } catch (\Exception $e) {
-//         return response()->json(['status' => 'false', 'message' => 'Error occurred', 'error' => $e->getMessage()], 500);
-//     }
-// }
-
-
-
 public function index(Request $request)
 {
    
@@ -385,16 +73,20 @@ public function index(Request $request)
             throw new \Exception('User not authenticated.');
         }
 
-        $counts = [
+        $labourRequestCounts = [
             'sent_for_approval_count' => 0,
             'approved_count' => 0,
             'not_approved_count' => 0,
             'resubmitted_labour_count' => 0,
+        ];
+        
+        $documentRequestCounts = [
             'sent_for_approval_document_count' => 0,
             'approved_document_count' => 0,
             'not_approved_document_count' => 0,
-            'resubmitted_document_count' => 0
+            'resubmitted_document_count' => 0,
         ];
+
         if ($roleId== 1) {
             $userCount = User::where('role_id', 2)
                                 ->orWhere('role_id', 3)
@@ -425,11 +117,11 @@ public function index(Request $request)
             
             foreach ($labourCounts as $count) {
                 if ($count->is_approved == 1) {
-                    $counts['sent_for_approval_count'] += $count->count;
+                    $labourRequestCounts['sent_for_approval_count'] += $count->count;
                 } elseif ($count->is_approved == 2) {
-                    $counts['approved_count'] += $count->count;
+                    $labourRequestCounts['approved_count'] += $count->count;
                 } elseif ($count->is_approved == 3) {
-                    $counts['not_approved_count'] += $count->count;
+                    $labourRequestCounts['not_approved_count'] += $count->count;
                 }
             }
 
@@ -440,15 +132,15 @@ public function index(Request $request)
 
             foreach ($documentCounts as $countdoc) {
                 if ($countdoc->is_approved == 1) {
-                    $counts['sent_for_approval_document_count'] += $countdoc->count;
+                    $documentRequestCounts['sent_for_approval_document_count'] += $countdoc->count;
                 } elseif ($countdoc->is_approved == 2) {
-                    $counts['approved_document_count'] += $countdoc->count;
+                    $documentRequestCounts['approved_document_count'] += $countdoc->count;
                 } elseif ($countdoc->is_approved == 3) {
-                    $counts['not_approved_document_count'] += $countdoc->count;
+                    $documentRequestCounts['not_approved_document_count'] += $countdoc->count;
                 }
             }
 
-            $counts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $sess_user_id)
+            $documentRequestCounts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $sess_user_id)
                 ->where('is_resubmitted', 1)
                 ->where('is_approved', 1)
                 ->count();
@@ -492,11 +184,11 @@ public function index(Request $request)
             
             foreach ($labourCounts as $count) {
                 if ($count->is_approved == 1) {
-                    $counts['sent_for_approval_count'] += $count->count;
+                    $labourRequestCounts['sent_for_approval_count'] += $count->count;
                 } elseif ($count->is_approved == 2) {
-                    $counts['approved_count'] += $count->count;
+                    $labourRequestCounts['approved_count'] += $count->count;
                 } elseif ($count->is_approved == 3) {
-                    $counts['not_approved_count'] += $count->count;
+                    $labourRequestCounts['not_approved_count'] += $count->count;
                 }
             }
 
@@ -508,15 +200,15 @@ public function index(Request $request)
 
             foreach ($documentCounts as $countdoc) {
                 if ($countdoc->is_approved == 1) {
-                    $counts['sent_for_approval_document_count'] += $countdoc->count;
+                    $documentRequestCounts['sent_for_approval_document_count'] += $countdoc->count;
                 } elseif ($countdoc->is_approved == 2) {
-                    $counts['approved_document_count'] += $countdoc->count;
+                    $documentRequestCounts['approved_document_count'] += $countdoc->count;
                 } elseif ($countdoc->is_approved == 3) {
-                    $counts['not_approved_document_count'] += $countdoc->count;
+                    $documentRequestCounts['not_approved_document_count'] += $countdoc->count;
                 }
             }
 
-            $counts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $user_working_dist)
+            $documentRequestCounts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $user_working_dist)
                 ->where('is_resubmitted', 1)
                 ->where('is_approved', 1)
                 ->count();
@@ -576,11 +268,11 @@ public function index(Request $request)
                         //   dd( $labourCounts);
                         foreach ($labourCounts as $count) {
                             if ($count->is_approved == 1) {
-                                $counts['sent_for_approval_count'] += $count->count;
+                                $labourRequestCounts['sent_for_approval_count'] += $count->count;
                             } elseif ($count->is_approved == 2) {
-                                $counts['approved_count'] += $count->count;
+                                $labourRequestCounts['approved_count'] += $count->count;
                             } elseif ($count->is_approved == 3) {
-                                $counts['not_approved_count'] += $count->count;
+                                $labourRequestCounts['not_approved_count'] += $count->count;
                             }
                         }
             
@@ -592,15 +284,15 @@ public function index(Request $request)
             
                         foreach ($documentCounts as $countdoc) {
                             if ($countdoc->is_approved == 1) {
-                                $counts['sent_for_approval_document_count'] += $countdoc->count;
+                                $documentRequestCounts['sent_for_approval_document_count'] += $countdoc->count;
                             } elseif ($countdoc->is_approved == 2) {
-                                $counts['approved_document_count'] += $countdoc->count;
+                                $documentRequestCounts['approved_document_count'] += $countdoc->count;
                             } elseif ($countdoc->is_approved == 3) {
-                                $counts['not_approved_document_count'] += $countdoc->count;
+                                $documentRequestCounts['not_approved_document_count'] += $countdoc->count;
                             }
                         }
             
-                        $counts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $user_working_vil)
+                        $documentRequestCounts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $user_working_vil)
                             ->where('is_resubmitted', 1)
                             ->where('is_approved', 1)
                             ->count();
@@ -614,8 +306,10 @@ public function index(Request $request)
             'today_count' => $todayCount,
             'current_year_count' => $currentYearCount,
             'project_count' => $projectCount,
-            'counts' => $counts,
+            'labourRequestCounts' => $labourRequestCounts,
+            'documentRequestCounts' => $documentRequestCounts,
         ];
+        // dd( $return_data);
         if ($sess_user_role == '1' || $sess_user_role == '2') {
             $return_data['user_count'] = $userCount;
         }

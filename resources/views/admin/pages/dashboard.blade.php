@@ -381,7 +381,7 @@
                                     @endif
 
                                     <div class="row">
-                                        @forelse($return_data['counts'] as $key => $count)
+                                        @forelse($return_data['labourRequestCounts'] as $key => $count)
                                             <div class="col-xl-3 col-lg-6">
                                                 @php
                                                     $route = '';
@@ -398,6 +398,50 @@
                                                         case 'resubmitted_labour_count':
                                                             $route = route('list-resubmitted-labours');
                                                             break;
+                                                        default:
+                                                            $route = '#'; // Default route if $key doesn't match any case
+                                                    }
+                                                @endphp
+
+                                                <a href="{{ $route }}">
+                                                    <div class="card">
+                                                        <div class="card-body"
+                                                            style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
+                                                            <div class="card-statistic-3 p-4">
+                                                                <div class="mb-4">
+                                                                    <h6 class="mb-0 dash_card_title">
+                                                                        {{ ucwords(str_replace('_', ' ', $key)) }}</h6>
+                                                                </div>
+                                                                <div class="row align-items-center mb-2 d-flex">
+                                                                    <div class="col-8">
+                                                                        <h2
+                                                                            class="d-flex align-items-center mb-0 dash_count">
+                                                                            {{ $count }}
+                                                                            {{-- {{ $labourRequestCounts }} --}}
+                                                                            {{-- {{ $return_data['labourRequestCounts'] }} --}}
+                                                                        </h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+
+
+
+
+                                            </div>
+                                        @empty
+                                            <h4>No Data Found For Dashboard</h4>
+                                        @endforelse
+                                    </div>
+                                    <div class="row">
+                                        @forelse($return_data['documentRequestCounts'] as $key => $count)
+                                            <div class="col-xl-3 col-lg-6">
+                                                @php
+                                                    $route = '';
+                                                    switch ($key) {
                                                         case 'sent_for_approval_document_count':
                                                             $route = route('list-grampanchayt-doc-new');
                                                             break;
@@ -428,7 +472,9 @@
                                                                     <div class="col-8">
                                                                         <h2
                                                                             class="d-flex align-items-center mb-0 dash_count">
-                                                                            {{ $count }}</h2>
+                                                                            {{ $count }}
+
+                                                                        </h2>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -442,11 +488,237 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-center">
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <canvas id="myPieChart" width="400" height="400"></canvas>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-center">
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <canvas id="myPieChart1" width="400" height="400"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
 
 
+
             </div>
+            {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+         
+            <script>
+                var ctx = document.getElementById('myPieChart').getContext('2d');
+                var myPieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: {!! json_encode($data['labels']) !!},
+                        datasets: [{
+                            data: {!! json_encode($data['counts']) !!},
+                            backgroundColor: [
+                                'red',
+                                'blue',
+                                'yellow',
+                                'green',
+                                'purple',
+                                'orange'
+                            ]
+                        }]
+                    },
+                    options: {
+                        // Additional options can go here
+                    }
+                });
+            </script> --}}
+
+
+
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                var ctx = document.getElementById('myPieChart').getContext('2d');
+            
+                var counts = @json($return_data['labourRequestCounts']);
+                var backgroundColors = [
+                    '#ff5773',
+                    '#88e0b0',
+                    '#fed000',
+                    '#cc33fa'
+                ];
+            
+                var labels = Object.keys(counts);
+                var data = Object.values(counts);
+            
+                var myPieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: backgroundColors
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            tooltip: {
+                                enabled: true
+                            },
+                            legend: {
+                                position: 'right'
+                            },
+                            title: {
+                            display: true,
+                            text: 'Labour Pie Chart',
+                            // Adding title font size
+                            font: {
+                                size: 20 // Adjust the size as needed
+                            }
+                        },
+                            // Add the 3D effect
+                            interaction: {
+                                mode: 'index',
+                                intersect: false,
+                            },
+                            animation: {
+                                animateRotate: true,
+                                animateScale: true
+                            },
+                            layout: {
+                                padding: {
+                                    left: 50,
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0
+                                }
+                            },
+                            indexAxis: 'y'
+                        }
+                    }
+                });
+            </script>
+            {{-- <script>
+                var ctx = document.getElementById('myPieChart').getContext('2d');
+
+                var counts = @json($return_data['labourRequestCounts']);
+                var backgroundColors = [
+                    '#ff5773',
+                    '#88e0b0',
+                    '#fed000',
+                    '#cc33fa'
+                ];
+
+                var labels = Object.keys(counts);
+                var data = Object.values(counts);
+
+                var myPieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: backgroundColors
+                        }]
+                    },
+                    options: {
+                        // Additional options can go here
+                    }
+                });
+            </script> --}}
+            {{-- <script>
+                var ctx = document.getElementById('myPieChart1').getContext('2d');
+
+                var counts = @json($return_data['documentRequestCounts']);
+                var backgroundColors = [
+                    '#ff5773',
+                    '#88e0b0',
+                    '#fed000',
+                    '#cc33fa'
+
+                ];
+
+                var labels = Object.keys(counts);
+                var data = Object.values(counts);
+
+                var myPieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: backgroundColors
+                        }]
+                    },
+                    options: {
+                        // Additional options can go here
+                    }
+                });
+            </script> --}}
+
+            <script>
+                var ctx = document.getElementById('myPieChart1').getContext('2d');
+            
+                var counts = @json($return_data['documentRequestCounts']);
+                var backgroundColors = [
+                    '#ff5773',
+                    '#88e0b0',
+                    '#fed000',
+                    '#cc33fa'
+                ];
+            
+                var labels = Object.keys(counts);
+                var data = Object.values(counts);
+            
+                var myPieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: backgroundColors
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            tooltip: {
+                                enabled: true
+                            },
+                            legend: {
+                                position: 'right'
+                            },
+                            title: {
+                            display: true,
+                            text: 'Gramsevak Docuement Pie Chart',
+                            // Adding title font size
+                            font: {
+                                size: 20 // Adjust the size as needed
+                            }
+                        },
+                          
+                            // Add the 3D effect
+                            interaction: {
+                                mode: 'index',
+                                intersect: false,
+                            },
+                            animation: {
+                                animateRotate: true,
+                                animateScale: true
+                            },
+                            layout: {
+                                padding: {
+                                    left: 50,
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0
+                                }
+                            },
+                            indexAxis: 'y'
+                        }
+                    }
+                });
+            </script>
         @endsection

@@ -376,8 +376,6 @@ class RegisterController extends Controller {
     
     public function editUsersProfile(Request $request){
         $user_data = $this->service->getProfile($request);
-        // dd($user_data);
-        // dd($user_data);
         // $user_detail= session()->get('user_id');
         // $id = $user_data->id;
         // return view('admin.layout.master',compact('user_data'));
@@ -537,21 +535,5 @@ class RegisterController extends Controller {
           ]);
         }
     }
-    public function sendOTPEMAIL($otp, $request) {
-		try {
-			$email_data = [
-				'otp' => $otp,
-			];
-			$toEmail = $request->u_email;
-			$senderSubject = 'Disaster Management OTP ' . date('d-m-Y H:i:s');
-			$fromEmail = env('MAIL_USERNAME');
-			Mail::send('admin.email.emailotp', ['email_data' => $email_data], function ($message) use ($toEmail, $fromEmail, $senderSubject) {
-				$message->to($toEmail)->subject($senderSubject);
-				$message->from($fromEmail, 'Disaster Management OTP');
-			});
-			return 'ok';
-		} catch (\Exception $e) {
-			info($e);
-		}
-    }
+  
 }

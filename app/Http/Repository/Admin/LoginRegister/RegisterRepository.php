@@ -461,13 +461,16 @@ class RegisterRepository
 
 			if (($request->number != $request->old_number) && !isset($request->password)) {
 				$this->sendOTPEMAIL($otp, $request);
+
+				// dd($request->number, $request->old_number);
+				
 				info("only mobile change");
 				$return_data['password_change'] = 'no';
 				$update_data['otp'] = $otp;
 				$return_data['mobile_change'] = 'yes';
 				$return_data['user_id'] = $request->edit_user_id;
 				$return_data['new_mobile_number'] = $request->number;
-				$return_data['password_new'] = '';
+				$return_data['u_password_new'] = '';
 				$return_data['msg'] = "OTP sent on registered on email";
 				$return_data['msg_alert'] = "green";
 
@@ -480,7 +483,7 @@ class RegisterRepository
 				$return_data['mobile_change'] = 'no';
 				$update_data['otp'] = $otp;
 				$return_data['user_id'] = $request->edit_user_id;
-				$return_data['password_new'] = bcrypt($request->password);
+				$return_data['u_password_new'] = bcrypt($request->password);
 				$return_data['new_mobile_number'] = '';
 				$return_data['msg'] = "OTP sent on registered on email";
 				$return_data['msg_alert'] = "green";
@@ -491,7 +494,7 @@ class RegisterRepository
 			if ((isset($request->password) && $request->password !== '') && ($request->number != $request->old_number)) {
 				info("only password and mobile number changed");
 				$update_data['otp'] = $otp;
-				$return_data['password_new'] = bcrypt($request->password);
+				$return_data['u_password_new'] = bcrypt($request->password);
 				$return_data['password_change'] = 'yes';
 				$return_data['mobile_change'] = 'yes';
 				$return_data['user_id'] = $request->edit_user_id;
@@ -510,9 +513,13 @@ class RegisterRepository
 
             $return_data['last_insert_id'] = $last_insert_id;
             $return_data['user_profile'] = $previousUserProfile;
+
+		dd($last_insert_id);
+		die();
+
 			return $return_data;
 
-
+			
 		} catch (\Exception $e) {
 			info($e);
 		}
