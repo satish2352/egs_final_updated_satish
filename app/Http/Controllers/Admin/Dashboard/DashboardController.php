@@ -92,11 +92,11 @@ public function index(Request $request)
                                 ->orWhere('role_id', 3)
                                 ->count();
 
-              $projectCount= Project::leftJoin('users', 'projects.District', '=', 'users.user_district')  
-              ->where('projects.end_date', '>=',date('Y-m-d'))
+              $projectCount= Project::where('projects.end_date', '>=',date('Y-m-d'))
             //   ->whereIn('projects.District', $data_user_output)
               ->where('projects.is_active', true)
-              ->count();              
+              ->count();  
+                        
 
             $todayCount = Labour::where('updated_at', '>=', $fromDate)
             ->where('updated_at', '<=', $toDate)
@@ -161,7 +161,7 @@ public function index(Request $request)
             ->where('projects.is_active', true)
             ->get()
             ->count();      
-            // dd($projectCount);
+           
 
 
              $todayCount = Labour::where('updated_at', '>=', $fromDate)
