@@ -340,11 +340,15 @@
                                 ? 'nav-link active' : 'nav-link' }}"
                                       href="{{ route('list-location-report') }}">Location Report</a></li>
                           {{-- @endif --}}
-                          {{-- @if (in_array('list-labour-duration-report', $data_for_url)) --}}
-                              <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-labour-duration-report*')
-                                ? 'nav-link active' : 'nav-link' }}"
-                                      href="{{ route('list-labour-duration-report') }}">Duration Report</a></li>
-                          {{-- @endif --}}
+                          
+                                <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-labour-attendance-report*')
+                                    ? 'nav-link active' : 'nav-link' }}"
+                                      href="{{ route('list-labour-attendance-report') }}">Skill Wise Attendance Report</a></li>
+
+                                <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-labour-attendance-report*')
+                                    ? 'nav-link active' : 'nav-link' }}"
+                                      href="{{ route('list-labour-attendance-report') }}">Location Wise Attendance Report</a></li>
+                          
                           {{-- @if (in_array('list-project-report', $data_for_url)) --}}
                               <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-project-report*')
                                 ? 'nav-link active' : 'nav-link' }}"
