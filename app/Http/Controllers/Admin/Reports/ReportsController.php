@@ -140,8 +140,11 @@ class ReportsController extends Controller
                         ->orderBy('status_name', 'asc')
                         ->get(['id', 'status_name']);
 
+            $district_data = TblArea::where('parent_id', '2')
+                        ->orderBy('name', 'asc')
+                        ->get(['location_id', 'name']);
            
-            return view('admin.pages.reports.list-project-report', compact('projects_data','skills_data','registration_status_data'));
+            return view('admin.pages.reports.list-project-report', compact('projects_data','skills_data','registration_status_data','district_data'));
         } catch (\Exception $e) {
             return $e;
         }
@@ -313,12 +316,15 @@ class ReportsController extends Controller
 
     public function getFilterProjectsReport(Request $request)
     {
+        // dd($request);
         $sess_user_id=session()->get('user_id');
 		$sess_user_type=session()->get('user_type');
 		$sess_user_role=session()->get('role_id');
 		$sess_user_working_dist=session()->get('working_dist');
 
-     
+        $districtId = $request->input('districtId');
+        $talukaId = $request->input('talukaId');
+        $villageId = $request->input('villageId');
         $ProjectId = $request->input('ProjectId');
         $SkillId = $request->input('SkillId');
         // $RegistrationStatusId = $request->input('RegistrationStatusId');
@@ -347,16 +353,24 @@ class ReportsController extends Controller
 		->leftJoin('users', 'labour.user_id', '=', 'users.id')
         ->leftJoin('tbl_mark_attendance', 'labour.mgnrega_card_id', '=', 'tbl_mark_attendance.mgnrega_card_id')
         ->join('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
-		->where('tbl_mark_attendance.project_id', $ProjectId)
+        ->when($request->get('ProjectId'), function($query) use ($request) {
+            $query->where('tbl_mark_attendance.project_id', $request->ProjectId);
+        })
 
-        // ->when($request->get('RegistrationStatusId'), function($query) use ($request) {
-        //     $query->where('labour.is_approved', $request->RegistrationStatusId);
-        // })
-        
-        // ->when($request->get('ProjectId'), function($query) use ($request, $data_user_output) {
-        //     $query->whereIn('labour.user_id',$data_user_output);
-        // })
+
+        ->when($request->get('districtId'), function($query) use ($request) {
+            $query->where('projects.district', $request->districtId);
+        })
+
+        ->when($request->get('talukaId'), function($query) use ($request) {
+            $query->where('projects.taluka', $request->talukaId);
+        })
+
+        ->when($request->get('villageId'), function($query) use ($request) {
+            $query->where('projects.taluka', $request->villageId);
+        })
         ->when($request->get('SkillId'), function($query) use ($request) {
+            // dd($request->SkillId);
             $query->where('labour.skill_id', $request->SkillId);
         })  
           ->select(
