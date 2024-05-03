@@ -74,17 +74,17 @@ public function index(Request $request)
         }
 
         $labourRequestCounts = [
-            'sent_for_approval_count' => 0,
-            'approved_count' => 0,
-            'not_approved_count' => 0,
-            'resubmitted_labour_count' => 0,
+            'Sent For Approval Labours' => 0,
+            'Approved Labours' => 0,
+            'Not Approved Labour' => 0,
+            'Resubmitted Labour' => 0,
         ];
         
         $documentRequestCounts = [
-            'sent_for_approval_document_count' => 0,
-            'approved_document_count' => 0,
-            'not_approved_document_count' => 0,
-            'resubmitted_document_count' => 0,
+            'Sent For Approval Document' => 0,
+            'Approved Documents' => 0,
+            'Not Approved Document' => 0,
+            'Resubmitted Documents' => 0,
         ];
 
         if ($roleId== 1) {
@@ -110,33 +110,37 @@ public function index(Request $request)
                 ->count();
 
             
-            $labourCounts = Labour::selectRaw('is_approved, COUNT(*) as count')
+            $labourCounts = Labour::selectRaw('is_approved,is_resubmitted, COUNT(*) as count')
                 ->where('is_resubmitted', 0)
-                ->groupBy('is_approved')
+                ->groupBy('is_approved','is_resubmitted')
                 ->get();
             
             foreach ($labourCounts as $count) {
-                if ($count->is_approved == 1) {
-                    $labourRequestCounts['sent_for_approval_count'] += $count->count;
-                } elseif ($count->is_approved == 2) {
-                    $labourRequestCounts['approved_count'] += $count->count;
-                } elseif ($count->is_approved == 3) {
-                    $labourRequestCounts['not_approved_count'] += $count->count;
+                if ($count->is_approved == 1 && $count->is_resubmitted == 0) {
+                    $labourRequestCounts['Sent For Approval Labours'] += $count->count;
+                } elseif ($count->is_approved == 2 && $count->is_resubmitted == 0) {
+                    $labourRequestCounts['Approved Labours'] += $count->count;
+                } elseif ($count->is_approved == 3 && $count->is_resubmitted == 0) {
+                    $labourRequestCounts['Not Approved Labour'] += $count->count;
+                } elseif ($count->is_approved == 1 && $count->is_resubmitted == 1) {
+                    $labourRequestCounts['Resubmitted Labour'] += $count->count;
                 }
             }
 
-            $documentCounts = GramPanchayatDocuments::selectRaw('is_approved, COUNT(*) as count')
+            $documentCounts = GramPanchayatDocuments::selectRaw('is_approved,is_resubmitted, COUNT(*) as count')
                 ->where('is_resubmitted', 0)
-                ->groupBy('is_approved')
+                ->groupBy('is_approved','is_resubmitted')
                 ->get();
 
             foreach ($documentCounts as $countdoc) {
-                if ($countdoc->is_approved == 1) {
-                    $documentRequestCounts['sent_for_approval_document_count'] += $countdoc->count;
-                } elseif ($countdoc->is_approved == 2) {
-                    $documentRequestCounts['approved_document_count'] += $countdoc->count;
-                } elseif ($countdoc->is_approved == 3) {
-                    $documentRequestCounts['not_approved_document_count'] += $countdoc->count;
+                if ($countdoc->is_approved == 1  && $count->is_resubmitted == 0) {
+                    $documentRequestCounts['Sent For Approval Document'] += $countdoc->count;
+                } elseif ($countdoc->is_approved == 2  && $count->is_resubmitted == 0) {
+                    $documentRequestCounts['Approved Documents'] += $countdoc->count;
+                } elseif ($countdoc->is_approved == 3  && $count->is_resubmitted == 0) {
+                    $documentRequestCounts['Not Approved Document'] += $countdoc->count;
+                } elseif ($countdoc->is_approved == 1  && $count->is_resubmitted == 1) {
+                    $documentRequestCounts['Resubmitted Documents'] += $countdoc->count;
                 }
             }
 

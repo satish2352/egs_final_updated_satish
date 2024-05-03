@@ -631,43 +631,48 @@ public function getFilterLaboursdurationReport(Request $request)
             
             // $data_user_output=$query_user->select('id')->get();
 
-            $query = LabourAttendanceMark::leftJoin('labour', 'tbl_mark_attendance.mgnrega_card_id', '=', 'labour.mgnrega_card_id')
-        ->leftJoin('users', 'labour.user_id', '=', 'users.id')
-        ->leftJoin('skills', 'labour.skill_id', '=', 'skills.id')
-        ->whereBetween('tbl_mark_attendance.created_at', [$startDate, $endDate])
-        ->when($request->get('districtId') || $request->get('talukaId') || $request->get('villageId'), function($query) use ($request, $data_user_output) {
-            $query->whereIn('tbl_mark_attendance.user_id',$data_user_output);
-        })
-        ->when($request->get('SkillId'), function($query) use ($request) {
-            $query->where('labour.skill_id', $request->SkillId);
-        })  
-        ->select(
-            'skills.id as skill_id',
-            'skills.skills as skill_name',
-            DB::raw('COUNT(tbl_mark_attendance.id) as attendance_count') // Count attendance records
-        )
-        ->groupBy('skills.id','skills.skills'); // Group by skill id
-
-            $data_output = $query->get();
-
-            // Calculate total working days in the specified month
-            $totalWorkingDays = $startDate->daysInMonth;
-
-            $labour_ajax_data = [];
-            // Calculate average attendance percentage for each skill
-            foreach ($data_output as $skill) {
-                $attendancePercentage = ($skill->attendance_count / $totalWorkingDays) * 100;
-                $averageAttendancePercentage = round($attendancePercentage, 2);
-
-                $labour_ajax_data[] = [
-                    'skill_id' => $skill->skill_id,
-                    'skill_name' => $skill->skill_name,
-                    'average_attendance_percentage' => $averageAttendancePercentage
-                ];
-            }
+            $query = Labour::leftJoin('registrationstatus', 'labour.is_approved', '=', 'registrationstatus.id')
+            ->leftJoin('gender as gender_labour', 'labour.gender_id', '=', 'gender_labour.id')
+            ->leftJoin('skills as skills_labour', 'labour.gender_id', '=', 'skills_labour.id')
+            ->leftJoin('tbl_area as district_labour', 'labour.district_id', '=', 'district_labour.location_id')
+            ->leftJoin('tbl_area as taluka_labour', 'labour.taluka_id', '=', 'taluka_labour.location_id')
+            ->leftJoin('tbl_area as village_labour', 'labour.village_id', '=', 'village_labour.location_id')
+            ->leftJoin('users', 'labour.user_id', '=', 'users.id')
+            ->where('registrationstatus.is_active', true)
+            ->when($request->get('RegistrationStatusId'), function($query) use ($request) {
+                $query->where('labour.is_approved', $request->RegistrationStatusId);
+            })
+    
+            ->when($request->get('districtId') || $request->get('talukaId') || $request->get('villageId'), function($query) use ($request, $data_user_output) {
+                $query->whereIn('labour.user_id',$data_user_output);
+            })
+            ->when($request->get('SkillId'), function($query) use ($request) {
+                $query->where('labour.skill_id', $request->SkillId);
+            })  
+            ->select(
+                'labour.id',
+                'labour.full_name',
+                'labour.date_of_birth',
+                // 'gender_labour.gender_name as gender_name',
+                'skills_labour.skills as skills',
+                // 'district_labour.name as district_id',
+                // 'taluka_labour.name as taluka_id',
+                // 'village_labour.name as village_id',
+                'labour.mobile_number',
+                'labour.landline_number',
+                'labour.mgnrega_card_id',
+                'labour.latitude',
+                'labour.longitude',
+                'labour.profile_image',
+                // 'registrationstatus.status_name',
+                'labour.is_approved',
+                'users.f_name',
+                'users.m_name',
+                'users.l_name',
+            );
 
            
-        //    $data_output = $query->get();
+           $data_output = $query->get();
 
         }
 
