@@ -247,7 +247,7 @@
                                                 </a>
                                             </div>
                                             <div class="col-md-3">
-                                                <a href="{{ route('list-approved-labours') }}">
+                                                <a href="{{ route('list-todays-approved-labours') }}">
                                                     <div class="card">
                                                         <div class="card-body"
                                                             style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
@@ -363,13 +363,34 @@
                                                             style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
                                                             <div class="card-statistic-3 p-4">
                                                                 <div class="mb-4">
-                                                                    <h6 class="mb-0 dash_card_title">Project Count</h6>
+                                                                    <h6 class="mb-0 dash_card_title">Ongoing Project Count</h6>
                                                                 </div>
                                                                 <div class="row align-items-center mb-2 d-flex">
                                                                     <div class="col-8">
                                                                         <h2
                                                                             class="d-flex align-items-center mb-0 dash_count">
                                                                             {{ $return_data['project_count'] }}</h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card">
+                                                    <a href="{{ route('list-projects') }}">
+                                                        <div class="card-body"
+                                                            style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
+                                                            <div class="card-statistic-3 p-4">
+                                                                <div class="mb-4">
+                                                                    <h6 class="mb-0 dash_card_title">Completed Projects Count</h6>
+                                                                </div>
+                                                                <div class="row align-items-center mb-2 d-flex">
+                                                                    <div class="col-8">
+                                                                        <h2
+                                                                            class="d-flex align-items-center mb-0 dash_count">
+                                                                            {{ $return_data['project_count_completed'] }}</h2>
                                                                     </div>
                                                                 </div>
                                                             </div>

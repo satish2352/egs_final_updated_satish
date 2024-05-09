@@ -610,6 +610,7 @@ public function getFilterLaboursdurationReport(Request $request)
                     'average_attendance_percentage' => $averageAttendancePercentage
                 ];
             }
+            // dd($labour_ajax_data);
  
       }else if($sess_user_role=='2')
       {

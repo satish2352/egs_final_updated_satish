@@ -98,6 +98,7 @@
                   </li>
              @endif
 
+             @if(session()->get('role_id')=='1')
              <li class="{{request()->is('list-district*')
                     ? 'nav-item active' : 'nav-item' }}">
                       <a class="{{request()->is('list-district*')
@@ -109,26 +110,21 @@
                       </a>
                       <div class="collapse" id="area">
                           <ul class="nav flex-column sub-menu">
-                              <!-- @if (in_array('list-district', $data_for_url)) -->
                                   <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-district*')
                                     ? 'nav-link active' : 'nav-link' }}"
                                           href="{{ route('list-district') }}">District</a></li>
-                              <!-- @endif -->
-                              <!-- @if (in_array('list-gender', $data_for_url)) -->
                                   <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-taluka*')
                                     ? 'nav-link active' : 'nav-link' }}"
                                           href="{{ route('list-taluka') }}">Taluka</a></li>
-                              <!-- @endif -->
-                              <!-- @if (in_array('list-maritalstatus', $data_for_url)) -->
                                   <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-village*')
                                     ? 'nav-link active' : 'nav-link' }}"
                                           href="{{ route('list-village') }}">Village</a></li>
-                              <!-- @endif -->
                               
 
                           </ul>
                       </div>
                   </li>
+                  @endif
 
             <li class="nav-item">
                 <a class="{{request()->is('list-labours*')
@@ -345,9 +341,9 @@
                                     ? 'nav-link active' : 'nav-link' }}"
                                       href="{{ route('list-labour-attendance-report') }}">Skill Wise Attendance Report</a></li>
 
-                                <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-labour-attendance-report*')
+                                <!-- <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-labour-attendance-report*')
                                     ? 'nav-link active' : 'nav-link' }}"
-                                      href="{{ route('list-labour-attendance-report') }}">Location Wise Attendance Report</a></li>
+                                      href="{{ route('list-labour-attendance-report') }}">Location Wise Attendance Report</a></li> -->
                           
                           {{-- @if (in_array('list-project-report', $data_for_url)) --}}
                               <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-project-report*')
@@ -355,9 +351,9 @@
                                       href="{{ route('list-project-report') }}">Project Report</a></li>
                           {{-- @endif --}}
                           {{-- @if (in_array('list-project-and-location-report', $data_for_url)) --}}
-                              <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-project-and-location-report*')
+                              <!-- <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-project-and-location-report*')
                                 ? 'nav-link active' : 'nav-link' }}"
-                                      href="{{ route('list-project-and-location-report') }}">Project and Location</a></li>
+                                      href="{{ route('list-project-and-location-report') }}">Project and Location</a></li> -->
                           {{-- @endif --}}
                       </ul>
                   </div>

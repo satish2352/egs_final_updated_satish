@@ -71,6 +71,27 @@ class LaboursController extends Controller {
         return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type'));
     }
 
+    public function listTodayApprovedLabours()
+    {
+        $sess_user_id=session()->get('user_id');
+		$sess_user_type=session()->get('user_type');
+		$sess_user_role=session()->get('role_id');
+		$sess_user_working_dist=session()->get('working_dist');
+
+        $district_data = TblArea::where('parent_id', '2')
+                    ->orderBy('name', 'asc')
+                    ->get(['location_id', 'name']);
+
+        $taluka_data=TblArea::where('parent_id', $sess_user_working_dist)
+                    ->orderBy('name', 'asc')
+                    ->get(['location_id', 'name']);
+                    
+        $labour_type='2';            
+
+        $labours = $this->service->listTodayApprovedLabours();
+        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type'));
+    }
+
     public function listDisapprovedLabours()
     {
         $sess_user_id=session()->get('user_id');

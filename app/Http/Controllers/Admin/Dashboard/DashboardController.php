@@ -76,14 +76,14 @@ public function index(Request $request)
         $labourRequestCounts = [
             'Sent For Approval Labours' => 0,
             'Approved Labours' => 0,
-            'Not Approved Labour' => 0,
-            'Resubmitted Labour' => 0,
+            'Not Approved Labours' => 0,
+            'Resubmitted Labours' => 0,
         ];
         
         $documentRequestCounts = [
-            'Sent For Approval Document' => 0,
+            'Sent For Approval Documents' => 0,
             'Approved Documents' => 0,
-            'Not Approved Document' => 0,
+            'Not Approved Documents' => 0,
             'Resubmitted Documents' => 0,
         ];
 
@@ -97,7 +97,11 @@ public function index(Request $request)
               ->where('projects.is_active', true)
               ->count();  
                         
-
+              $projectCountCompleted= Project::where('projects.end_date', '=',date('Y-m-d'))
+              //   ->whereIn('projects.District', $data_user_output)
+                ->where('projects.is_active', true)
+                ->count();
+                
             $todayCount = Labour::where('updated_at', '>=', $fromDate)
             ->where('updated_at', '<=', $toDate)
             ->where('is_approved', 2)
@@ -121,9 +125,9 @@ public function index(Request $request)
                 } elseif ($count->is_approved == 2 && $count->is_resubmitted == 0) {
                     $labourRequestCounts['Approved Labours'] += $count->count;
                 } elseif ($count->is_approved == 3 && $count->is_resubmitted == 0) {
-                    $labourRequestCounts['Not Approved Labour'] += $count->count;
+                    $labourRequestCounts['Not Approved Labours'] += $count->count;
                 } elseif ($count->is_approved == 1 && $count->is_resubmitted == 1) {
-                    $labourRequestCounts['Resubmitted Labour'] += $count->count;
+                    $labourRequestCounts['Resubmitted Labours'] += $count->count;
                 }
             }
 
@@ -166,7 +170,12 @@ public function index(Request $request)
             ->where('users.user_district', $user_working_dist)
             ->count();      
            
-
+            $projectCountCompleted= Project::leftJoin('users', 'projects.District', '=', 'users.user_district')  
+            ->where('projects.end_date', '<=',date('Y-m-d'))
+            // ->whereIn('projects.District', $user_working_dist)
+            ->where('projects.is_active', true)
+            ->where('users.user_district', $user_working_dist)
+            ->count();  
            
 
 
@@ -246,13 +255,16 @@ public function index(Request $request)
                 })
                 ->count();
 
-                // dd($projectCount);
-
-            // $projectCount= Project::leftJoin('users', 'projects.District', '=', 'users.user_district')  
-            // ->where('projects.end_date', '>=',date('Y-m-d'))
-            // ->whereIn('projects.District', $user_working_vil)
-            // ->where('projects.is_active', true)
-            // ->count();  
+            $projectCountCompleted = Project:: leftJoin('tbl_area as district_projects', 'projects.District', '=', 'district_projects.location_id')  
+                ->where('projects.is_active', true)
+                ->where('projects.end_date', '<=', now())
+                ->when($request->has('latitude'), function($query) use ($latN, $latS, $lonE, $lonW) {
+                    $query->where('projects.latitude', '<=', $latN)
+                        ->where('projects.latitude', '>=', $latS)
+                        ->where('projects.longitude', '<=', $lonE)
+                        ->where('projects.longitude', '>=', $lonW);
+                })
+                ->count();  
 
             
             $todayCount = Labour::where('updated_at', '>=', $fromDate)
@@ -313,6 +325,7 @@ public function index(Request $request)
             'today_count' => $todayCount,
             'current_year_count' => $currentYearCount,
             'project_count' => $projectCount,
+            'project_count_completed' =>$projectCountCompleted,
             'labourRequestCounts' => $labourRequestCounts,
             'documentRequestCounts' => $documentRequestCounts,
         ];

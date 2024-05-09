@@ -6,7 +6,7 @@
         <div class="content-wrapper mt-7">
             <div class="page-header">
                 <h3 class="page-title">
-                    Resubmitted Docuemnt List
+                    Resubmitted Document List
                 </h3>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">

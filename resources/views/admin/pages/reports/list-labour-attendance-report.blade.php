@@ -29,7 +29,7 @@
                                     <select class="form-control" name="week_id" id="week_id">
                                         <option value="">Select Week</option>
                                         @for ($i = 1; $i <= 5; $i++)
-                                            <option value="{{ $i }}">{{ $i }}</option>
+                                            <option value="{{ $i }}">{{ $i }} Week</option>
                                         @endfor
                                     </select>
                                 </div>
@@ -127,7 +127,7 @@
                             <div class="col-lg-3 col-md-3 col-sm-3">
                                 <div class="form-group">
                                     <button type="button" class="btn btn-sm btn-success" id="submitButton">
-                                        Search1
+                                        Search
                                     </button>
                                 </div>
                             </div>
