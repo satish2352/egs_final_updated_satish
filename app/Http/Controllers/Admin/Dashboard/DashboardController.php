@@ -138,11 +138,11 @@ public function index(Request $request)
 
             foreach ($documentCounts as $countdoc) {
                 if ($countdoc->is_approved == 1  && $count->is_resubmitted == 0) {
-                    $documentRequestCounts['Sent For Approval Document'] += $countdoc->count;
+                    $documentRequestCounts['Sent For Approval Documents'] += $countdoc->count;
                 } elseif ($countdoc->is_approved == 2  && $count->is_resubmitted == 0) {
                     $documentRequestCounts['Approved Documents'] += $countdoc->count;
                 } elseif ($countdoc->is_approved == 3  && $count->is_resubmitted == 0) {
-                    $documentRequestCounts['Not Approved Document'] += $countdoc->count;
+                    $documentRequestCounts['Not Approved Documents'] += $countdoc->count;
                 } elseif ($countdoc->is_approved == 1  && $count->is_resubmitted == 1) {
                     $documentRequestCounts['Resubmitted Documents'] += $countdoc->count;
                 }
