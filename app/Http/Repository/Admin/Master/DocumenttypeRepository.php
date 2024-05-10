@@ -108,7 +108,7 @@ class DocumenttypeRepository{
 
             // Assuming 'is_active' is a field in the Slider model
             if ($slide) {
-                $is_active = $slide->is_active === 1 ? 0 : 1;
+                $is_active = $slide->is_active == 1 ? 0 : 1;
                 $slide->is_active = $is_active;
                 $slide->save();
 

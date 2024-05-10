@@ -221,7 +221,7 @@ class RoleRepository  {
         try {
             $role = Roles::find($request); // Assuming $request directly contains the ID        
             if ($role) {
-                $is_active = $role->is_active === 1 ? 0 : 1;
+                $is_active = $role->is_active == 1 ? 0 : 1;
                 $role->is_active = $is_active;
                 // dd($marquee);
                 $role->save();
