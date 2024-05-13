@@ -105,8 +105,7 @@ class UserProfileController extends Controller
                 $message->to($email)->subject('Password Reset');
                 $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
             });
-dd($msg);
-die();
+
             return true; // Email sent successfully
 
         } catch (\Exception $e) {
