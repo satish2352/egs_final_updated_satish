@@ -74,17 +74,17 @@ public function index(Request $request)
         }
 
         $labourRequestCounts = [
-            'sent_for_approval_count' => 0,
-            'approved_count' => 0,
-            'not_approved_count' => 0,
-            'resubmitted_labour_count' => 0,
+            'Sent For Approval Labours' => 0,
+            'Approved Labours' => 0,
+            'Not Approved Labours' => 0,
+            'Resubmitted Labours' => 0,
         ];
         
         $documentRequestCounts = [
-            'sent_for_approval_document_count' => 0,
-            'approved_document_count' => 0,
-            'not_approved_document_count' => 0,
-            'resubmitted_document_count' => 0,
+            'Sent For Approval Documents' => 0,
+            'Approved Documents' => 0,
+            'Not Approved Documents' => 0,
+            'Resubmitted Documents' => 0,
         ];
 
         if ($roleId== 1) {
@@ -97,7 +97,11 @@ public function index(Request $request)
               ->where('projects.is_active', true)
               ->count();  
                         
-
+              $projectCountCompleted= Project::where('projects.end_date', '=',date('Y-m-d'))
+              //   ->whereIn('projects.District', $data_user_output)
+                ->where('projects.is_active', true)
+                ->count();
+                
             $todayCount = Labour::where('updated_at', '>=', $fromDate)
             ->where('updated_at', '<=', $toDate)
             ->where('is_approved', 2)
@@ -110,33 +114,37 @@ public function index(Request $request)
                 ->count();
 
             
-            $labourCounts = Labour::selectRaw('is_approved, COUNT(*) as count')
+            $labourCounts = Labour::selectRaw('is_approved,is_resubmitted, COUNT(*) as count')
                 ->where('is_resubmitted', 0)
-                ->groupBy('is_approved')
+                ->groupBy('is_approved','is_resubmitted')
                 ->get();
             
             foreach ($labourCounts as $count) {
-                if ($count->is_approved == 1) {
-                    $labourRequestCounts['sent_for_approval_count'] += $count->count;
-                } elseif ($count->is_approved == 2) {
-                    $labourRequestCounts['approved_count'] += $count->count;
-                } elseif ($count->is_approved == 3) {
-                    $labourRequestCounts['not_approved_count'] += $count->count;
+                if ($count->is_approved == 1 && $count->is_resubmitted == 0) {
+                    $labourRequestCounts['Sent For Approval Labours'] += $count->count;
+                } elseif ($count->is_approved == 2 && $count->is_resubmitted == 0) {
+                    $labourRequestCounts['Approved Labours'] += $count->count;
+                } elseif ($count->is_approved == 3 && $count->is_resubmitted == 0) {
+                    $labourRequestCounts['Not Approved Labours'] += $count->count;
+                } elseif ($count->is_approved == 1 && $count->is_resubmitted == 1) {
+                    $labourRequestCounts['Resubmitted Labours'] += $count->count;
                 }
             }
 
-            $documentCounts = GramPanchayatDocuments::selectRaw('is_approved, COUNT(*) as count')
+            $documentCounts = GramPanchayatDocuments::selectRaw('is_approved,is_resubmitted, COUNT(*) as count')
                 ->where('is_resubmitted', 0)
-                ->groupBy('is_approved')
+                ->groupBy('is_approved','is_resubmitted')
                 ->get();
 
             foreach ($documentCounts as $countdoc) {
-                if ($countdoc->is_approved == 1) {
-                    $documentRequestCounts['sent_for_approval_document_count'] += $countdoc->count;
-                } elseif ($countdoc->is_approved == 2) {
-                    $documentRequestCounts['approved_document_count'] += $countdoc->count;
-                } elseif ($countdoc->is_approved == 3) {
-                    $documentRequestCounts['not_approved_document_count'] += $countdoc->count;
+                if ($countdoc->is_approved == 1  && $count->is_resubmitted == 0) {
+                    $documentRequestCounts['Sent For Approval Documents'] += $countdoc->count;
+                } elseif ($countdoc->is_approved == 2  && $count->is_resubmitted == 0) {
+                    $documentRequestCounts['Approved Documents'] += $countdoc->count;
+                } elseif ($countdoc->is_approved == 3  && $count->is_resubmitted == 0) {
+                    $documentRequestCounts['Not Approved Documents'] += $countdoc->count;
+                } elseif ($countdoc->is_approved == 1  && $count->is_resubmitted == 1) {
+                    $documentRequestCounts['Resubmitted Documents'] += $countdoc->count;
                 }
             }
 
@@ -162,7 +170,12 @@ public function index(Request $request)
             ->where('users.user_district', $user_working_dist)
             ->count();      
            
-
+            $projectCountCompleted= Project::leftJoin('users', 'projects.District', '=', 'users.user_district')  
+            ->where('projects.end_date', '<=',date('Y-m-d'))
+            // ->whereIn('projects.District', $user_working_dist)
+            ->where('projects.is_active', true)
+            ->where('users.user_district', $user_working_dist)
+            ->count();  
            
 
 
@@ -242,13 +255,16 @@ public function index(Request $request)
                 })
                 ->count();
 
-                // dd($projectCount);
-
-            // $projectCount= Project::leftJoin('users', 'projects.District', '=', 'users.user_district')  
-            // ->where('projects.end_date', '>=',date('Y-m-d'))
-            // ->whereIn('projects.District', $user_working_vil)
-            // ->where('projects.is_active', true)
-            // ->count();  
+            $projectCountCompleted = Project:: leftJoin('tbl_area as district_projects', 'projects.District', '=', 'district_projects.location_id')  
+                ->where('projects.is_active', true)
+                ->where('projects.end_date', '<=', now())
+                ->when($request->has('latitude'), function($query) use ($latN, $latS, $lonE, $lonW) {
+                    $query->where('projects.latitude', '<=', $latN)
+                        ->where('projects.latitude', '>=', $latS)
+                        ->where('projects.longitude', '<=', $lonE)
+                        ->where('projects.longitude', '>=', $lonW);
+                })
+                ->count();  
 
             
             $todayCount = Labour::where('updated_at', '>=', $fromDate)
@@ -309,6 +325,7 @@ public function index(Request $request)
             'today_count' => $todayCount,
             'current_year_count' => $currentYearCount,
             'project_count' => $projectCount,
+            'project_count_completed' =>$projectCountCompleted,
             'labourRequestCounts' => $labourRequestCounts,
             'documentRequestCounts' => $documentRequestCounts,
         ];

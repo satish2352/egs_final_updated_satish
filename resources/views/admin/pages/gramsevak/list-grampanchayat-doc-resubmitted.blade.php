@@ -6,7 +6,7 @@
         <div class="content-wrapper mt-7">
             <div class="page-header">
                 <h3 class="page-title">
-                    Docuemnt Received For Reverification List
+                    Document Received For Reverification List
                 </h3>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">

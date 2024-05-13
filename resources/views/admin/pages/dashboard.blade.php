@@ -247,7 +247,7 @@
                                                 </a>
                                             </div>
                                             <div class="col-md-3">
-                                                <a href="{{ route('list-approved-labours') }}">
+                                                <a href="{{ route('list-todays-approved-labours') }}">
                                                     <div class="card">
                                                         <div class="card-body"
                                                             style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
@@ -363,13 +363,34 @@
                                                             style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
                                                             <div class="card-statistic-3 p-4">
                                                                 <div class="mb-4">
-                                                                    <h6 class="mb-0 dash_card_title">Project Count</h6>
+                                                                    <h6 class="mb-0 dash_card_title">Ongoing Project Count</h6>
                                                                 </div>
                                                                 <div class="row align-items-center mb-2 d-flex">
                                                                     <div class="col-8">
                                                                         <h2
                                                                             class="d-flex align-items-center mb-0 dash_count">
                                                                             {{ $return_data['project_count'] }}</h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card">
+                                                    <a href="{{ route('list-projects') }}">
+                                                        <div class="card-body"
+                                                            style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
+                                                            <div class="card-statistic-3 p-4">
+                                                                <div class="mb-4">
+                                                                    <h6 class="mb-0 dash_card_title">Completed Projects Count</h6>
+                                                                </div>
+                                                                <div class="row align-items-center mb-2 d-flex">
+                                                                    <div class="col-8">
+                                                                        <h2
+                                                                            class="d-flex align-items-center mb-0 dash_count">
+                                                                            {{ $return_data['project_count_completed'] }}</h2>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -386,16 +407,16 @@
                                                 @php
                                                     $route = '';
                                                     switch ($key) {
-                                                        case 'sent_for_approval_count':
+                                                        case 'Sent For Approval Labours':
                                                             $route = route('list-labours');
                                                             break;
-                                                        case 'approved_count':
+                                                        case 'Approved Labours':
                                                             $route = route('list-approved-labours');
                                                             break;
-                                                        case 'not_approved_count':
+                                                        case 'Not Approved Labours':
                                                             $route = route('list-disapproved-labours');
                                                             break;
-                                                        case 'resubmitted_labour_count':
+                                                        case 'Resubmitted Labours':
                                                             $route = route('list-resubmitted-labours');
                                                             break;
                                                         default:
@@ -442,16 +463,16 @@
                                                 @php
                                                     $route = '';
                                                     switch ($key) {
-                                                        case 'sent_for_approval_document_count':
+                                                        case 'Sent For Approval Documents':
                                                             $route = route('list-grampanchayt-doc-new');
                                                             break;
-                                                        case 'approved_document_count':
+                                                        case 'Approved Documents':
                                                             $route = route('list-grampanchayt-doc-approved');
                                                             break;
-                                                        case 'not_approved_document_count':
+                                                        case 'Not Approved Documents':
                                                             $route = route('list-grampanchayt-doc-not-approved');
                                                             break;
-                                                        case 'resubmitted_document_count':
+                                                        case 'Resubmitted Documents':
                                                             $route = route('list-grampanchayt-doc-resubmitted');
                                                             break;
                                                         default:
@@ -491,13 +512,13 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-center">
                                     <div class="col-lg-10 col-md-10 col-sm-10">
-                                        <canvas id="myPieChart" width="400" height="400"></canvas>
+                                        <canvas id="myPieChart" width="400" height="200"></canvas>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-center">
                                     <div class="col-lg-10 col-md-10 col-sm-10">
-                                        <canvas id="myPieChart1" width="400" height="400"></canvas>
+                                        <canvas id="myPieChart1" width="400" height="200"></canvas>
                                     </div>
                                 </div>
                             </div>

@@ -68,6 +68,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/list-labour-attendance', ['as' => 'list-labour-attendance', 'uses' => 'App\Http\Controllers\Admin\Menu\LaboursController@getLabourAttendanceList']);
 
     Route::get('/list-approved-labours', ['as' => 'list-approved-labours', 'uses' => 'App\Http\Controllers\Admin\Menu\LaboursController@listApprovedLabours']);
+    Route::get('/list-todays-approved-labours', ['as' => 'list-todays-approved-labours', 'uses' => 'App\Http\Controllers\Admin\Menu\LaboursController@listTodayApprovedLabours']);
     Route::get('/list-disapproved-labours', ['as' => 'list-disapproved-labours', 'uses' => 'App\Http\Controllers\Admin\Menu\LaboursController@listDisapprovedLabours']);
     Route::get('/list-resubmitted-labours', ['as' => 'list-resubmitted-labours', 'uses' => 'App\Http\Controllers\Admin\Menu\LaboursController@listResubmitedLabours']);
     Route::post('/update-labour-status', ['as' => 'update-labour-status', 'uses' => 'App\Http\Controllers\Admin\Menu\LaboursController@updateLabourStatus']);
@@ -228,21 +229,6 @@ Route::post('/delete-usertype', ['as' => 'delete-usertype', 'uses' => 'App\Http\
 Route::post('/update-one-usertype', ['as' => 'update-one-usertype', 'uses' => 'App\Http\Controllers\Admin\Master\UsertypeController@updateOne']);
 
 
-// Reports======================
-Route::get('/list-location-report', ['as' => 'list-location-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getAllLabourLocation']);
-Route::get('/export-location-report', ['as' => 'export-location-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getExportLabourLocation']);
-
-Route::get('/list-labour-duration-report', ['as' => 'list-labour-duration-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getAllLabourDuration']);
-Route::get('/list-labour-duration-filter-report', ['as' => 'list-labour-duration-filter-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getFilterLaboursdurationReport']);
-
-Route::get('/list-project-report', ['as' => 'list-project-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getAllProjects']);
-Route::get('/list-project-and-location-report', ['as' => 'list-project-and-location-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getAllProjectLocation']);
-
-Route::get('/list-labours-filter-reports', ['as' => 'list-labours-filter-reports', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getFilterLaboursReport']);
-Route::get('/list-project-wise-labour-reports', ['as' => 'list-project-wise-labour-reports', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getFilterProjectsReport']);
-
-
-
 // Route::get('/db-backup', ['as' => 'db-backup', 'uses' => 'App\Http\Controllers\DBBackup\DBBackupController@downloadBackup']);
 
 Route::get('/log-out', ['as' => 'log-out', 'uses' => 'App\Http\Controllers\Admin\LoginRegister\LoginController@logout']);
@@ -277,6 +263,23 @@ Route::post('/update-village', ['as' => 'update-village', 'uses' => 'App\Http\Co
 Route::post('/delete-village', ['as' => 'delete-village', 'uses' => 'App\Http\Controllers\Admin\Area\AreaController@deleteVillage']);
 
 Route::post('/get-ajax-listing', ['as' => 'get-ajax-listing', 'uses' => 'App\Http\Controllers\Admin\Master\DocumenttypeController@ajaxList']);
+
+
+// Reports======================
+Route::get('/list-location-report', ['as' => 'list-location-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getAllLabourLocation']);
+Route::get('/export-location-report', ['as' => 'export-location-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getExportLabourLocation']);
+
+Route::get('/list-labour-attendance-report', ['as' => 'list-labour-attendance-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getAllLabourDuration']);
+// Route::get('/list-labour-duration-filter-report', ['as' => 'list-labour-duration-filter-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getFilterLaboursdurationReport']);
+
+Route::get('/list-project-report', ['as' => 'list-project-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getAllProjects']);
+Route::get('/list-project-and-location-report', ['as' => 'list-project-and-location-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getAllProjectLocation']);
+
+Route::get('/list-labours-filter-reports', ['as' => 'list-labours-filter-reports', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getFilterLaboursReport']);
+Route::get('/list-project-wise-labour-reports', ['as' => 'list-project-wise-labour-reports', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getFilterProjectsReport']);
+
+//new reports
+Route::get('/list-labour-attendance-skill-wise-report', ['as' => 'list-labour-attendance-skill-wise-report', 'uses' => 'App\Http\Controllers\Admin\Reports\ReportsController@getFilterLaboursdurationReport']);
 
 
 

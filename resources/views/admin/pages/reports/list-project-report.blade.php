@@ -24,7 +24,41 @@
                         <div class="row">
 
                        
-                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <select class="form-control" name="district_id" id="district_id">
+                                            <option value="">Select District</option>
+                                            @foreach ($district_data as $district_for_data)    
+                                            <option value="{{ $district_for_data['location_id'] }}">{{ $district_for_data['name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('district_id'))
+                                            <span class="red-text"><?php echo $errors->first('district_id', ':message'); ?></span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <select class="form-control" name="taluka_id" id="taluka_id">
+                                            <option value="">Select Taluka</option>
+                                        </select>
+                                        @if ($errors->has('taluka_id'))
+                                            <span class="red-text"><?php echo $errors->first('taluka_id', ':message'); ?></span>
+                                        @endif
+                                    </div>
+                                </div>
+                            
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <select class="form-control" name="village_id" id="village_id">
+                                        <option value="">Select Village</option>
+                                        </select>
+                                        @if ($errors->has('village_id'))
+                                            <span class="red-text"><?php echo $errors->first('village_id', ':message'); ?></span>
+                                        @endif
+                                    </div>
+                                </div>                            <div class="col-lg-3 col-md-3 col-sm-3">
                                 <div class="form-group">
                                     <select class="form-control" name="project_id" id="project_id">
                                         <option value="">Select Project</option>
@@ -133,13 +167,83 @@
  
        
 
+            
+        <script>
+            $(document).ready(function() {
 
+                $('#district_id').change(function(e) {
+                    e.preventDefault();
+                    var districtId = $('#district_id').val();
 
-<script>
+                    if (districtId !== '') {
+                        $.ajax({
+                            url: '{{ route('taluka') }}',
+                            type: 'GET',
+                            data: {
+                                districtId: districtId
+                            },
+                            success: function(response) {
+                                if (response.taluka.length > 0) {
+                                    $('#taluka_id').empty();
+                                    $('#village_id').empty();
+                                    $('#taluka_id').html('<option value="">Select Taluka</option>');
+                                    $('#village_id').html('<option value="">Select Village</option>');
+                                    $.each(response.taluka, function(index, taluka) {
+                                        $('#taluka_id').append('<option value="' + taluka
+                                            .location_id +
+                                            '">' + taluka.name + '</option>');
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+
+                $('#taluka_id').change(function(e) {
+                    e.preventDefault();
+                    var talukaId = $('#taluka_id').val();
+
+                    if (talukaId !== '') {
+                        $.ajax({
+                            url: '{{ route('village') }}',
+                            type: 'GET',
+                            data: {
+                                talukaId: talukaId
+                            },
+                            success: function(response) {
+                                if (response.village.length > 0) {
+                                    $('#village_id').empty();
+                                    $('#village_id').html('<option value="">Select Village</option>');
+                                    $.each(response.village, function(index, village) {
+                                        $('#village_id').append('<option value="' + village
+                                            .location_id +
+                                            '">' + village.name + '</option>');
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+
+        <script>
             $(document).ready(function() {
 
                 $('#submitButton').click(function(e) {
                     e.preventDefault();
+
+                    var districtId = $('#district_id').val()
+                    if(districtId==undefined){
+                        districtId="";
+                    }
+                    var talukaId = $('#taluka_id').val();
+                    var villageId = $('#village_id').val();
                     
                     var ProjectId = $('#project_id').val();
 
@@ -161,6 +265,9 @@
                             url: '{{ route('list-project-wise-labour-reports') }}',
                             type: 'GET',
                             data: {
+                                districtId: districtId,
+                                talukaId: talukaId,
+                                villageId: villageId,
                                 ProjectId: ProjectId,
                                 SkillId: SkillId,
                                 IsApprovedId: IsApprovedId,
@@ -219,11 +326,13 @@
             $(document).ready(function(){
                 $('#skillorunskill_id').on('change', function() {
                     var selectedOption = $(this).val();
-                    if(selectedOption === 'unskill') {
+                    if(selectedOption === 'unskill' || selectedOption == '') {
                         $('#skill_id').prop('disabled', true);
+                        $('#skill_id').val('');
                         // $('#skill_id').val('1');
                     } else {
                         $('#skill_id').prop('disabled', false);
+                        $('#skill_id').val('');
                         // $('#skill_id').val('');
 
                     }

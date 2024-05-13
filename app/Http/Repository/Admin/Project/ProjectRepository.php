@@ -106,6 +106,7 @@ class ProjectRepository
 		try {
 		$data =array();
 		$project_data = new Project();
+		dd($project_data);
 		$project_data->project_name = $request['project_name'];
 		$project_data->state = '';
 		$project_data->district = $request['district'];
