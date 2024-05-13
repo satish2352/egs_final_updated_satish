@@ -6,6 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
+
+use Illuminate\Support\Facades\Mail;
+
 use Validator;
 use App\Models\ {
     User
@@ -89,4 +96,61 @@ class UserProfileController extends Controller
         }
     }
     
+
+    public function sendPasswordEmail($password, $email)
+    {
+        try {
+            // Build the message
+           $msg= Mail::raw('Your new password is: ' . $password, function ($message) use ($email) {
+                $message->to($email)->subject('Password Reset');
+                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+            });
+dd($msg);
+die();
+            return true; // Email sent successfully
+
+        } catch (\Exception $e) {
+            // Log the error
+            \Log::error($e);
+            return false;
+        }
+    }
+
+    public function resetPasswordEmailBased(Request $request)
+    {
+        try {
+            // Validate the email
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['status' => 'false', 'message' => 'Invalid email format'], 400);
+            }
+
+            $user = User::where('email', $request->email)->first();
+            if (!$user) {
+                return response()->json(['status' => 'false', 'message' => 'Email not found'], 404);
+            }
+
+            $newPassword = Str::random(8); // Change the password length as needed
+
+            // Send password reset email
+            $emailSent = $this->sendPasswordEmail($newPassword, $request->email);
+
+            if (!$emailSent) {
+                return response()->json(['status' => 'false', 'message' => 'Failed to send reset link'], 500);
+            }
+
+            // Update user's password
+            $user->password = Hash::make($newPassword);
+            $user->save();
+
+            return response()->json(['status' => 'true', 'message' => 'Password updated successfully'], 200);
+        } catch (\Exception $e) {
+            // Log the error
+            \Log::error($e);
+            return response()->json(['status' => 'false', 'message' => 'Failed to update password'], 500);
+        }
+    }
 }

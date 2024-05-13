@@ -91,8 +91,8 @@ Route::group([
            Route::post('/particular-user-profile', [UserProfileController::class, 'getParticularUserProfile']);
            
 
-           Route::post('/change-passowrd-email', [AuthController::class, 'resetPasswordEmailBased']);
-           
+           Route::post('/change-passowrd-email', [UserProfileController::class, 'resetPasswordEmailBased']);
+
            Route::post('logout', [AuthController::class, 'logout']);
 
            Route::post('/change-password-profile', [UserProfileController::class, 'changePasswordProfile']);
