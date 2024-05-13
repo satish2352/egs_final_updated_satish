@@ -49,51 +49,7 @@ class UserProfileController extends Controller
                 return response()->json(['status' => 'false', 'message' => 'User Details Get Fail','error' => $e->getMessage()], 500);
             }
     }
-
-
-    // public function changePasswordProfile(Request $request) {
-    //     try {
-           
-    //         $all_data_validation = Validator::make($request->all(), [
-    //             'old_password' => 'required|min:8|max:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
-    //             'new_password' => 'required|min:8|max:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
-    //         ]);
-    //         $customMessages = [
-    //             'old_password.required'=>'full name is old password',
-               
-              
-    //        ];
-
-    //        $validator = Validator::make($request->all(), $all_data_validation, $customMessages);
     
-
-    //        if ($validator->fails()) {
-    //         $errors = $validator->errors()->all();
-    //         $errorMessage = '';
-    //         $errorMessage = implode(" \n", $validator->errors()->all());
-    //         return response()->json([
-    //             'status' => 'false',
-    //             'message' => 'Validation Fail: ' . $errorMessage,
-    //         ], 200);
-    //     }
-
-    //         // if ($validator->fails()) {
-    //         //     return response()->json(['status' => 'false', 'message' => $validator->errors()], 200);
-    //         // }
-    
-    //         $user = auth()->user();
-    //         if (!Hash::check($request->old_password, $user->password)) {
-    //             return response()->json(['status' => 'false', 'message' => 'Invalid old password'], 200);
-    //         }
-    
-    //         $user->password = Hash::make($request->new_password);
-    //         $user->save();
-    
-    //         return response()->json(['status' => 'true', 'message' => 'Password updated successfully'], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['status' => 'false', 'message' => 'Failed to update password', 'error' => $e->getMessage()], 500);
-    //     }
-    // }
     public function changePasswordProfile(Request $request) {
         try {
             $all_data_validation = Validator::make($request->all(), [
