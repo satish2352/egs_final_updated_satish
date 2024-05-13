@@ -97,7 +97,7 @@ class UserProfileController extends Controller
     public function changePasswordProfile(Request $request) {
         try {
             $all_data_validation = Validator::make($request->all(), [
-                'old_password' => 'required|min:8|max:8', 
+                'old_password' => 'required|min:8|max:50', 
                 'new_password' => 'required|min:8|max:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/|different:old_password', 
             ], [
                 'old_password.required' => 'The old password field is required.',
@@ -109,9 +109,7 @@ class UserProfileController extends Controller
                 'new_password.regex' => 'The new password must contain at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character.',
                 'new_password.different' => 'The new password must be different from the old password.',
             ]);
-    
-
-      
+          
             
             if ($all_data_validation->fails()) {
                 $errorMessage = $all_data_validation->errors()->first(); // Simplified error message retrieval
