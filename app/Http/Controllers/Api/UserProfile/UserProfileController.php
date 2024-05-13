@@ -102,7 +102,7 @@ class UserProfileController extends Controller
             ], [
                 'old_password.required' => 'The old password field is required.',
                 'old_password.min' => 'The old password must be at least 8 characters.',
-                'old_password.max' => 'The old password may not be greater than 255 characters.',
+                'old_password.max' => 'The old password may not be greater than 8 characters.',
                 'new_password.required' => 'The new password field is required.',
                 'new_password.min' => 'The new password must be at least 8 characters.',
                 'new_password.max' => 'The new password may not be greater than 8 characters.',
