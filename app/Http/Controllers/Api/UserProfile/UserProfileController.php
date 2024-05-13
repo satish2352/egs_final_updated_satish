@@ -105,7 +105,7 @@ class UserProfileController extends Controller
                 'old_password.max' => 'The old password may not be greater than 255 characters.',
                 'new_password.required' => 'The new password field is required.',
                 'new_password.min' => 'The new password must be at least 8 characters.',
-                'new_password.max' => 'The new password may not be greater than 255 characters.',
+                'new_password.max' => 'The new password may not be greater than 8 characters.',
                 'new_password.regex' => 'The new password must contain at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character.',
                 'new_password.different' => 'The new password must be different from the old password.',
             ]);
