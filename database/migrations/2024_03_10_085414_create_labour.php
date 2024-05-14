@@ -27,8 +27,8 @@ return new class extends Migration
             $table->string('mgnrega_card_id');
             $table->string('latitude');
             $table->string('longitude');
-            $table->boolean('is_approved')->default(true);
-            $table->boolean('is_resubmitted')->default(false);
+            $table->integer('is_approved')->default(true);
+            $table->integer('is_resubmitted')->default(false);
             $table->unsignedBigInteger('reason_id')->nullable();
             $table->string('other_remark')->default('null');
             $table->string('sync_reason')->default('null');
