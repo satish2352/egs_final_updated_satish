@@ -36,7 +36,7 @@ Route::post('me', [AuthController::class, 'me']);
 Route::post('/list-masters', [AllMasterController::class, 'getAllMasters']);
 Route::post('/list-updated-master', [AllMasterController::class, 'getAllMastersUpdated']);
 
-Route::post('/change-passowrd-email', [AuthController::class, 'resetPasswordEmailBased']);
+Route::post('/reset-password-byemail', [AuthController::class, 'resetPasswordEmailBased']);
 Route::group([
 
     'middleware' => 'api',
