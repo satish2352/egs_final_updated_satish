@@ -99,15 +99,14 @@ class RegisterRepository
 		$user_data->number = $request['number'];
 		$user_data->aadhar_no = $request['aadhar_no'];
 		$user_data->address = $request['address'];
-		$user_data->state = '';
-		$user_data->district = $request['district'];
-		$user_data->taluka	 = $request['taluka'];
-		$user_data->village = $request['village'];
+		$user_data->district = intval($request['district']);
+		$user_data->taluka	 = intval($request['taluka']);
+		$user_data->village = intval($request['village']);
 		$user_data->pincode = $request['pincode'];
-		$user_data->user_type = $request['user_type'];
-		$user_data->user_district = $request['user_district'];
-		$user_data->user_taluka = $request['user_taluka'];
-		$user_data->user_village = $request['user_village'];
+		$user_data->user_type = intval($request['user_type']);
+		$user_data->user_district = intval($request['user_district']);
+		$user_data->user_taluka = intval($request['user_taluka']);
+		$user_data->user_village = intval($request['user_village']);
 		$user_data->ip_address = 'null';
 		$user_data->is_active = isset($request['is_active']) ? true : false;
 		$user_data->save();
@@ -281,7 +280,6 @@ class RegisterRepository
 				'users.village',
 				'users.pincode',
 				'users.user_type',
-				'users.state',
 				'users.user_district',
 				'users.user_taluka',
 				'users.user_village',
@@ -314,7 +312,6 @@ class RegisterRepository
 							'users.village',
 							'users.pincode',
 							'users.user_type',
-							'users.state',
 							'users.user_district',
 							'users.user_taluka',
 							'users.user_village',
