@@ -159,16 +159,16 @@
                                                 @foreach ($gramsevaks as $item)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $item->f_name }} {{ $item->m_name }} {{ $item->l_name }}
-                                                            ({{ $item->email }})
+                                                        <td>{{ $item['f_name'] }} {{ $item['m_name'] }} {{ $item['l_name'] }}
+                                                            ({{ $item['email']}})
                                                         </td>
-                                                        <td>{{ $item->district }}</td>
-                                                        <td>{{ $item->taluka }}</td>
-                                                        <td>{{ $item->village }}</td>
+                                                        <td>{{ $item['district'] }}</td>
+                                                        <td>{{ $item['taluka'] }}</td>
+                                                        <td>{{ $item['village'] }}</td>
 
                                                         <td class="d-flex">
                                                                  
-                                                            <a data-id="{{ $item->id }}"
+                                                            <a data-id="{{ $item['id'] }}"
                                                                 class="show-btn btn btn-sm btn-outline-primary m-1"><i
                                                                     class="fas fa-eye"></i></a>
                                                          
