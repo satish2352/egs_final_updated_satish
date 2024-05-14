@@ -151,12 +151,12 @@ class AuthController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response()->json(['status' => 'false', 'message' => 'Invalid email format'], 400);
+                return response()->json(['status' => 'false', 'message' => 'Invalid email format'], 200);
             }
 
             $user = User::where('email', $request->email)->first();
             if (!$user) {
-                return response()->json(['status' => 'false', 'message' => 'Email not found'], 404);
+                return response()->json(['status' => 'false', 'message' => 'Email not found'], 200);
             }
             
 
@@ -170,7 +170,7 @@ class AuthController extends Controller
             $emailSent = $this->sendPasswordEmail($newPassword, $request->email);
 
             if (!$emailSent) {
-                return response()->json(['status' => 'false', 'message' => 'Failed to send reset link'], 500);
+                return response()->json(['status' => 'false', 'message' => 'Failed to send reset link'], 200);
             }
 
             
