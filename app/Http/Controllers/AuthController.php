@@ -177,7 +177,7 @@ class AuthController extends Controller
             $user->password = Hash::make($newPassword);
             $user->save();
            
-            return response()->json(['status' => 'true', 'message' => 'Password updated successfully', 'data' => $user], 200);
+            return response()->json(['status' => 'true', 'message' => 'Password updated successfully'], 200);
         } catch (\Exception $e) {
             
             \Log::error($e);
