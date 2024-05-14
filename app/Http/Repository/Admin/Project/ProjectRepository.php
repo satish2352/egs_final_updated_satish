@@ -107,7 +107,6 @@ class ProjectRepository
 		$data =array();
 		$project_data = new Project();
 		$project_data->project_name = $request['project_name'];
-		$project_data->state = '';
 		$project_data->district = intval($request['district']);
 		$project_data->taluka	 = intval($request['taluka']);
 		$project_data->village = intval($request['village']);
@@ -139,7 +138,6 @@ class ProjectRepository
 						->update([
 							// 'u_uname' => $request['u_uname'],
 							'project_name' => $request['project_name'],
-							'state' => '',
 							'district' => $request['district'],
 							'taluka' => $request['taluka'],
 							'village' => $request['village'],
@@ -180,7 +178,6 @@ class ProjectRepository
 				// 'roles.id as role_id',
 				'projects.project_name',
 				'projects.description',
-				'projects.state',
 				'projects.district',
 				'projects.taluka',
 				'projects.village',
