@@ -108,9 +108,9 @@ class ProjectRepository
 		$project_data = new Project();
 		$project_data->project_name = $request['project_name'];
 		$project_data->state = '';
-		$project_data->district = $request['district'];
-		$project_data->taluka	 = $request['taluka'];
-		$project_data->village = $request['village'];
+		$project_data->district = intval($request['district']);
+		$project_data->taluka	 = intval($request['taluka']);
+		$project_data->village = intval($request['village']);
 
 		$project_data->latitude = $request['latitude'];
 		$project_data->longitude = $request['longitude'];
