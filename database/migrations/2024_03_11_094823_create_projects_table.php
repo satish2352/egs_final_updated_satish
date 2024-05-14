@@ -17,10 +17,10 @@ class CreateProjectsTable extends Migration
             $table->bigIncrements('id');
             $table->string('project_name')->unique();
             $table->text('description');
-            $table->string('state');
-            $table->string('District');
-            $table->string('taluka');
-            $table->string('village');
+            $table->integer('state');
+            $table->integer('district');
+            $table->integer('taluka');
+            $table->integer('village');
             $table->text('start_date');
             $table->text('end_date');
             $table->string('latitude');

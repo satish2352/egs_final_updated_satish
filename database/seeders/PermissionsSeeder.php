@@ -125,6 +125,22 @@ class PermissionsSeeder extends Seeder
                         'route_name' => 'Gramsevak Listing',
                         'url' => 'list-gramsevak',
                         'permission_name' => 'Gramsevak Listing',
-                    ]);              
+                    ]); 
+                Permissions::create(
+                    [
+                        'created_at' => \Carbon\Carbon::now(),
+                        'updated_at' => \Carbon\Carbon::now(),
+                        'route_name' => 'Labours Management',
+                        'url' => 'list-labours',
+                        'permission_name' => 'Labours Management',
+                    ]);
+                Permissions::create(
+                    [
+                        'created_at' => \Carbon\Carbon::now(),
+                        'updated_at' => \Carbon\Carbon::now(),
+                        'route_name' => 'Labours Attendance',
+                        'url' => 'list-labour-attendance',
+                        'permission_name' => 'Labours Attendance',
+                    ]);                
     }
 }

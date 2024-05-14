@@ -16,6 +16,7 @@ class CreateDocumenttypeTable extends Migration
         Schema::create('documenttype', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('document_type_name');
+            $table->string('doc_color');
             $table->boolean('is_deleted')->default(false);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
