@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['permissions.policy'])->group(function () {
     Route::middleware('referrer-policy')->group(function () {
 
-Route::get('/login', function () {
+Route::get('/', function () {
     return view('admin.login');
 });
 
