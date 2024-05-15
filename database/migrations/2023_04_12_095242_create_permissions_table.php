@@ -18,7 +18,8 @@ class CreatePermissionsTable extends Migration
             $table->string('route_name');
             $table->string('permission_name');
             $table->string('url');
-            $table->boolean('is_active')->default(true);
+            $table->integer('is_active')->default(true);
+            $table->integer('is_deleted')->default(false);
             $table->timestamps();
         });
     }

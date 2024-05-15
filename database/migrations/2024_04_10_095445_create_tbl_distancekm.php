@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('tbl_distancekm', function (Blueprint $table) {
             $table->id();
             $table->string('distance_km');
-            $table->string('is_deleted')->default(false);
-            $table->boolean('is_active')->default(true);
+            $table->integer('is_active')->default(true);
+            $table->integer('is_deleted')->default(false);
             $table->timestamps();
         });
     }

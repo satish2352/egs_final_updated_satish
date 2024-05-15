@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('labour', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('gender_id');
-            $table->unsignedBigInteger('district_id');
-            $table->unsignedBigInteger('taluka_id');
-            $table->unsignedBigInteger('village_id');
-            $table->unsignedBigInteger('skill_id');
+            $table->integer('user_id');
+            $table->integer('gender_id');
+            $table->integer('district_id');
+            $table->integer('taluka_id');
+            $table->integer('village_id');
+            $table->integer('skill_id');
             $table->string('user_type')->default('null');
             $table->string('full_name');
             $table->string('date_of_birth');
@@ -29,14 +29,15 @@ return new class extends Migration
             $table->string('longitude');
             $table->integer('is_approved')->default(true);
             $table->integer('is_resubmitted')->default(false);
-            $table->unsignedBigInteger('reason_id')->nullable();
+            $table->integer('reason_id')->nullable();
             $table->string('other_remark')->default('null');
             $table->string('sync_reason')->default('null');
             $table->string('aadhar_image')->default('null');
             $table->string('mgnrega_image')->default('null');
             $table->string('profile_image')->default('null');
             $table->string('voter_image')->default('null');
-            $table->boolean('is_active')->default(true);
+            $table->integer('is_active')->default(true);
+            $table->integer('is_deleted')->default(false);
             $table->timestamps();
         });
     }

@@ -26,7 +26,8 @@ class CreateProjectsTable extends Migration
             $table->string('latitude');
             $table->string('longitude');
             $table->rememberToken();
-            $table->boolean('is_active')->default(true);
+            $table->integer('is_active')->default(true);
+            $table->integer('is_deleted')->default(false);
             $table->timestamps();
         });
     }

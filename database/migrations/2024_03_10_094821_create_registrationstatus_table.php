@@ -16,8 +16,8 @@ class CreateRegistrationstatusTable extends Migration
         Schema::create('registrationstatus', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('status_name');
-            $table->boolean('is_deleted')->default(false);
-            $table->boolean('is_active')->default(true);
+            $table->integer('is_active')->default(true);
+            $table->integer('is_deleted')->default(false);
             $table->timestamps();
         });
     }
