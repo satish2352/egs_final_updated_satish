@@ -25,7 +25,6 @@ return new class extends Migration
             $table->string('device_id')->default('null');
             $table->string('aadhar_no');
             $table->string('address');
-            $table->integer('state');
             $table->integer('district');
             $table->integer('taluka');
             $table->integer('village');
