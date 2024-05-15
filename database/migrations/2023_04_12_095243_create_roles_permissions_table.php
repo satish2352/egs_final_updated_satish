@@ -22,7 +22,8 @@ class CreateRolesPermissionsTable extends Migration
             $table->boolean('per_edit')->default(false);
             $table->boolean('per_update')->default(false);
             $table->boolean('per_delete')->default(false);
-            $table->boolean('is_active')->default(true);
+            $table->integer('is_active')->default(true);
+            $table->integer('is_deleted')->default(false);
             // $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
             // $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->timestamps();

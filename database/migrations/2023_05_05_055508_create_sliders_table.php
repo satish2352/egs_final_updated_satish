@@ -24,8 +24,8 @@ class CreateSlidersTable extends Migration
             // $table->string('english_scrolltime');
             // $table->string('image_alt');
             $table->string('url')->default('null');
-            $table->string('is_deleted')->default(false);
-            $table->boolean('is_active')->default(true);
+            $table->integer('is_active')->default(true);
+            $table->integer('is_deleted')->default(false);
             // Add more columns here
             $table->timestamps();
         });

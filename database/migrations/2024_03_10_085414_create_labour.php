@@ -36,7 +36,8 @@ return new class extends Migration
             $table->string('mgnrega_image')->default('null');
             $table->string('profile_image')->default('null');
             $table->string('voter_image')->default('null');
-            $table->boolean('is_active')->default(true);
+            $table->integer('is_active')->default(true);
+            $table->integer('is_deleted')->default(false);
             $table->timestamps();
         });
     }

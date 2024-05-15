@@ -21,7 +21,8 @@ class CreateMainSubMenusesTable extends Migration
             $table->string('order_no');
             $table->boolean('is_static')->default(false);
             $table->string('url')->default('null');
-            $table->boolean('is_active')->default(true);
+            $table->integer('is_active')->default(true);
+            $table->integer('is_deleted')->default(false);
             $table->string('main_sub')->default('sub');
             // $table->foreign('main_menu_id')->references('id')->on('main_menuses')->onDelete('cascade');
             $table->timestamps();

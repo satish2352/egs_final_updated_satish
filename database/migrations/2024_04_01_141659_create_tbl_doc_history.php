@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('is_approved');
             $table->unsignedBigInteger('reason_doc_id');
             $table->string('other_remark')->nullable();
-            $table->string('is_deleted')->default(false);
-            $table->boolean('is_active')->default(true);
+            $table->integer('is_active')->default(true);
+            $table->integer('is_deleted')->default(false);
             $table->timestamps();
         });
     }

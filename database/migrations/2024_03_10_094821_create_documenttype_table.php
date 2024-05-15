@@ -17,8 +17,8 @@ class CreateDocumenttypeTable extends Migration
             $table->bigIncrements('id');
             $table->string('document_type_name');
             $table->string('doc_color');
-            $table->boolean('is_deleted')->default(false);
-            $table->boolean('is_active')->default(true);
+            $table->integer('is_active')->default(true);
+            $table->integer('is_deleted')->default(false);
             $table->timestamps();
         });
     }

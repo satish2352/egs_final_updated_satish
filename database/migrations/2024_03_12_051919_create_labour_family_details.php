@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('gender_id');
             $table->string('relationship_id');
             $table->string('married_status_id');
-            $table->boolean('is_deleted')->default(false);
-            $table->boolean('is_active')->default(true);
+            $table->integer('is_active')->default(true);
+            $table->integer('is_deleted')->default(false);
             $table->timestamps();
         });
     }
