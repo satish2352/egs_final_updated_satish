@@ -51,7 +51,7 @@ class UsersSeeder extends Seeder
             // 'imei_no' => 'imei_no',
             'aadhar_no' => 'aadhar_no',
             'address' => 'address',
-            'district' => 'district',
+            'district' => '0',
             'taluka' => '0',
             'village' => '0',
             'pincode' => '0',
