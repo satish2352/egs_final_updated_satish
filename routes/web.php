@@ -228,6 +228,15 @@ Route::post('/show-usertype', ['as' => 'show-usertype', 'uses' => 'App\Http\Cont
 Route::post('/delete-usertype', ['as' => 'delete-usertype', 'uses' => 'App\Http\Controllers\Admin\Master\UsertypeController@destroy']);
 Route::post('/update-one-usertype', ['as' => 'update-one-usertype', 'uses' => 'App\Http\Controllers\Admin\Master\UsertypeController@updateOne']);
 
+Route::get('/list-rejection-reasons', ['as' => 'list-rejection-reasons', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsController@index']);
+Route::get('/add-rejection-reasons', ['as' => 'add-rejection-reasons', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsController@add']);
+Route::post('/add-rejection-reasons', ['as' => 'add-rejection-reasons', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsController@store']);
+Route::get('/edit-rejection-reasons/{edit_id}', ['as' => 'edit-rejection-reasons', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsController@edit']);
+Route::post('/update-rejection-reasons', ['as' => 'update-rejection-reasons', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsController@update']);
+
+
+Route::get('/list-rejection-reasons-documents', ['as' => 'list-rejection-reasons-documents', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsDocumentController@index']);
+
 
 // Route::get('/db-backup', ['as' => 'db-backup', 'uses' => 'App\Http\Controllers\DBBackup\DBBackupController@downloadBackup']);
 
