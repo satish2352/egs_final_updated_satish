@@ -12,7 +12,8 @@ use App\Models\ {
 class MaritalstatusRepository{
 	public function getAll(){
         try {
-            return Maritalstatus::all();
+            $maritalstatus = Maritalstatus::orderBy('id', 'asc')->get();
+            return $maritalstatus;
         } catch (\Exception $e) {
             return $e;
         }

@@ -12,7 +12,8 @@ use App\Models\ {
 class UsertypeRepository{
 	public function getAll(){
         try {
-            return Usertype::all();
+            $usertypes = Usertype::orderBy('id', 'asc')->get();
+            return $usertypes;
         } catch (\Exception $e) {
             return $e;
         }

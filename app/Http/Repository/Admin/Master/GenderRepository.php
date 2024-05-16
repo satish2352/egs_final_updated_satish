@@ -12,7 +12,8 @@ use App\Models\ {
 class GenderRepository{
 	public function getAll(){
         try {
-            return Gender::all();
+            $genders = Gender::orderBy('id', 'asc')->get();
+            return $genders;
         } catch (\Exception $e) {
             return $e;
         }

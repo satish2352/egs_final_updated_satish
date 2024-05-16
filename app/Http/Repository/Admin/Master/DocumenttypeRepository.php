@@ -14,7 +14,8 @@ class DocumenttypeRepository{
         try {
             // return Documenttype::all();
             // return Documenttype::paginate(10);
-            return Documenttype::all();
+            $documenttypes = Documenttype::orderBy('id', 'asc')->get();
+            return $documenttypes;
         } catch (\Exception $e) {
             return $e;
         }

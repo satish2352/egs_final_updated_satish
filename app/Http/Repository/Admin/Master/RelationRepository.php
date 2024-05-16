@@ -12,7 +12,8 @@ use App\Models\ {
 class RelationRepository{
 	public function getAll(){
         try {
-            return RelationModel::all();
+            $relations = RelationModel::orderBy('id', 'asc')->get();
+            return $relations;
         } catch (\Exception $e) {
             return $e;
         }

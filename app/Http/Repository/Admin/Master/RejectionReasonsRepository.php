@@ -12,7 +12,8 @@ use App\Models\ {
 class RejectionReasonsRepository{
 	public function getAll(){
         try {
-            return Reasons::all();
+            $reasons = Reasons::orderBy('id', 'asc')->get();
+            return $reasons;
         } catch (\Exception $e) {
             return $e;
         }

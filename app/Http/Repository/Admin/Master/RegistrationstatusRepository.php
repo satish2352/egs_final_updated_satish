@@ -12,7 +12,8 @@ use App\Models\ {
 class RegistrationstatusRepository{
 	public function getAll(){
         try {
-            return Registrationstatus::all();
+            $registrationstatus = Registrationstatus::orderBy('id', 'asc')->get();
+            return $registrationstatus;
         } catch (\Exception $e) {
             return $e;
         }

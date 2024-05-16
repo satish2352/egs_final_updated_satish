@@ -12,7 +12,8 @@ use App\Models\ {
 class SkillsRepository{
 	public function getAll(){
         try {
-            return Skills::all();
+            $skills = Skills::orderBy('id', 'asc')->get();
+            return $skills;
         } catch (\Exception $e) {
             return $e;
         }
