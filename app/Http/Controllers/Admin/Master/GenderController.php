@@ -38,11 +38,7 @@ class GenderController extends Controller
             'gender_name'       =>  'Please enter title.',
             'gender_name.regex' => 'Please  enter text only.',
             'gender_name.unique' => 'Title already exist.',
-            // 'marathi_title.unique' => 'शीर्षक आधीच अस्तित्वात आहे.',
-            'gender_name.max'   => 'Please  enter text length upto 255 character only.',
-            // 'marathi_title.required'       =>'कृपया शीर्षक प्रविष्ट करा.',
-            // 'marathi_title.unique'  =>  'तुमचा घटना शीर्षक आधीपासून अस्तित्वात आहे .',
-            // 'marathi_title.max'   => 'कृपया केवळ २५५ वर्णांपर्यंत मजकूराची लांबी प्रविष्ट करा.',            
+            'gender_name.max'   => 'Please  enter text length upto 255 character only.',         
         ];
 
         try {

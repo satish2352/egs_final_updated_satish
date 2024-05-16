@@ -163,14 +163,14 @@ public function index(Request $request)
             ->count();
 
 
-            $projectCount= Project::leftJoin('users', 'projects.District', '=', 'users.user_district')  
+            $projectCount= Project::leftJoin('users', 'projects.district', '=', 'users.user_district')  
             ->where('projects.end_date', '>=',date('Y-m-d'))
             // ->whereIn('projects.District', $user_working_dist)
             ->where('projects.is_active', true)
             ->where('users.user_district', $user_working_dist)
             ->count();      
            
-            $projectCountCompleted= Project::leftJoin('users', 'projects.District', '=', 'users.user_district')  
+            $projectCountCompleted= Project::leftJoin('users', 'projects.district', '=', 'users.user_district')  
             ->where('projects.end_date', '<=',date('Y-m-d'))
             // ->whereIn('projects.District', $user_working_dist)
             ->where('projects.is_active', true)
@@ -244,7 +244,7 @@ public function index(Request $request)
             $lonW = $latLongArr['lonW'];
 
 
-            $projectCount = Project:: leftJoin('tbl_area as district_projects', 'projects.District', '=', 'district_projects.location_id')  
+            $projectCount = Project:: leftJoin('tbl_area as district_projects', 'projects.district', '=', 'district_projects.location_id')  
                 ->where('projects.is_active', true)
                 ->where('projects.end_date', '>=', now())
                 ->when($request->has('latitude'), function($query) use ($latN, $latS, $lonE, $lonW) {
@@ -255,7 +255,7 @@ public function index(Request $request)
                 })
                 ->count();
 
-            $projectCountCompleted = Project:: leftJoin('tbl_area as district_projects', 'projects.District', '=', 'district_projects.location_id')  
+            $projectCountCompleted = Project:: leftJoin('tbl_area as district_projects', 'projects.district', '=', 'district_projects.location_id')  
                 ->where('projects.is_active', true)
                 ->where('projects.end_date', '<=', now())
                 ->when($request->has('latitude'), function($query) use ($latN, $latS, $lonE, $lonW) {

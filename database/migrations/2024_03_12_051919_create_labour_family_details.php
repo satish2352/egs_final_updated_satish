@@ -16,11 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('labour_id');
             $table->string('full_name');
             $table->string('date_of_birth');
-            $table->string('gender_id');
-            $table->string('relationship_id');
-            $table->string('married_status_id');
-            $table->integer('is_active')->default(true);
+            $table->integer('gender_id');
+            $table->integer('relationship_id');
+            $table->integer('married_status_id');
             $table->integer('is_deleted')->default(false);
+            $table->integer('is_active')->default(true);
             $table->timestamps();
         });
     }

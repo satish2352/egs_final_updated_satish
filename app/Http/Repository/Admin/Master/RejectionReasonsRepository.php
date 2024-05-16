@@ -6,14 +6,14 @@ use DB;
 use Illuminate\Support\Carbon;
 // use Session;
 use App\Models\ {
-	Gender
+	Reasons
 };
 
-class GenderRepository{
+class RejectionReasonsRepository{
 	public function getAll(){
         try {
-            $genders = Gender::orderBy('id', 'asc')->get();
-            return $genders;
+            $reasons = Reasons::orderBy('id', 'asc')->get();
+            return $reasons;
         } catch (\Exception $e) {
             return $e;
         }
@@ -21,13 +21,11 @@ class GenderRepository{
 
 	public function addAll($request){
         try {
-            $gender_data = new Gender();
-            $gender_data->gender_name = $request['gender_name'];
-            $gender_data->is_active = 1;
-            $gender_data->is_deleted = 0;
-            $gender_data->save();       
+            $rejectionreasons_data = new Reasons();
+            $rejectionreasons_data->reason_name = $request['reason_name'];
+            $rejectionreasons_data->save();       
                 
-            return $gender_data;
+            return $rejectionreasons_data;
 
         } catch (\Exception $e) {
             return [
@@ -38,44 +36,44 @@ class GenderRepository{
     }
     public function getById($id){
         try {
-            $gender = Gender::find($id);
-            if ($gender) {
-                return $gender;
+            $rejectionreasons = Reasons::find($id);
+            if ($rejectionreasons) {
+                return $rejectionreasons;
             } else {
                 return null;
             }
         } catch (\Exception $e) {
             return $e;
             return [
-                'msg' => 'Failed to get by Id Gender.',
+                'msg' => 'Failed to get by Id Rejection Reasons.',
                 'status' => 'error'
             ];
         }
     }
     public function updateAll($request){
         try {
-            $gender_data = Gender::find($request->id);
+            $rejectionreasons_data = Reasons::find($request->id);
             
-            if (!$gender_data) {
+            if (!$rejectionreasons_data) {
                 return [
-                    'msg' => 'Gender data not found.',
+                    'msg' => 'Rejection Reasons data not found.',
                     'status' => 'error'
                 ];
             }
         // Store the previous image names
-            $gender_data->gender_name = $request['gender_name'];
-            // $gender_data->marathi_title = $request['marathi_title'];
-            // $gender_data->url = $request['url'];
-            $gender_data->save();        
+            $rejectionreasons_data->reason_name = $request['reason_name'];
+            // $rejectionreasons_data->marathi_title = $request['marathi_title'];
+            // $rejectionreasons_data->url = $request['url'];
+            $rejectionreasons_data->save();        
         
             return [
-                'msg' => 'Gender data updated successfully.',
+                'msg' => 'Rejection Reasons data updated successfully.',
                 'status' => 'success'
             ];
         } catch (\Exception $e) {
             return $e;
             return [
-                'msg' => 'Failed to update Gender data.',
+                'msg' => 'Failed to update Rejection Reasons.',
                 'status' => 'error'
             ];
         }
@@ -83,19 +81,19 @@ class GenderRepository{
 
     public function deleteById($id) {
         try {
-            $gender = Gender::find($id);
-            if ($gender) {
+            $registrationstatus = Registrationstatus::find($id);
+            if ($registrationstatus) {
                 // Delete the images from the storage folder
                 Storage::delete([
-                    'public/images/citizen-action/gender-suggestion/'.$gender->english_image,
-                    'public/images/citizen-action/gender-suggestion/'.$gender->marathi_image
+                    'public/images/citizen-action/registrationstatus-suggestion/'.$registrationstatus->english_image,
+                    'public/images/citizen-action/registrationstatus-suggestion/'.$registrationstatus->marathi_image
                 ]);
 
                 // Delete the record from the database
                 
-                $gender->delete();
+                $registrationstatus->delete();
                 
-                return $gender;
+                return $registrationstatus;
             } else {
                 return null;
             }
@@ -105,7 +103,7 @@ class GenderRepository{
     }
     public function updateOne($request){
         try {
-            $slide = Gender::find($request); // Assuming $request directly contains the ID
+            $slide = Registrationstatus::find($request); // Assuming $request directly contains the ID
 
             // Assuming 'is_active' is a field in the Slider model
             if ($slide) {

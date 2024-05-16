@@ -92,6 +92,9 @@
                                     ? 'nav-link active' : 'nav-link' }}"
                                           href="{{ route('list-usertype') }}">User Type</a></li>
                               @endif
+                                  <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-rejection-reasons*')
+                                    ? 'nav-link active' : 'nav-link' }}"
+                                          href="{{ route('list-rejection-reasons') }}">Rejection Reasons</a></li>
 
                           </ul>
                       </div>
