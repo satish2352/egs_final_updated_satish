@@ -91,7 +91,7 @@ class ProjectController extends Controller
                 ->select(
                     'tbl_mark_attendance.id',
                     'labour.full_name',
-                    User::raw("CONCAT(users.f_name, IFNULL(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
+                    User::raw("CONCAT(users.f_name, COALESCE(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
                     'labour.mgnrega_card_id',
                     'labour.latitude',
                     'labour.longitude',

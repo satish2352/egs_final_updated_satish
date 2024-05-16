@@ -81,7 +81,7 @@ class OfficerGramDocAppNotAppController extends Controller
                 $data_output  = $basic_query_object
                 ->select(
                     'tbl_gram_panchayat_documents.id',
-                    User::raw("CONCAT(users.f_name, IFNULL(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
+                    User::raw("CONCAT(users.f_name, COALESCE(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
                     'tbl_gram_panchayat_documents.document_name',
                     'tbl_documenttype.document_type_name',
                     'tbl_documenttype.doc_color',
@@ -186,7 +186,7 @@ class OfficerGramDocAppNotAppController extends Controller
                     'tbl_documenttype.document_type_name',
                     'tbl_documenttype.doc_color',
                     'tbl_gram_panchayat_documents.document_pdf',
-                        User::raw("CONCAT(users.f_name, IFNULL(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
+                        User::raw("CONCAT(users.f_name, COALESCE(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
                     'users.user_district',
                     'district_u.name as district_name',
                     'users.user_taluka',

@@ -64,7 +64,7 @@ class OfficerController extends Controller
                 ->select(
                     'labour.id',
                     'labour.full_name',
-                    User::raw("CONCAT(users.f_name, IFNULL(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
+                    User::raw("CONCAT(users.f_name, COALESCE(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
                     'labour.date_of_birth',
                     'gender_labour.gender_name as gender_name',
                     'skills_labour.skills as skills',

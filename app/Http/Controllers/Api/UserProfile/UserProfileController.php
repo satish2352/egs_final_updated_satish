@@ -27,7 +27,7 @@ class UserProfileController extends Controller
                 ->leftJoin('tbl_area as village_users', 'users.user_village', '=', 'village_users.location_id')
                 ->where('users.id', $user)
                 ->select('users.id',
-                    User::raw("CONCAT(users.f_name, IFNULL(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
+                    User::raw("CONCAT(users.f_name, COALESCE(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
                     'users.number',
                     'users.user_district',
                     'district_users.name as district_name',
