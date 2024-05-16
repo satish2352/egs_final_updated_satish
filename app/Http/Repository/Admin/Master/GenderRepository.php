@@ -22,6 +22,8 @@ class GenderRepository{
         try {
             $gender_data = new Gender();
             $gender_data->gender_name = $request['gender_name'];
+            $gender_data->is_active = 1;
+            $gender_data->is_deleted = 0;
             $gender_data->save();       
                 
             return $gender_data;
