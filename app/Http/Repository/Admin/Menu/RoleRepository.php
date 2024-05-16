@@ -16,7 +16,8 @@ class RoleRepository  {
 	public function getAllRole()
     {
         try {
-            return Roles::all();
+            $roles = Role::orderBy('id', 'asc')->get();
+            return $roles;
         } catch (\Exception $e) {
             return $e;
         }
