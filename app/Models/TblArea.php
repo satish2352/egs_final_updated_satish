@@ -9,6 +9,6 @@ class TblArea extends Model
 {
     use HasFactory;
     protected $table = 'tbl_area';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'location_id';
     protected $fillable = ['name', 'location_type', 'parent_id'];
 }
