@@ -126,27 +126,56 @@ class AuthController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
    
-    public function sendPasswordEmail($password, $email)
-    {
-        try {
-           $msg= Mail::raw('Your new password is: ' . $password, function ($message) use ($email) {
-                $message->to($email)->subject('Password Reset');
-                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+    // public function sendPasswordEmail($password, $email)
+    // {
+    //     try {
+    //        $msg= Mail::raw('Your new password is: ' . $password, function ($message) use ($email) {
+    //             $message->to($email)->subject('Password Reset');
+    //             $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
             
                
-            });
+    //         });
 
            
 
-            return true;
+    //         return true;
 
+    //     } catch (\Exception $e) {
+    //         // Log the error
+    //         \Log::error($e);
+    //         return false;
+    //     }
+    // }
+
+
+    function sendPasswordEmail($password, $email) {
+        // Set email parameters
+        $to = $email;
+        $subject = 'Password Reset';
+        echo $subject;
+        $message = 'Your new password is: ' . $password;
+        $headers = 'From: ' . env('MAIL_FROM_ADDRESS') . "\r\n" .
+                   'Reply-To: ' . env('MAIL_FROM_ADDRESS') . "\r\n" .
+                   'X-Mailer: PHP/' . phpversion();
+    
+                   echo $headers;
+        try {
+            // Attempt to send email
+            $success = mail($to, $subject, $message, $headers);
+            dd($success);
+
+            if ($success) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (\Exception $e) {
             // Log the error
-            \Log::error($e);
+            error_log($e->getMessage());
             return false;
         }
     }
-
+    
     public function resetPasswordEmailBased(Request $request)
     {
         try {
