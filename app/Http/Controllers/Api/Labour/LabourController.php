@@ -267,7 +267,10 @@ class LabourController extends Controller
                     $query->where('labour.is_resubmitted', $is_resubmitted);
                 })
                 ->when($request->has('mgnrega_card_id'), function($query) use ($request) {
-                    $query->where('labour.mgnrega_card_id', 'like', '%' . $request->id . '%');
+                    $query->where('labour.mgnrega_card_id', 'like', '%' . $request->mgnrega_card_id . '%');
+                })
+                ->when($request->has('labour_id'), function($query) use ($request) {
+                    $query->where('labour.id', '=', $request->labour_id);
                 })
                 ->when($request->get('project_id'), function($query) use ($request) {
                     
