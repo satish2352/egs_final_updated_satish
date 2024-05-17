@@ -22,7 +22,7 @@ class GramPanchayatDocumentController extends Controller
         $all_data_validation = [
             'document_type_id' => 'required',  
             'document_name' => 'required', 
-            'document_pdf' => 'required|mimes:pdf|min:1|max:10240', 
+            'document_pdf' => 'required|mimes:pdf|min:1|max:25600', 
             'latitude' => ['required', 'between:-90,90'], 
             'longitude' => ['required', 'between:-180,180'], 
         ];       
@@ -169,7 +169,7 @@ class GramPanchayatDocumentController extends Controller
                 'id' => 'required', 
                 // 'document_type_id' => 'required',
                 // 'document_name' => 'required',             
-                'document_pdf' => 'required|mimes:pdf|min:1|max:10240', 
+                'document_pdf' => 'required|mimes:pdf|min:1|max:25600', 
             ]);
     
             if ($validator->fails()) {
