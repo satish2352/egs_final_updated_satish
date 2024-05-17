@@ -96,8 +96,9 @@ class ProjectController extends Controller
                     'labour.latitude',
                     'labour.longitude',
                     'tbl_mark_attendance.attendance_day',
-                    LabourAttendanceMark::raw("CONVERT_TZ(tbl_mark_attendance.updated_at, '+00:00', '+05:30') as updated_at"), 
-                )->distinct('labour.id')
+                    // LabourAttendanceMark::raw("CONVERT_TZ(tbl_mark_attendance.updated_at, '+00:00', '+05:30') as updated_at"), 
+                    LabourAttendanceMark::raw("tbl_mark_attendance.updated_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata' as updated_at"), 
+                    )->distinct('labour.id')
                 ->orderBy('id', 'desc');
     
                 $projectQuery = Project:: leftJoin('tbl_area as district_projects', 'projects.District', '=', 'district_projects.location_id')  
