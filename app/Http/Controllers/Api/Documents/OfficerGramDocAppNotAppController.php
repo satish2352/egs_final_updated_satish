@@ -86,8 +86,9 @@ class OfficerGramDocAppNotAppController extends Controller
                     'tbl_documenttype.document_type_name',
                     'tbl_documenttype.doc_color',
                     'tbl_gram_panchayat_documents.document_pdf',
-                    GramPanchayatDocuments::raw("CONVERT_TZ(tbl_gram_panchayat_documents.updated_at, '+00:00', '+05:30') as updated_at"),
-                )->skip($start)
+                    GramPanchayatDocuments::raw("tbl_gram_panchayat_documents.updated_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata' as updated_at"), 
+
+                    )->skip($start)
                 ->take($rowperpage)
                 ->orderBy('id', 'desc')
                 ->get();
@@ -194,8 +195,9 @@ class OfficerGramDocAppNotAppController extends Controller
                     'users.user_village',
                     'village_u.name as village_name',
                     'registrationstatus.status_name',
-                    GramPanchayatDocuments::raw("CONVERT_TZ(tbl_gram_panchayat_documents.updated_at, '+00:00', '+05:30') as updated_at"), 
-                )->skip($start)
+                    GramPanchayatDocuments::raw("tbl_gram_panchayat_documents.updated_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata' as updated_at"), 
+
+                    )->skip($start)
                 ->take($rowperpage)
                 ->orderBy('id', 'desc')
                 ->get();

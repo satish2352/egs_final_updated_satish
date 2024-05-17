@@ -350,8 +350,9 @@ class LabourController extends Controller
                         'tbl_reason.reason_name as reason_name',
                         'tbl_history.other_remark',
                         'tbl_history.updated_at',
-                        HistoryModel::raw("CONVERT_TZ(tbl_history.updated_at, '+00:00', '+05:30') as updated_at"), 
-                    )
+                        HistoryModel::raw("tbl_history.updated_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata' as updated_at"), 
+
+                        )
                     ->where('tbl_history.labour_id', $labourhistory['id'])
                     ->get();
             }
