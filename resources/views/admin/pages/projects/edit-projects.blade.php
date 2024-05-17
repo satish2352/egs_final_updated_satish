@@ -168,28 +168,6 @@
 
         <script>
 
-function getState(stateId) {
-                $('#state').html('<option value="">Select State</option>');
-                if (stateId !== '') {
-                    $.ajax({
-                        url: '{{ route('states') }}',
-                        type: 'GET',
-                        data: {
-                            stateId: stateId
-                        },
-                        success: function(response) {
-                            if (response.state.length > 0) {
-                                $.each(response.state, function(index, state) {
-                                    $('#state').append('<option value="' + state
-                                        .location_id +
-                                        '" selected>' + state.name + '</option>');
-                                });
-                                $('#state').val(stateId);
-                            }
-                        }
-                    });
-                }
-            }
           
 
 function getDistrictTaluka(districtId, taluka_id) {
@@ -285,14 +263,10 @@ if (talukaId !== '') {
             $(document).ready(function() {
                 myFunction($("#role_id").val());
                 
-                // getStateDistrict('{{ $project_data['data_projects']['state'] }}', '{{ $project_data['data_projects']['district'] }}');
                 getDistrictTaluka('{{ $project_data['data_projects']['district'] }}', '{{ $project_data['data_projects']['taluka'] }}');
                 getTalukaVillage('{{ $project_data['data_projects']['taluka'] }}', '{{ $project_data['data_projects']['village'] }}');
-                getState('{{ $project_data['data_projects']['state'] }}');
 
-                $("#state").on('change', function() {
-                    getStateDistrict($("#state").val(),'');
-                });
+               
 
                 $("#district").on('change', function() {
                     getDistrictTaluka($("#district").val(),'');
@@ -378,130 +352,85 @@ if (talukaId !== '') {
     $(document).ready(function() {
         // Function to check if all input fields are filled with valid data
         function checkFormValidity() {
-            const role_id = $('#role_id').val();
-            const f_name = $('#f_name').val();
-            const m_name = $('#m_name').val();
-            const l_name = $('#l_name').val();
-            const number = $('#number').val();
-            const designation = $('#designation').val();
-            const address = $('#address').val();
-            const state = $('#state').val();
-            const city = $('#city').val();
-            // const user_profile = $('#user_profile').val();
-            const pincode = $('#pincode').val();
+            const project_name = $('#project_name').val();
+            const description = $('#description').val();
+            const latitude = $('#latitude').val();
+            const longitude = $('#longitude').val();
+            const district = $('#district').val();
+            const taluka = $('#taluka').val();
+            const village = $('#village').val();
             
         }
 
-        // Call the checkFormValidity function on file input change
-        $('input, #english_image, #marathi_image').on('change', function() {
-            checkFormValidity();
-            validator.element(this); // Revalidate the file input
-        });
         // Initialize the form validation
-        var form = $("#regForm");
-        var validator = form.validate({
-            rules: {
-                // email: {
-                //     required: true,
-                // },
-                role_id: {
-                    required: true,
-                },
-                // password: {
-                //     required: true,
-                // },
-                // password_confirmation: {
-                //     required: true,
-                // },
-                f_name: {
-                    required: true,
-                },
-                m_name: {
-                    required: true,
-                },
-                l_name: {
-                    required: true,
-                },
-                number: {
-                    required: true,
-                },
-                designation: {
-                    required: true,
-                },
-                address: {
-                    required: true,
-                },
-                state: {
-                    required: true,
-                },
-                city: {
-                    required: true,
-                },
-                // user_profile: {
-                //     required: true,
-                // },
-                pincode: {
-                    required: true,
-                },
-            },
-            messages: {
-                // email: {
-                //     required: "Please Enter the Eamil",
-                // },
-                role_id: {
-                    required: "Please Select Role Name",
-                },
-                // password: {
-                //     required: "Please Enter the Password",
-                // },
-                // password_confirmation: {
-                //     required: "Please Enter the Confirmation Password",
-                // },
-                f_name: {
-                    required: "Please Enter the First Name",
-                },
-                m_name: {
-                    required: "Please Enter the Middle Name",
-                },
-                l_name: {
-                    required: "Please Enter the Last Name",
-                },
-                number: {
-                    required: "Please Enter the Number",
-                },
-                designation: {
-                    required: "Please Enter the Designation",
-                },
-                address: {
-                    required: "Please Enter the Address",
-                },
+      
 
-                state: {
-                    required: "Please Select State",
-                },
-                city: {
-                    required: "Please Select State",
-                },
-                // user_profile: {
-                //     required: "Upload Media File",
-                //     accept: "Only png, jpeg, and jpg image files are allowed.", // Update the error message for the accept rule
-                // },
-                pincode: {
-                    required: "Please Enter the Pincode",
-                },
-            },
-            submitHandler: function(form) {
-                form.submit();
-            }
-        });
+        $("#regForm").validate({
+                    rules: {
+                        project_name: {
+                            required: true,
+                        },
+                        district: {
+                            required: true,
+                        },
+                        taluka: {
+                            required: true,
+                        },
+                        village: {
+                            required: true,
+                        },
+                        latitude: {
+                            required: true,
+                            latitude: true,
+                        },
+                        longitude: {
+                            required: true,
+                            longitude: true,
+                        },
+                        start_date: {
+                            required: true,
+                        },
+                        end_date: {
+                            required: true,
+                        },
+                        description: {
+                            required: true,
+                        },
 
-        // Submit the form when the "Update" button is clicked
-        $("#submitButton").click(function() {
-            // Validate the form
-            if (form.valid()) {
-                form.submit();
-            }
-        });
+                    },
+                    messages: {
+                        project_name: {
+                            required: "Please Enter the Eamil",
+                            // remote: "This Email already exists."
+                        },
+                        district: {
+                            required: "Please Enter the Password",
+                        },
+                        taluka: {
+                            required: "Please Enter the Confirmation Password",
+                        },
+                        village: {
+                            required: "Please Enter the First Name",
+                        },
+                        latitude: {
+                            required: "Please Enter the Middle Name",
+                        },
+                        longitude: {
+                            required: "Please Enter the Last Name",
+                        },
+                        start_date: {
+                            required: "Please Enter the Number",
+                        },
+                        end_date: {
+                            required: "Please Enter the Designation",
+                        },
+                        description: {
+                            required: "Please Enter the Address",
+                        },
+                    },
+
+                });
+
     });
 </script>    
 
@@ -511,23 +440,17 @@ if (talukaId !== '') {
     $(document).ready(function() {
         // Function to check if all input fields are filled with valid data
         function checkFormValidity() {
-            // const email = $('#email').val();
-            const role_id = $('#role_id').val();
-            // const password = $('#password').val();
-            // const password_confirmation = $('#password_confirmation').val();
-            const f_name = $('#f_name').val();
-            const m_name = $('#m_name').val();
-            const l_name = $('#l_name').val();
-            const number = $('#number').val();
-            const designation = $('#designation').val();
-            const address = $('#address').val();
-            const state = $('#state').val();
-            const city = $('#city').val();
-            // const user_profile = $('#user_profile').val();
-            const pincode = $('#pincode').val();
+            const project_name = $('#project_name').val();
+            const description = $('#description').val();
+            const latitude = $('#latitude').val();
+            const longitude = $('#longitude').val();
+            const district = $('#district').val();
+            const taluka = $('#taluka').val();
+            const village = $('#village').val();
 
             // Enable the submit button if all fields are valid
-            if (role_id && f_name && m_name && l_name && number && designation && address && state && city && pincode) {
+            f (project_name && description && latitude && longitude && district && taluka &&
+                    village) {
                 $('#submitButton').prop('disabled', false);
             } else {
                 $('#submitButton').prop('disabled', true);
@@ -537,102 +460,6 @@ if (talukaId !== '') {
         // Call the checkFormValidity function on input change
         $('input,textarea, select, #user_profile').on('input change',
             checkFormValidity);
-
-        // Initialize the form validation
-        $("#regForm").validate({
-            rules: {
-                // email: {
-                //     required: true,
-                // },
-                role_id: {
-                    required: true,
-                },
-                // password: {
-                //     required: true,
-                // },
-                // password_confirmation: {
-                //     required: true,
-                // },
-                f_name: {
-                    required: true,
-                },
-                m_name: {
-                    required: true,
-                },
-                l_name: {
-                    required: true,
-                },
-                number: {
-                    required: true,
-                },
-                designation: {
-                    required: true,
-                },
-                address: {
-                    required: true,
-                },
-                state: {
-                    required: true,
-                },
-                city: {
-                    required: true,
-                },
-                // user_profile: {
-                //     required: true,
-                // },
-                pincode: {
-                    required: true,
-                },
-
-            },
-            messages: {
-                // email: {
-                //     required: "Please Enter the Eamil",
-                // },
-                role_id: {
-                    required: "Please Select Role Name",
-                },
-                // password: {
-                //     required: "Please Enter the Password",
-                // },
-                // password_confirmation: {
-                //     required: "Please Enter the Confirmation Password",
-                // },
-                f_name: {
-                    required: "Please Enter the First Name",
-                },
-                m_name: {
-                    required: "Please Enter the Middle Name",
-                },
-                l_name: {
-                    required: "Please Enter the Last Name",
-                },
-                number: {
-                    required: "Please Enter the Number",
-                },
-                designation: {
-                    required: "Please Enter the Designation",
-                },
-                address: {
-                    required: "Please Enter the Address",
-                },
-
-                state: {
-                    required: "Please Select State",
-                },
-                city: {
-                    required: "Please Select State",
-                },
-                // user_profile: {
-                //     required: "Upload Media File",
-                //     accept: "Only png, jpeg, and jpg image files are allowed.", // Update the error message for the accept rule
-                // },
-                pincode: {
-                    required: "Please Enter the Pincode",
-                },
-            },
-
-        });
     });
 </script> --}}
     @endsection
