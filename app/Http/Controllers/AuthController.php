@@ -156,8 +156,7 @@ class AuthController extends Controller
 
             $user = User::where('email', $request->email)->first();
 
-            dd($user);
-            die();
+          
             if (!$user) {
                 return response()->json(['status' => 'false', 'message' => 'Email not found'], 200);
             }
@@ -170,6 +169,10 @@ class AuthController extends Controller
             for ($i = 0; $i < $length; $i++) {
                 $newPassword .= $characters[random_int(0, strlen($characters) - 1)];
             }
+
+            dd($newPassword);
+            die();
+
             $emailSent = $this->sendPasswordEmail($newPassword, $request->email);
 
             if (!$emailSent) {
