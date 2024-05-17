@@ -126,101 +126,71 @@ class AuthController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
    
-    // public function sendPasswordEmail($password, $email)
-    // {
-    //     try {
-    //        $msg= Mail::raw('Your new password is: ' . $password, function ($message) use ($email) {
-    //             $message->to($email)->subject('Password Reset');
-    //             $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+    public function sendPasswordEmail($password, $email)
+    {
+        try {
+           $msg= Mail::raw('Your new password is: ' . $password, function ($message) use ($email) {
+                $message->to($email)->subject('Password Reset');
+                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
             
                
-    //         });
+            });
 
            
 
-    //         return true;
+            return true;
 
-    //     } catch (\Exception $e) {
-    //         // Log the error
-    //         \Log::error($e);
-    //         return false;
-    //     }
-    // }
-
-
-    function resetPasswordEmailBased($password, $email) {
-        // Set email parameters
-        $to = $email;
-        $subject = 'Password Reset';
-        echo $subject;
-        $message = 'Your new password is: ' . $password;
-        $headers = 'From: ' . env('MAIL_FROM_ADDRESS') . "\r\n" .
-                   'Reply-To: ' . env('MAIL_FROM_ADDRESS') . "\r\n" .
-                   'X-Mailer: PHP/' . phpversion();
-    
-                   echo $headers;
-        try {
-            // Attempt to send email
-            $success = mail($to, $subject, $message, $headers);
-            dd($success);
-
-            if ($success) {
-                return true;
-            } else {
-                return false;
-            }
         } catch (\Exception $e) {
             // Log the error
-            error_log($e->getMessage());
+            \Log::error($e);
             return false;
         }
     }
-    
-    // public function resetPasswordEmailBased(Request $request)
-    // {
-    //     try {
-    //        $test = phpinfo();
-    //         // $validator = Validator::make($request->all(), [
-    //         //     'email' => 'required|email',
-    //         // ]);
 
-    //         // if ($validator->fails()) {
-    //         //     return response()->json(['status' => 'false', 'message' => 'Invalid email format'], 200);
-    //         // }
+    public function resetPasswordEmailBased(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+            ]);
 
-    //         // $user = User::where('email', $request->email)->first();
+            if ($validator->fails()) {
+                return response()->json(['status' => 'false', 'message' => 'Invalid email format'], 200);
+            }
+
+            $user = User::where('email', $request->email)->first();
 
           
-    //         // if (!$user) {
-    //         //     return response()->json(['status' => 'false', 'message' => 'Email not found'], 200);
-    //         // }
+            if (!$user) {
+                return response()->json(['status' => 'false', 'message' => 'Email not found'], 200);
+            }
             
 
-    //         // // $newPassword = Str::random(8); // Change the password length as needed
-    //         // $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*?&';
-    //         // $newPassword = '';
-    //         // $length = 8;
-    //         // for ($i = 0; $i < $length; $i++) {
-    //         //     $newPassword .= $characters[random_int(0, strlen($characters) - 1)];
-    //         // }
+            // $newPassword = Str::random(8); // Change the password length as needed
+            $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*?&';
+            $newPassword = '';
+            $length = 8;
+            for ($i = 0; $i < $length; $i++) {
+                $newPassword .= $characters[random_int(0, strlen($characters) - 1)];
+            }
 
            
 
-    //         // $emailSent = $this->sendPasswordEmail($newPassword, $request->email);
+            $emailSent = $this->sendPasswordEmail($newPassword, $request->email);
 
-    //         // if (!$emailSent) {
-    //         //     return response()->json(['status' => 'false', 'message' => 'Failed to send reset link'], 200);
-    //         // }
+            if (!$emailSent) {
+                return response()->json(['status' => 'false', 'message' => 'Failed to send reset link'], 200);
+            }
 
             
-    //         // $user->password = Hash::make($newPassword);
-    //         // $user->save();
+            $user->password = Hash::make($newPassword);
+            $user->save();
            
-    //          return response()->json(['status' => 'true', 'message' => 'Password updated successfully', 'data'=>$test], 200);
-    //     } catch (\Exception $e) {
+            return response()->json(['status' => 'true', 'message' => 'Password updated successfully'], 200);
+        } catch (\Exception $e) {
             
-    //         \Log::error($e);
-    //         return response()->json(['status' => 'false', 'message' => 'Failed to update password'], 500);
-    //     }
-    // }
+            \Log::error($e);
+            return response()->json(['status' => 'false', 'message' => 'Failed to update password'], 500);
+        }
+    }
 }
