@@ -132,7 +132,12 @@ class AuthController extends Controller
            $msg= Mail::raw('Your new password is: ' . $password, function ($message) use ($email) {
                 $message->to($email)->subject('Password Reset');
                 $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+            
+                dd($message);
+                die();
             });
+
+           
 
             return true;
 
@@ -170,8 +175,7 @@ class AuthController extends Controller
                 $newPassword .= $characters[random_int(0, strlen($characters) - 1)];
             }
 
-            dd($newPassword);
-            die();
+           
 
             $emailSent = $this->sendPasswordEmail($newPassword, $request->email);
 
