@@ -1,13 +1,13 @@
 <?php
 namespace App\Http\Services\Admin\Master;
 
-use App\Http\Repository\Admin\Master\RejectionReasonsRepository;
+use App\Http\Repository\Admin\Master\RejectionReasonsDocumentRepository;
 
 use App\Reasons;
 use Carbon\Carbon;
 
 
-class RejectionReasonsServices{
+class RejectionReasonsDocumentServices{
 
 	protected $repo;
 
@@ -15,7 +15,7 @@ class RejectionReasonsServices{
      * TopicService constructor.
      */
     public function __construct(){
-        $this->repo = new RejectionReasonsRepository();
+        $this->repo = new RejectionReasonsDocumentRepository();
     }
     public function getAll(){
         try {
