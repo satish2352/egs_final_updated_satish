@@ -287,11 +287,11 @@ public function index(Request $request)
                         //   dd( $labourCounts);
                         foreach ($labourCounts as $count) {
                             if ($count->is_approved == 1) {
-                                $labourRequestCounts['sent_for_approval_count'] += $count->count;
+                                $labourRequestCounts['Sent For Approval Labours'] += $count->count;
                             } elseif ($count->is_approved == 2) {
-                                $labourRequestCounts['approved_count'] += $count->count;
+                                $labourRequestCounts['Approved Labours'] += $count->count;
                             } elseif ($count->is_approved == 3) {
-                                $labourRequestCounts['not_approved_count'] += $count->count;
+                                $labourRequestCounts['Not Approved Labours'] += $count->count;
                             }
                         }
             
@@ -303,11 +303,11 @@ public function index(Request $request)
             
                         foreach ($documentCounts as $countdoc) {
                             if ($countdoc->is_approved == 1) {
-                                $documentRequestCounts['sent_for_approval_document_count'] += $countdoc->count;
+                                $documentRequestCounts['Sent For Approval Documents'] += $countdoc->count;
                             } elseif ($countdoc->is_approved == 2) {
-                                $documentRequestCounts['approved_document_count'] += $countdoc->count;
+                                $documentRequestCounts['Approved Documents'] += $countdoc->count;
                             } elseif ($countdoc->is_approved == 3) {
-                                $documentRequestCounts['not_approved_document_count'] += $countdoc->count;
+                                $documentRequestCounts['Not Approved Documents'] += $countdoc->count;
                             }
                         }
             
