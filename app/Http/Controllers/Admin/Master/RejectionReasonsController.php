@@ -171,8 +171,8 @@ class RejectionReasonsController extends Controller
     public function show(Request $request)
     {
         try {
-            $registrationstatus_data = $this->service->getById($request->show_id);
-            return view('admin.pages.master.registrationstatus.show-registrationstatus', compact('registrationstatus_data'));
+            $rejection_reasons_data = $this->service->getById($request->show_id);
+            return view('admin.pages.master.rejectionreasons.show-rejectionreasons', compact('rejection_reasons_data'));
         } catch (\Exception $e) {
             return $e;
         }
@@ -182,7 +182,7 @@ class RejectionReasonsController extends Controller
         try {
             $active_id = $request->active_id;
         $result = $this->service->updateOne($active_id);
-            return redirect('list-registrationstatus')->with('flash_message', 'Updated!');  
+            return redirect('list-rejection-reasons')->with('flash_message', 'Updated!');  
         } catch (\Exception $e) {
             return $e;
         }
@@ -190,12 +190,12 @@ class RejectionReasonsController extends Controller
 
     public function destroy(Request $request){
         try {
-            $registrationstatus_data = $this->service->deleteById($request->delete_id);
-            if ($registrationstatus_data) {
-                $msg = $registrationstatus_data['msg'];
-                $status = $registrationstatus_data['status'];
+            $rejection_reasons_data = $this->service->deleteById($request->delete_id);
+            if ($rejection_reasons_data) {
+                $msg = $rejection_reasons_data['msg'];
+                $status = $rejection_reasons_data['status'];
                 if ($status == 'success') {
-                    return redirect('list-registrationstatus')->with(compact('msg', 'status'));
+                    return redirect('list-rejection-reasons')->with(compact('msg', 'status'));
                 } else {
                     return redirect()->back()
                         ->withInput()

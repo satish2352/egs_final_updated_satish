@@ -7,9 +7,9 @@
         <div class="content-wrapper mt-7">
             <div class="page-header">
                 <h3 class="page-title">
-                    Rejection Reasons List
+                    Document Rejection Reasons List
                     @if (in_array('per_add', $data_permission))
-                        <a href="{{ route('add-rejection-reasons') }}" class="btn btn-sm btn-primary ml-3">+
+                        <a href="{{ route('add-rejection-reason-docs') }}" class="btn btn-sm btn-primary ml-3">+
                             Add</a>
                     @endif
 
@@ -17,7 +17,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('list-rejection-reasons') }}">Master</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"> Rejection Reasons</li>
+                        <li class="breadcrumb-item active" aria-current="page">Document Rejection Reasons</li>
                     </ol>
                 </nav>
             </div>
@@ -58,7 +58,7 @@
                                                             <div class="d-flex">
                                                                 @if (in_array('per_update', $data_permission))
                                                                     <a
-                                                                        href="{{ route('edit-rejection-reasons', base64_encode($item->id)) }}"
+                                                                        href="{{ route('edit-rejection-reason-docs', base64_encode($item->id)) }}"
                                                                         class="btn btn-sm btn-outline-primary m-1"
                                                                         title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                                                 @endif
@@ -86,15 +86,15 @@
                 </div>
             </div>
         </div>
-        <form method="POST" action="{{ url('/delete-registrationstatus') }}" id="deleteform">
+        <form method="POST" action="{{ url('/delete-rejection-reason-docs') }}" id="deleteform">
             @csrf
             <input type="hidden" name="delete_id" id="delete_id" value="">
         </form>
-        <form method="POST" action="{{ url('/show-registrationstatus') }}" id="showform">
+        <form method="POST" action="{{ url('/show-rejection-reason-docs') }}" id="showform">
             @csrf
             <input type="hidden" name="show_id" id="show_id" value="">
         </form>
-        <form method="POST" action="{{ url('/update-one-registrationstatus') }}" id="activeform">
+        <form method="POST" action="{{ url('/update-one-rejection-reason-docs') }}" id="activeform">
             @csrf
             <input type="hidden" name="active_id" id="active_id" value="">
         </form>

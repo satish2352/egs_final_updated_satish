@@ -6,13 +6,13 @@ use DB;
 use Illuminate\Support\Carbon;
 // use Session;
 use App\Models\ {
-	Reasons
+	DocumentReasons
 };
 
-class RejectionReasonsRepository{
+class RejectionReasonsDocumentRepository{
 	public function getAll(){
         try {
-            $reasons = Reasons::where('is_deleted', '0')
+            $reasons = DocumentReasons::where('is_deleted', '0')
             ->orderBy('id', 'asc')->get();
             return $reasons;
         } catch (\Exception $e) {
@@ -22,7 +22,7 @@ class RejectionReasonsRepository{
 
 	public function addAll($request){
         try {
-            $rejectionreasons_data = new Reasons();
+            $rejectionreasons_data = new DocumentReasons();
             $rejectionreasons_data->reason_name = $request['reason_name'];
             $rejectionreasons_data->save();       
                 
@@ -37,7 +37,7 @@ class RejectionReasonsRepository{
     }
     public function getById($id){
         try {
-            $rejectionreasons = Reasons::find($id);
+            $rejectionreasons = DocumentReasons::find($id);
             if ($rejectionreasons) {
                 return $rejectionreasons;
             } else {
@@ -46,18 +46,18 @@ class RejectionReasonsRepository{
         } catch (\Exception $e) {
             return $e;
             return [
-                'msg' => 'Failed to get by Id Rejection Reasons.',
+                'msg' => 'Failed to get by Id Document Rejection Reasons.',
                 'status' => 'error'
             ];
         }
     }
     public function updateAll($request){
         try {
-            $rejectionreasons_data = Reasons::find($request->id);
+            $rejectionreasons_data = DocumentReasons::find($request->id);
             
             if (!$rejectionreasons_data) {
                 return [
-                    'msg' => 'Rejection Reasons data not found.',
+                    'msg' => 'Document Rejection Reasons data not found.',
                     'status' => 'error'
                 ];
             }
@@ -68,13 +68,13 @@ class RejectionReasonsRepository{
             $rejectionreasons_data->save();        
         
             return [
-                'msg' => 'Rejection Reasons data updated successfully.',
+                'msg' => 'Document Rejection Reasons data updated successfully.',
                 'status' => 'success'
             ];
         } catch (\Exception $e) {
             return $e;
             return [
-                'msg' => 'Failed to update Rejection Reasons.',
+                'msg' => 'Failed to update Document Rejection Reasons.',
                 'status' => 'error'
             ];
         }
@@ -82,11 +82,11 @@ class RejectionReasonsRepository{
 
     public function deleteById($id){
         try {
-            $rejectionreasons_data = Reasons::find($id);
+            $rejectionreasons_data = DocumentReasons::find($id);
             // dd($rejectionreasons_data);
             if (!$rejectionreasons_data) {
                 return [
-                    'msg' => 'Rejection Reasons data not found.',
+                    'msg' => 'Docuemnt Rejection Reasons data not found.',
                     'status' => 'error'
                 ];
             }
@@ -94,43 +94,21 @@ class RejectionReasonsRepository{
             $rejectionreasons_data->is_deleted = 1;
             $rejectionreasons_data->save();        
             return [
-                'msg' => 'Rejection Reasons data Deleted successfully.',
+                'msg' => 'Docuemnt Rejection Reasons data Deleted successfully.',
                 'status' => 'success'
             ];
         } catch (\Exception $e) {
             return $e;
             return [
-                'msg' => 'Failed to update Rejection Reasons.',
+                'msg' => 'Failed to update Docuemnt Rejection Reasons.',
                 'status' => 'error'
             ];
         }
     }
 
-    // public function deleteById($id) {
-    //     try {
-    //         $rejectionreasons_data = Reasons::find($id);
-    //         if ($rejectionreasons_data) {
-    //             // Delete the images from the storage folder
-                
-
-    //             // Delete the record from the database
-                
-    //             // $registrationstatus->delete();
-
-    //             $rejectionreasons_data->is_deleted = 1;
-    //             $rejectionreasons_data->save();    
-                
-    //             return $rejectionreasons_data;
-    //         } else {
-    //             return null;
-    //         }
-    //     } catch (\Exception $e) {
-    //         return $e;
-    //     }
-    // }
     public function updateOne($request){
         try {
-            $slide = Reasons::find($request); // Assuming $request directly contains the ID
+            $slide = DocumentReasons::find($request); // Assuming $request directly contains the ID
 
             // Assuming 'is_active' is a field in the Slider model
             if ($slide) {

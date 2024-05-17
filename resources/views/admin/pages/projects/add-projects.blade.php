@@ -371,15 +371,6 @@
                     const taluka = $('#taluka').val();
                     const village = $('#village').val();
 
-                    // console.log('project_name',project_name);
-                    // console.log('description',description);
-                    // console.log('latitude',latitude);
-                    // console.log('longitude',longitude);
-                    // console.log('state',project_name);
-                    // console.log('district',district);
-                    // console.log('taluka',project_name);
-                    // console.log('village',village);
-
                     // Enable the submit button if all fields are valid
                     if (project_name && description && latitude && longitude && district && taluka &&
                     village) {

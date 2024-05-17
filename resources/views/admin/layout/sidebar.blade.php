@@ -88,13 +88,16 @@
                                           href="{{ route('list-documenttype') }}">Document Type</a></li>
                               @endif
                               @if (in_array('list-usertype', $data_for_url))
-                              <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-usertype*')
+                                <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-usertype*')
                                     ? 'nav-link active' : 'nav-link' }}"
                                           href="{{ route('list-usertype') }}">User Type</a></li>
                               @endif
-                                  <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-rejection-reasons*')
+                                <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-rejection-reasons*')
                                     ? 'nav-link active' : 'nav-link' }}"
                                           href="{{ route('list-rejection-reasons') }}">Rejection Reasons</a></li>
+                                <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-rejection-reasons-docs*')
+                                    ? 'nav-link active' : 'nav-link' }}"
+                                          href="{{ route('list-rejection-reason-docs') }}">Document Rejection Reasons</a></li>    
 
                           </ul>
                       </div>
