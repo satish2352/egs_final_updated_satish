@@ -61,6 +61,9 @@ class OfficerController extends Controller
                 ->when($request->has('mgnrega_card_id'), function($query) use ($request) {
                     $query->where('labour.mgnrega_card_id', 'like', '%' . $request->mgnrega_card_id . '%');
                 })
+                ->when($request->has('labour_id'), function($query) use ($request) {
+                    $query->where('labour.id', '=', $request->labour_id);
+                })
                 ->select(
                     'labour.id',
                     'labour.full_name',
