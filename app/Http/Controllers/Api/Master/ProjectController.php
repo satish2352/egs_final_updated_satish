@@ -43,9 +43,9 @@ class ProjectController extends Controller
 
         $data_user_output = $data_user_output->get()->toArray(); 
         // dd($data_user_output); 
-            $project = Project::leftJoin('users', 'projects.District', '=', 'users.user_district')  
+            $project = Project::leftJoin('users', 'projects.district', '=', 'users.user_district')  
               ->where('projects.end_date', '>=',date('Y-m-d'))
-              ->whereIn('projects.District', $data_user_output)
+              ->whereIn('projects.district', $data_user_output)
               ->where('projects.is_active', true)
               ->select(
                   'projects.id',
@@ -102,7 +102,7 @@ class ProjectController extends Controller
                     // ->distinct('labour.id')
                 ->orderBy('tbl_mark_attendance.id', 'desc');
     
-                $projectQuery = Project:: leftJoin('tbl_area as district_projects', 'projects.District', '=', 'district_projects.location_id')  
+                $projectQuery = Project:: leftJoin('tbl_area as district_projects', 'projects.district', '=', 'district_projects.location_id')  
                 ->leftJoin('tbl_area as taluka_projects', 'projects.taluka', '=', 'taluka_projects.location_id')
                ->leftJoin('tbl_area as village_projects', 'projects.village', '=', 'village_projects.location_id')
                 ->where('projects.is_active', true)
@@ -124,7 +124,7 @@ class ProjectController extends Controller
                     'projects.end_date',
                     'projects.latitude',
                     'projects.longitude',
-                    'projects.District',
+                    'projects.district',
                     'district_projects.name as district_name',
                     'projects.taluka',
                     'taluka_projects.name as taluka_name',
@@ -169,7 +169,7 @@ class ProjectController extends Controller
                 $projectData_array['name'] = $value->project_name;
                 $projectData_array['latitude'] = $value->latitude;
                 $projectData_array['longitude'] = $value->longitude;
-                $projectData_array['District'] = $value->District;
+                $projectData_array['district'] = $value->district;
                 $projectData_array['district_name'] = $value->district_name;
                 $projectData_array['taluka'] = $value->taluka;
                 $projectData_array['taluka_name'] = $value->taluka_name;
