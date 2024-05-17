@@ -155,6 +155,9 @@ class AuthController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
+
+            dd($user);
+            die();
             if (!$user) {
                 return response()->json(['status' => 'false', 'message' => 'Email not found'], 200);
             }
