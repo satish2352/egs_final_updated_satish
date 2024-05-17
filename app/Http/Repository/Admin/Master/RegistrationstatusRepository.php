@@ -61,7 +61,7 @@ class RegistrationstatusRepository{
                 ];
             }
         // Store the previous image names
-            $registrationstatus_data->registrationstatus = $request['registrationstatus'];
+            $registrationstatus_data->status_name = $request['status_name'];
             // $registrationstatus_data->marathi_title = $request['marathi_title'];
             // $registrationstatus_data->url = $request['url'];
             $registrationstatus_data->save();        
