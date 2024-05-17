@@ -98,8 +98,9 @@ class ProjectController extends Controller
                     'tbl_mark_attendance.attendance_day',
                     // LabourAttendanceMark::raw("CONVERT_TZ(tbl_mark_attendance.updated_at, '+00:00', '+05:30') as updated_at"), 
                     LabourAttendanceMark::raw("tbl_mark_attendance.updated_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata' as updated_at"), 
-                    )->distinct('labour.id')
-                ->orderBy('id', 'desc');
+                    )
+                    // ->distinct('labour.id')
+                ->orderBy('tbl_mark_attendance.id', 'desc');
     
                 $projectQuery = Project:: leftJoin('tbl_area as district_projects', 'projects.District', '=', 'district_projects.location_id')  
                 ->leftJoin('tbl_area as taluka_projects', 'projects.taluka', '=', 'taluka_projects.location_id')
@@ -129,8 +130,9 @@ class ProjectController extends Controller
                     'taluka_projects.name as taluka_name',
                     'projects.village',
                     'village_projects.name as village_name',
-                )->distinct('projects.id')
-                ->orderBy('id', 'desc');
+                )->orderBy('projects.id', 'desc');
+                // ->distinct('projects.id')
+                // ->orderBy('id', 'desc');
 
                 $gramsevakdocumentQuery = GramPanchayatDocuments::where('tbl_gram_panchayat_documents.user_id', $user)
                 ->where('tbl_gram_panchayat_documents.is_approved', 2)
