@@ -86,15 +86,15 @@
                 </div>
             </div>
         </div>
-        <form method="POST" action="{{ url('/delete-registrationstatus') }}" id="deleteform">
+        <form method="POST" action="{{ url('/delete-rejection-reasons') }}" id="deleteform">
             @csrf
             <input type="hidden" name="delete_id" id="delete_id" value="">
         </form>
-        <form method="POST" action="{{ url('/show-registrationstatus') }}" id="showform">
+        <form method="POST" action="{{ url('/show-rejection-reasons') }}" id="showform">
             @csrf
             <input type="hidden" name="show_id" id="show_id" value="">
         </form>
-        <form method="POST" action="{{ url('/update-one-registrationstatus') }}" id="activeform">
+        <form method="POST" action="{{ url('/update-one-rejection-reasons') }}" id="activeform">
             @csrf
             <input type="hidden" name="active_id" id="active_id" value="">
         </form>

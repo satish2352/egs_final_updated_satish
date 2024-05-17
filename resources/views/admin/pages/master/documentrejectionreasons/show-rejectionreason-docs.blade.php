@@ -10,12 +10,12 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-start align-items-center">
                             <h3 class="page-title">
-                                Registration Status
+                                Document Rejection Reasons
                             </h3>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-end align-items-center">
                             <div>
-                                <a href="{{ route('list-registrationstatus') }}" class="btn btn-sm btn-primary ml-3">Back</a>
+                                <a href="{{ route('list-rejection-reason-docs') }}" class="btn btn-sm btn-primary ml-3">Back</a>
                             </div>
                         </div>
 
@@ -30,7 +30,7 @@
                                             <label>Title :</label>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4">
-                                            <label>{{ strip_tags($registrationstatus_data->status_name) }}</label>
+                                            <label>{{ strip_tags($rejection_reasons_data->reason_name) }}</label>
                                         </div>
                                     </div>
                                 </div>

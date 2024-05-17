@@ -233,10 +233,19 @@ Route::get('/add-rejection-reasons', ['as' => 'add-rejection-reasons', 'uses' =>
 Route::post('/add-rejection-reasons', ['as' => 'add-rejection-reasons', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsController@store']);
 Route::get('/edit-rejection-reasons/{edit_id}', ['as' => 'edit-rejection-reasons', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsController@edit']);
 Route::post('/update-rejection-reasons', ['as' => 'update-rejection-reasons', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsController@update']);
+Route::post('/show-rejection-reasons', ['as' => 'show-rejection-reasons', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsController@show']);
+Route::post('/delete-rejection-reasons', ['as' => 'delete-rejection-reasons', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsController@destroy']);
+Route::post('/update-one-rejection-reasons', ['as' => 'update-one-rejection-reasons', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsController@updateOne']);
 
 
-Route::get('/list-rejection-reasons-documents', ['as' => 'list-rejection-reasons-documents', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsDocumentController@index']);
-
+Route::get('/list-rejection-reason-docs', ['as' => 'list-rejection-reason-docs', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsDocumentController@index']);
+Route::get('/add-rejection-reason-docs', ['as' => 'add-rejection-reason-docs', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsDocumentController@add']);
+Route::post('/add-rejection-reason-docs', ['as' => 'add-rejection-reason-docs', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsDocumentController@store']);
+Route::get('/edit-rejection-reason-docs/{edit_id}', ['as' => 'edit-rejection-reason-docs', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsDocumentController@edit']);
+Route::post('/update-rejection-reason-docs', ['as' => 'update-rejection-reason-docs', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsDocumentController@update']);
+Route::post('/show-rejection-reason-docs', ['as' => 'show-rejection-reason-docs', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsDocumentController@show']);
+Route::post('/delete-rejection-reason-docs', ['as' => 'delete-rejection-reason-docs', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsDocumentController@destroy']);
+Route::post('/update-one-rejection-reason-docs', ['as' => 'update-one-rejection-reason-docs', 'uses' => 'App\Http\Controllers\Admin\Master\RejectionReasonsDocumentController@updateOne']);
 
 // Route::get('/db-backup', ['as' => 'db-backup', 'uses' => 'App\Http\Controllers\DBBackup\DBBackupController@downloadBackup']);
 

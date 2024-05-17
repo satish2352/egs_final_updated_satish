@@ -5,12 +5,12 @@
         <div class="content-wrapper mt-6">
             <div class="page-header">
                 <h3 class="page-title">
-                    Edit Registration Status
+                    Edit Rejection Reasons
                 </h3>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('list-registrationstatus') }}">Master</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"> Update Registration Status
+                        <li class="breadcrumb-item active" aria-current="page"> Update Rejection Reasons
                         </li>
                     </ol>
                 </nav>
