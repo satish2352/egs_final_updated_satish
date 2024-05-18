@@ -291,6 +291,12 @@
 
                     <!-- @endif -->
                     @if (in_array('list-labours', $data_for_url))
+                        <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-sended-for-approval*')
+                            ? 'nav-link active' : 'nav-link' }}"
+                                    href="{{ route('list-sended-for-approval') }}">Sended For Approval</a>
+                                </li>
+                    @endif
+                    @if (in_array('list-labours', $data_for_url))
                         <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-approved-documents*')
                             ? 'nav-link active' : 'nav-link' }}"
                                     href="{{ route('list-approved-documents') }}">Approved Documents</a></li>
