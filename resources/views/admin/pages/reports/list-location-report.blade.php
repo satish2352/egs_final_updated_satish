@@ -19,8 +19,6 @@
                 <div class="col-12 grid-margin">
                     <div class="card">
                         <div class="card-body">
-                        <!-- <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
-                                        action="{{ route('list-labours') }}" enctype="multipart/form-data"> -->
                         @if(session()->get('role_id')=='1')
                         <div class="row">
 
@@ -138,6 +136,74 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <select class="form-control" name="skillorunskill_id" id="skillorunskill_id">
+                                        <option value="">Select Skill</option>
+                                        <option value="skill">Skill</option>
+                                        <option value="unskill">Unskill</option>
+                                    </select>
+                                    @if ($errors->has('skill_id'))
+                                        <span class="red-text"><?php echo $errors->first('skill_id', ':message'); ?></span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <select class="form-control" name="skill_id" id="skill_id" disabled>
+
+                                        <option value="">Select Skill</option>
+                                       @foreach ($skills_data as $skills_for_data)    
+                                        <option value="{{ $skills_for_data['id'] }}">{{ $skills_for_data['skill_name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('skill_id'))
+                                        <span class="red-text"><?php echo $errors->first('skill_id', ':message'); ?></span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <select class="form-control" name="registration_status_id" id="registration_status_id">
+
+                                        <option value="">Select Registration Status</option>
+                                       @foreach ($registration_status_data as $registration_status_for_data)    
+                                        <option value="{{ $registration_status_for_data['id'] }}">{{ $registration_status_for_data['status_name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('registration_status_id'))
+                                        <span class="red-text"><?php echo $errors->first('registration_status_id', ':message'); ?></span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="form-group">
+                            <button type="submit" class="btn btn-sm btn-success" id="submitButton">
+                                            Search
+                                        </button>
+                                        </div>
+                            </div>
+                        </div>
+                        @elseif(session()->get('role_id')=='3')
+                        <div class="row">
+
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <select class="form-control" name="village_id" id="village_id">
+                                        <option value="">Select Village</option>
+                                        @foreach ($village_data as $village_for_data)    
+                                        <option value="{{ $village_for_data['location_id'] }}">{{ $village_for_data['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('village_id'))
+                                        <span class="red-text"><?php echo $errors->first('village_id', ':message'); ?></span>
+                                    @endif
+                                </div>
+                            </div> 
 
                             <div class="col-lg-3 col-md-3 col-sm-3">
                                 <div class="form-group">

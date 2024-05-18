@@ -6,7 +6,10 @@
         <div class="content-wrapper mt-7">
             <div class="page-header">
                 <h3 class="page-title">
-                    Projects Master List <a href="{{ route('add-projects') }}" class="btn btn-sm btn-primary ml-3">+ Add</a>
+                    Projects Master List 
+                    @if (in_array('per_add', $data_permission))
+                    <a href="{{ route('add-projects') }}" class="btn btn-sm btn-primary ml-3">+ Add</a>
+                    @endif
                 </h3>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">

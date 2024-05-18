@@ -43,6 +43,15 @@ class ReportsController extends Controller
             $sess_user_role=session()->get('role_id');
             $sess_user_working_dist=session()->get('working_dist');
 
+            $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
+                ->where('users.id', $sess_user_id)
+                ->first();
+
+            $utype=$data_output->user_type;
+            $user_working_dist=$data_output->user_district;
+            $user_working_tal=$data_output->user_taluka;
+            $user_working_vil=$data_output->user_village;
+
             $district_data = TblArea::where('parent_id', '2')
                         ->orderBy('name', 'asc')
                         ->get(['location_id', 'name']);
@@ -50,6 +59,11 @@ class ReportsController extends Controller
             $taluka_data=TblArea::where('parent_id', $sess_user_working_dist)
                         ->orderBy('name', 'asc')
                         ->get(['location_id', 'name']);
+
+            $village_data=TblArea::where('location_id', $user_working_vil)
+                        ->orderBy('name', 'asc')
+                        ->get(['location_id', 'name']);       
+            // dd($village_data);                 
 
             $skills_data = Skills::where('is_active', 1) // 4 represents cities
                         ->whereNot('id', '1')
@@ -63,7 +77,7 @@ class ReportsController extends Controller
 
             $labours = $this->service->getAllLabourLocation();
             // dd($labours);
-            return view('admin.pages.reports.list-location-report', compact('labours','district_data','taluka_data','skills_data','registration_status_data'));
+            return view('admin.pages.reports.list-location-report', compact('labours','district_data','taluka_data','skills_data','registration_status_data','village_data'));
         } catch (\Exception $e) {
             return $e;
         }
