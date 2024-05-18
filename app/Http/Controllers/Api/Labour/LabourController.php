@@ -266,16 +266,16 @@ class LabourController extends Controller
                 ->when($request->has('is_resubmitted'), function($query) use ($is_resubmitted) {
                     $query->where('labour.is_resubmitted', $is_resubmitted);
                 })
-                ->when($request->has('mgnrega_card_id') && $request->has('labour_id'), function($query) use ($request) {
-                    $query->where(function($query) use ($request) {
-                        $query->where('labour.mgnrega_card_id', 'like', '%' . $request->mgnrega_card_id . '%')
-                              ->where('labour.id', '=', $request->labour_id);
-                    });
-                })
-                
-                // ->when($request->has('mgnrega_card_id'), function($query) use ($request) {
-                //     $query->where('labour.mgnrega_card_id', 'like', '%' . $request->mgnrega_card_id . '%');
+                // ->when($request->has('mgnrega_card_id') && $request->has('labour_id'), function($query) use ($request) {
+                //     $query->where(function($query) use ($request) {
+                //         $query->where('labour.mgnrega_card_id', 'like', '%' . $request->mgnrega_card_id . '%')
+                //               ->where('labour.id', '=', $request->labour_id);
+                //     });
                 // })
+                
+                ->when($request->has('mgnrega_card_id'), function($query) use ($request) {
+                    $query->where('labour.mgnrega_card_id', 'like', '%' . $request->mgnrega_card_id . '%');
+                })
                 // ->when($request->has('labour_id'), function($query) use ($request) {
                 //     $query->where('labour.id', '=', $request->labour_id);
                 // })
