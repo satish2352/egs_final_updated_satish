@@ -59,7 +59,8 @@ class ProjectRepository
               'projects.latitude',
               'projects.longitude',
               'projects.is_active',
-		  );
+		  )
+		  ->orderBy('id', 'asc');
 
 		  if($utype=='1')
             {
