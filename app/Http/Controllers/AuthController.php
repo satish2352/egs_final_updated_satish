@@ -147,15 +147,20 @@ class AuthController extends Controller
     public function sendPasswordEmail($password, $email)
 {
     try {
-        $emailContent = 'Your new password is: ' . $password;
-        \Log::info('Sending email to: ' . $email . ' with content: ' . $emailContent);
+        // $emailContent = 'Your new password is: ' . $password;
+        // \Log::info('Sending email to: ' . $email . ' with content: ' . $emailContent);
 
-        Mail::raw($emailContent, function ($message) use ($email) {
-            $message->to($email)->subject('Password Reset');
+        // Mail::raw($emailContent, function ($message) use ($email) {
+        //     $message->to($email)->subject('Password Reset');
+        //     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+        // });
+        Mail::raw('This is a test email.', function ($message) {
+            $message->to('test@example.com')->subject('Test Email');
             $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
         });
+        return 'Email sent successfully!';
 
-        return true;
+        // return true;
     } catch (\Exception $e) {
         \Log::error($e);
         return false;
