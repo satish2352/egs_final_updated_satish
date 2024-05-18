@@ -18,28 +18,30 @@ class ProjectRepository
 {
 
 	public function getProjectsList() {
-        // $data_users = Projects::join('tbl_area', function($join) {
-		// 					$join->on('projects.role_id', '=', 'roles.id');
-		// 				})
-		// 				// ->where('users.is_active','=',true)
-		// 				->select('roles.role_name',
-		// 						'users.email',
-		// 						'users.f_name',
-		// 						'users.m_name',
-		// 						'users.l_name',
-		// 						'users.number',
-		// 						'users.imei_no',
-		// 						'users.aadhar_no',
-		// 						'users.address',
-		// 						'users.state',
-		// 						'users.district',
-		// 						'users.taluka',
-		// 						'users.village',
-		// 						'users.pincode',
-		// 						'users.id',
-		// 						'users.is_active'
-		// 					)->get();
-							// ->toArray();
+
+		$sess_user_id=session()->get('user_id');
+		$sess_user_type=session()->get('user_type');
+		$sess_user_role=session()->get('role_id');
+
+		$data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
+                ->where('users.id', $sess_user_id)
+                ->first();
+
+            $utype=$data_output->user_type;
+            $user_working_dist=$data_output->user_district;
+            $user_working_tal=$data_output->user_taluka;
+            $user_working_vil=$data_output->user_village;
+
+			if($utype=='1')
+            {
+            $data_user_output = $user_working_dist;
+            }else if($utype=='2')
+            {
+                $data_user_output = $user_working_tal;
+            }else if($utype=='3')
+            {
+                $data_user_output = $user_working_vil;
+            } 
 
 		$data_users = Project::leftJoin('tbl_area as district_project', 'projects.district', '=', 'district_project.location_id')
 		->leftJoin('tbl_area as taluka_project', 'projects.taluka', '=', 'taluka_project.location_id')
@@ -49,7 +51,6 @@ class ProjectRepository
               'projects.id',
               'projects.project_name',
               'projects.description',
-            //   'labour.gender_name',
               'district_project.name as district_name',
               'taluka_project.name as taluka_name',
               'village_project.name as village_name',
@@ -58,9 +59,21 @@ class ProjectRepository
               'projects.latitude',
               'projects.longitude',
               'projects.is_active',
-          )->get();
+		  );
+
+		  if($utype=='1')
+            {
+				$data_users->where('projects.district', $user_working_dist);
+            }else if($utype=='2')
+            {
+				$data_users->where('projects.taluka', $user_working_tal);
+            }else if($utype=='3')
+            {
+				$data_users->where('projects.village', $user_working_vil);
+            }
+			$data_output = $data_users->get();
 			// dd($data_users);
-		return $data_users;
+		return $data_output;
 	}
 
 	
