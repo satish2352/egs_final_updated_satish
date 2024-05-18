@@ -276,9 +276,9 @@ class LabourController extends Controller
                 ->when($request->has('mgnrega_card_id'), function($query) use ($request) {
                     $query->where('labour.mgnrega_card_id', 'like', '%' . $request->mgnrega_card_id . '%');
                 })
-                // ->when($request->has('labour_id'), function($query) use ($request) {
-                //     $query->where('labour.id', '=', $request->labour_id);
-                // })
+                ->when($request->has('labour_id'), function($query) use ($request) {
+                    $query->where('labour.id', '=', $request->labour_id);
+                })
                 ->when($request->get('project_id'), function($query) use ($request) {
                     
                     $query->leftJoin('tbl_mark_attendance', 'labour.mgnrega_card_id', '=', 'tbl_mark_attendance.mgnrega_card_id');
