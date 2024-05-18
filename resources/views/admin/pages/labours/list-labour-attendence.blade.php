@@ -293,12 +293,19 @@
                             // },
                             success: function(response) {
                                 if (response.labour_attendance_ajax_data.length > 0) {
-                                    $('#order-listing tbody').empty();
+                                    var table = $('#order-listing').DataTable();
+                                    table.clear().draw();
                                     
                                     $.each(response.labour_attendance_ajax_data, function(index, labour_attendance_data) {
-                                        console.log(labour_attendance_data.created_at);
-                                        var lid=index + parseInt(1);
-                                        $('#order-listing tbody').append('<tr><td>' + lid +'</td><td>' + labour_attendance_data.project_name + '</td><td>' + labour_attendance_data.full_name +'</td><td>' + labour_attendance_data.mobile_number + '</td><td>' + labour_attendance_data.mgnrega_card_id + '</td><td>' + labour_attendance_data.attendance_day+ '</td><td>' + labour_attendance_data.created_at + '</td></tr>');
+                                    index++;
+
+                                    table.row.add([ index,
+                                            labour_attendance_data.project_name,
+                                            labour_attendance_data.full_name,
+                                            labour_attendance_data.mobile_number,
+                                            labour_attendance_data.mgnrega_card_id,
+                                            labour_attendance_data.attendance_day,
+                                            labour_attendance_data.created_at]).draw(false);
                                     });
                                 }else{
                                     $('#order-listing tbody').empty();
