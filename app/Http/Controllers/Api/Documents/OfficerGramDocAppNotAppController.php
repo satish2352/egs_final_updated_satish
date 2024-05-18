@@ -216,7 +216,8 @@ class OfficerGramDocAppNotAppController extends Controller
                             'users.f_name as f_name',
                             'tbl_doc_reason.reason_name as reason_name',
                             'tbl_doc_history.other_remark',
-                            'tbl_doc_history.updated_at',
+                            HistoryDocumentModel::raw("tbl_doc_history.updated_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata' as updated_at"), 
+                            // 'tbl_doc_history.updated_at',
                         )
                         ->where('tbl_doc_history.gram_document_id', $documenthistory['id'])
                         ->get();
