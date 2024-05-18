@@ -112,6 +112,14 @@
                     </li>
                 </ul>
 
+                <ul class="navbar-nav pl-3">
+                <li class="nav-item d-md-flex"><h6><?php echo session()->get('f_name').' '.session()->get('m_name').' '.session()->get('l_name'); ?></h6>
+                </li>
+
+                <li class="nav-item d-md-flex"><?php echo ' ('.session()->get('role_name').')'; ?></li>   
+                </ul>
+
+
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item nav-profile dropdown mr-0">
 
