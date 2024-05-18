@@ -132,12 +132,10 @@ class AuthController extends Controller
            $msg= Mail::raw('Your new password is: ' . $password, function ($message) use ($email) {
                 $message->to($email)->subject('Password Reset');
                 $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-            
-               
             });
 
-           
-
+            dd($msg);
+            die();
             return true;
 
         } catch (\Exception $e) {
@@ -159,8 +157,6 @@ class AuthController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
-
-          
             if (!$user) {
                 return response()->json(['status' => 'false', 'message' => 'Email not found'], 200);
             }
@@ -173,9 +169,6 @@ class AuthController extends Controller
             for ($i = 0; $i < $length; $i++) {
                 $newPassword .= $characters[random_int(0, strlen($characters) - 1)];
             }
-
-           
-
             $emailSent = $this->sendPasswordEmail($newPassword, $request->email);
 
             if (!$emailSent) {
