@@ -126,48 +126,25 @@ class AuthController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
    
-    // public function sendPasswordEmail($password, $email)
-    // {
-    //     try {
-    //        $msg= Mail::raw('Your new password is: ' . $password, function ($message) use ($email) {
-    //             $message->to($email)->subject('Password Reset');
-    //             $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-
-    //             dd($message);
-    //         });           
-    //         return true;
-
-    //     } catch (\Exception $e) {
-    //         // Log the error
-    //         \Log::error($e);
-    //         return false;
-    //     }
-    // }
-
     public function sendPasswordEmail($password, $email)
-{
-    try {
-        // $emailContent = 'Your new password is: ' . $password;
-        // \Log::info('Sending email to: ' . $email . ' with content: ' . $emailContent);
+    {
+        try {
+           $msg= Mail::raw('Your new password is: ' . $password, function ($message) use ($email) {
+                $message->to($email)->subject('Password Reset');
+                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
 
-        // Mail::raw($emailContent, function ($message) use ($email) {
-        //     $message->to($email)->subject('Password Reset');
-        //     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
-        // });
-        Mail::raw('This is a test email.', function ($message) {
-            $message->to('test@example.com')->subject('Test Email');
-            $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                dd($message);
+            });           
+            return true;
 
-            dd($message);
-        });
-        return 'Email sent successfully!';
-
-        // return true;
-    } catch (\Exception $e) {
-        \Log::error($e);
-        return false;
+        } catch (\Exception $e) {
+            // Log the error
+            \Log::error($e);
+            return false;
+        }
     }
-}
+
+ 
 
 
     public function resetPasswordEmailBased(Request $request)
