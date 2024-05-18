@@ -30,6 +30,7 @@ Route::get('/error-handling', ['as' => 'error-handling', 'uses' => 'App\Http\Con
 
 Route::get('/login', ['as' => 'login', 'uses' => 'App\Http\Controllers\Admin\LoginRegister\LoginController@index']);
 Route::post('/submitLogin', ['as' => 'submitLogin', 'uses' => 'App\Http\Controllers\Admin\LoginRegister\LoginController@submitLogin']);
+Route::post('/reset-password-byemail', ['as' => 'reset-password-byemail', 'uses' => 'App\Http\Controllers\Admin\LoginRegister\ChangePassController@resetPasswordEmailBased']);
 
 // ================================================
 Route::group(['middleware' => ['admin']], function () {

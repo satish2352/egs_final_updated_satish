@@ -398,7 +398,7 @@
                                                     <select class="form-control" name="reason_id" id="reason_id">
                                                         <option value="">Select Reason</option>
                                                        
-                                                        <option value="1001">Others</option>
+                                                        <!-- <option value="1001">Others</option> -->
                                                             @foreach ($dynamic_reasons as $dynamic_reasons_data)
                                                             <option value="{{ $dynamic_reasons_data['id'] }}">{{ $dynamic_reasons_data['reason_name'] }}</option>
                                                             @endforeach  

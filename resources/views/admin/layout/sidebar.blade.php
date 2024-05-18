@@ -277,19 +277,13 @@
                 </a>
                 <div class="collapse" id="gdocument">
                     <ul class="nav flex-column sub-menu">
-                    <!-- @if (in_array('list-grampanchayt-doc-new', $data_for_url)) -->
-                        <!-- @if(session()->get('role_id')=='1' || session()->get('role_id')=='2')
-                            <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-grampanchayt-doc-new*')
+                    
+                    @if (in_array('list-labours', $data_for_url))
+                        <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-grampanchayt-doc-new*')
                             ? 'nav-link active' : 'nav-link' }}"
-                                    href="{{ route('list-grampanchayt-doc-new') }}">Received For Approval</a></li>
-                        @elseif(session()->get('role_id')=='3') -->
-                            <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-sended-for-approval*')
-                            ? 'nav-link active' : 'nav-link' }}"
-                                    href="{{ route('list-sended-for-approval') }}">Sended For Approval</a>
+                                    href="{{ route('list-grampanchayt-doc-new') }}">Sended For Approval Documents</a>
                                 </li>
-                        <!-- @endif -->
-
-                    <!-- @endif -->
+                    @endif
                     @if (in_array('list-labours', $data_for_url))
                         <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-approved-documents*')
                             ? 'nav-link active' : 'nav-link' }}"
