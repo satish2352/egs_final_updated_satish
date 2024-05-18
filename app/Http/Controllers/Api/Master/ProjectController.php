@@ -88,6 +88,9 @@ class ProjectController extends Controller
                 ->when($request->has('mgnrega_card_id'), function($query) use ($request) {
                     $query->where('labour.mgnrega_card_id', 'like', '%' . $request->mgnrega_card_id . '%');
                 })
+                ->when($request->has('id'), function($query) use ($request) {
+                    $query->where('labour.id', '=', $request->id);
+                })
                 ->select(
                     'tbl_mark_attendance.id',
                     'labour.full_name',
