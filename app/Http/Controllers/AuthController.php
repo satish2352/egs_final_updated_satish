@@ -157,6 +157,8 @@ class AuthController extends Controller
         Mail::raw('This is a test email.', function ($message) {
             $message->to('test@example.com')->subject('Test Email');
             $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+
+            dd($message);
         });
         return 'Email sent successfully!';
 
