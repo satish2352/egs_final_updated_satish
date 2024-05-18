@@ -821,7 +821,7 @@ class LabourRepository
             ->leftJoin('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
             ->leftJoin('tbl_area as taluka_labour', 'users.user_taluka', '=', 'taluka_labour.location_id')
             ->leftJoin('tbl_area as village_labour', 'users.user_village', '=', 'village_labour.location_id')
-			->where('projects.District', $user_working_dist)
+			->where('projects.district', $user_working_dist)
             ->whereDate('tbl_mark_attendance.created_at', $date)
 			->select(
 				'tbl_mark_attendance.id',
