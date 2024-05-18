@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <style>
      .password-toggle {
@@ -34,6 +36,13 @@
 
         .fa-eye-slash {
             /* display: none; */
+        }
+
+        .modal .modal-dialog .modal-content .modal-header {
+            padding: 8px 11px;
+        }
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding: 11px 25px;
         }
     </style>
 <body>
@@ -50,7 +59,6 @@
                                 <img src="{{ asset('/assets/images/mlogo.png') }}" alt="logo">
                             </div>
                             <!--  Login Form -->
-                            <h4 class="text-center" style="color:#392C70">EGS</h4>
 
                             @if (isset($return_data['msg_alert']) && $return_data['msg_alert'] == 'green')
                                 <div class="alert alert-success" role="alert">
@@ -122,10 +130,10 @@
                                 <div class="my-3">
                                     <button type="submit"
                                         class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Login</button>
-                                    {{-- <div class="d-flex justify-content-sm-between mt-3 fo14">
-                                        <a href="#" class="text-dark">Forgot Username</a>
-                                        <a href="#" class="text-dark">Forgot Password</a>
-                                    </div> --}}
+                                    <div class="d-flex justify-content-sm-between mt-3 fo14">
+                                        <a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Forgot Password</a>
+                                        
+                                    </div>
                                     <div class="border-line"></div>
                                 </div>
                                 {{-- <div class="text-center mt-3 font-weight-light">
@@ -246,6 +254,36 @@
         }
     }
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Forgot Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url('reset-password-byemail') }}" method="POST">
+        @csrf
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email">
+            </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+      
+    </div>
+  </div>
+</div>
+
 </body>
 
 </html>
