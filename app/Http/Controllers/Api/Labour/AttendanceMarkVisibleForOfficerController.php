@@ -78,7 +78,7 @@ class AttendanceMarkVisibleForOfficerController extends Controller
                 
                 $data_output = $basic_query_object
                 ->select(
-                    'tbl_mark_attendance.id',
+                    'labour.id',
                     User::raw("CONCAT(users.f_name, COALESCE(CONCAT(' ', users.m_name), ''),' ', users.l_name) AS gramsevak_full_name"),
                     'tbl_mark_attendance.project_id',
                     'projects.project_name',
