@@ -126,23 +126,42 @@ class AuthController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
    
+    // public function sendPasswordEmail($password, $email)
+    // {
+    //     try {
+    //        $msg= Mail::raw('Your new password is: ' . $password, function ($message) use ($email) {
+    //             $message->to($email)->subject('Password Reset');
+    //             $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+
+    //             dd($message);
+    //         });           
+    //         return true;
+
+    //     } catch (\Exception $e) {
+    //         // Log the error
+    //         \Log::error($e);
+    //         return false;
+    //     }
+    // }
+
     public function sendPasswordEmail($password, $email)
-    {
-        try {
-           $msg= Mail::raw('Your new password is: ' . $password, function ($message) use ($email) {
-                $message->to($email)->subject('Password Reset');
-                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+{
+    try {
+        $emailContent = 'Your new password is: ' . $password;
+        \Log::info('Sending email to: ' . $email . ' with content: ' . $emailContent);
 
-                dd($message);
-            });           
-            return true;
+        Mail::raw($emailContent, function ($message) use ($email) {
+            $message->to($email)->subject('Password Reset');
+            $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+        });
 
-        } catch (\Exception $e) {
-            // Log the error
-            \Log::error($e);
-            return false;
-        }
+        return true;
+    } catch (\Exception $e) {
+        \Log::error($e);
+        return false;
     }
+}
+
 
     public function resetPasswordEmailBased(Request $request)
     {
