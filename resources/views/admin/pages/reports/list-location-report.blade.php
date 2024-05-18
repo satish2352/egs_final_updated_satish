@@ -426,7 +426,6 @@
                             //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             // },
                             success: function(response) {
-                                console.log(response.labour_ajax_data);
                                 if (response.labour_ajax_data.length > 0) {
                                     // $('#order-listing tbody').empty();
                                     var table = $('#order-listing').DataTable();
