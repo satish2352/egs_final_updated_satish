@@ -144,7 +144,7 @@ class LabourAttendanceMarkController extends Controller
                 $totalRecords = $basic_query_object->select('tbl_mark_attendance.id')->get()->count();
                 $data_output  = $basic_query_object
                 ->select(
-                    'tbl_mark_attendance.id',
+                    'labour.id',
                     'tbl_mark_attendance.project_id',
                     'projects.project_name',
                     'labour.full_name as full_name',
