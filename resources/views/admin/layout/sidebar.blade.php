@@ -210,17 +210,6 @@
             </li>
             @endif
 
-           
-            <!-- @if (in_array('list-gramsevak', $data_for_url))
-            <li class="{{request()->is('list-gramsevak*')
-                ? 'nav-item active' : 'nav-item' }}">
-                <?php //$currenturl = Request::url(); ?>
-                <a class="nav-link" href="{{ route('list-gramsevak') }}">
-                    <i class="fas fa-file-alt fa-lg menu-icon"></i>
-                    <span class="menu-title">Gramsevak Management</span>
-                </a>
-            </li>
-            @endif -->
 
             @if(session()->get('role_id')=='1' || session()->get('role_id')=='2')
             <li class="nav-item">
@@ -295,9 +284,9 @@
                                     href="{{ route('list-not-approved-documents') }}">Not Approved Documents</a></li>
                     @endif
                     @if (in_array('list-labours', $data_for_url))
-                        <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-resubmitted-labours*')
+                        <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-grampanchayt-doc-resubmitted*')
                             ? 'nav-link active' : 'nav-link' }}"
-                                    href="{{ route('list-resubmitted-labours') }}">Resubmitted Documents</a></li>
+                                    href="{{ route('list-grampanchayt-doc-resubmitted') }}">Resubmitted Documents</a></li>
                     @endif
 
                     </ul>
