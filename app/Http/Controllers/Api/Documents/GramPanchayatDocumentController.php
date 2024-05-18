@@ -250,7 +250,7 @@ class GramPanchayatDocumentController extends Controller
            
         // dd( $document);
             if (!$document) {
-                return response()->json(['status' => 'false', 'message' => 'Document not found'], 404);
+                return response()->json(['status' => 'false', 'message' => 'Document not found'], 200);
             }
            
                 $document->document_pdf = Config::get('DocumentConstant.GRAM_PANCHAYAT_DOC_VIEW') . $document->document_pdf;
