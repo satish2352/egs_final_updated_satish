@@ -156,7 +156,7 @@ class ProjectController extends Controller
             $labourData_array_final = [];
             foreach ($labourData as $key => $value) {
                 $labourData_array = [];
-                $labourData_array['id'] = $value->mgnrega_card_id;
+                $labourData_array['id'] = $value->id;
                 $labourData_array['name'] = $value->full_name;
                 $labourData_array['mgnrega_card_id'] = $value->mgnrega_card_id;
                 $labourData_array['latitude'] = $value->latitude;
