@@ -20,7 +20,7 @@ class AllMasterController extends Controller
 {
     public function getAllMasters(){
         try {
-            $data = {};
+            $data = [];
             $data['gender'] = Gender::where('is_active', true)->orderBy('id', 'asc')->get();
             $data['maritalstatus'] = Maritalstatus::where('is_active', true)->orderBy('id', 'asc')->get();
             $data['skills'] = Skills::where('is_active', true)->orderBy('id', 'asc')->get();
