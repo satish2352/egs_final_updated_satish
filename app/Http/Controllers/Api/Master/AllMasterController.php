@@ -32,7 +32,7 @@ class AllMasterController extends Controller
             $data['reasons'] = Reasons::where('is_active', true)->orderBy('id', 'asc')->get();
             $data['documentreasons'] = DocumentReasons::where('is_active', true)->orderBy('id', 'asc')->get();
             
-            return response()->json(['status' => 'success', 'message' => 'asjdsajdjsa data retrieved successfully', 'data' => json_encode($data)], 200);
+            return response()->json(['status' => 'success', 'message' => 'asjdsajdjsa data retrieved successfully', 'data' => array($data)], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'false', 'message' => $e->getMessage()], 500);
         }
