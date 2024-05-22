@@ -75,6 +75,7 @@ public function deleteDistrict($id){
 }
 
     public function updateOneDistrict($id){
+        dd($this->repo->updateOneDistrict($id));
         return $this->repo->updateOneDistrict($id);
     }
 

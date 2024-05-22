@@ -105,6 +105,7 @@ class AreaRepository
             if ($area_data) {
                 $is_active = $area_data->is_active === 1 ? 0 : 1;
                 $area_data->is_active = $is_active;
+                $area_data->is_new = 1;
                 $area_data->save();
 
                 return [
@@ -213,6 +214,7 @@ class AreaRepository
             if ($area_data) {
                 $is_active = $area_data->is_active === 1 ? 0 : 1;
                 $area_data->is_active = $is_active;
+                $area_data->is_new = 1;
                 $area_data->save();
 
                 return [
@@ -293,6 +295,7 @@ class AreaRepository
             if ($area_data) {
                 $is_active = $area_data->is_active === 1 ? 0 : 1;
                 $area_data->is_active = $is_active;
+                $area_data->is_new = 1;
                 $area_data->save();
 
                 return [
