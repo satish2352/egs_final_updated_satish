@@ -360,7 +360,7 @@ class AreaController extends Controller {
         try {
             $active_id = $request->active_id;
         $result = $this->service->updateOneVillage($active_id);
-            return redirect('list-taluka')->with('flash_message', 'Updated!');  
+            return redirect('list-village')->with('flash_message', 'Updated!');  
         } catch (\Exception $e) {
             return $e;
         }
