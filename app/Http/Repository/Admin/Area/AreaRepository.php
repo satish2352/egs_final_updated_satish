@@ -106,8 +106,8 @@ class AreaRepository
                 $is_active = $area_data->is_active === 1 ? 0 : 1;
                 $area_data->is_active = $is_active;
                 $area_data->is_new = 1;
-                $area_data->save();
-
+                // $area_data->save();
+				dd($area_data->save());
                 return [
                     'msg' => 'District updated successfully.',
                     'status' => 'success'
