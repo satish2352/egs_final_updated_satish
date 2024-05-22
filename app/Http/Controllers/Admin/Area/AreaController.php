@@ -159,6 +159,7 @@ class AreaController extends Controller {
 
     public function addTaluka(){
         $dynamic_district = TblArea::where('parent_id', 2)
+                            ->where('is_active', '1')
                             ->select('location_id','name')
                             ->orderBy('name', 'asc')
                             ->get()
@@ -211,6 +212,7 @@ class AreaController extends Controller {
 
     public function editTaluka(Request $request){
         $dynamic_district = TblArea::where('parent_id', 2)
+                            ->where('is_active', '1')
                             ->select('location_id','name')
                             ->orderBy('name', 'asc')
                             ->get()
@@ -301,6 +303,7 @@ class AreaController extends Controller {
 
     public function addVillage(){
         $dynamic_district = TblArea::where('parent_id', 2)
+                            ->where('is_active', '1')
                             ->select('location_id','name')
                             ->orderBy('name', 'asc')
                             ->get()
@@ -365,6 +368,7 @@ class AreaController extends Controller {
 
     public function editVillage(Request $request){
         $dynamic_district = TblArea::where('parent_id', 2)
+                            ->where('is_active', '1')
                             ->select('location_id','name')
                             ->orderBy('name', 'asc')
                             ->get()
@@ -444,6 +448,7 @@ class AreaController extends Controller {
         $stateId = $request->input('stateId');
 
         $district = TblArea::where('parent_id', $stateId)
+                    ->where('is_active', '1')
                     ->orderBy('name', 'asc')
                     ->get(['location_id', 'name']);
               return response()->json(['district' => $district]);
@@ -455,6 +460,7 @@ class AreaController extends Controller {
         $districtId = $request->input('districtId');
 
         $taluka = TblArea::where('parent_id', $districtId)
+                    ->where('is_active', '1')
                     ->orderBy('name', 'asc')
                     ->get(['location_id', 'name']);
               return response()->json(['taluka' => $taluka]);
@@ -466,6 +472,7 @@ class AreaController extends Controller {
         $talukaId = $request->input('talukaId');
 
         $village = TblArea::where('parent_id', $talukaId)
+                    ->where('is_active', '1')
                     ->orderBy('name', 'asc')
                     ->get(['location_id', 'name']);
               return response()->json(['village' => $village]);
@@ -476,6 +483,7 @@ class AreaController extends Controller {
     {
         $stateId = $request->input('stateId');
         $state =  TblArea::select('location_id','name')
+                            ->where('is_active', '1')
                             ->orderBy('name', 'asc')
                             ->get()
                             ->toArray();

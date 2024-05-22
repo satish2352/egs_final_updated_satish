@@ -25,7 +25,7 @@
                                     
                                     <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <div class="form-group">
-                                                    <label for="district">District</label>&nbsp<span class="red-text">*</span>
+                                                    <label for="district">User District</label>&nbsp<span class="red-text">*</span>
                                                     <select class="form-control" name="district" id="district">
                                                         <option value="">Select District</option>
                                                         @foreach ($dynamic_district as $district)
