@@ -68,7 +68,7 @@
                         </div>
                         <div class="col-lg-8 col-md-8 col-sm-8 d-flex justify-content-end align-items-center">
                             <div>
-                                <a href="{{ route('list-labours') }}" class="btn btn-sm btn-primary ml-3">Back</a>
+                                <a href="#" onclick="history.back()" class="btn btn-sm btn-primary ml-3">Back</a>
                             </div>
                         </div>
 
@@ -425,7 +425,7 @@
                                         <button type="submit" class="btn btn-sm btn-success" id="submitButton" disabled>
                                             Save &amp; Submit
                                         </button>
-                                        <span><a href="{{ route('list-projects') }}"
+                                        <span><a href="#" onclick="history.back()"
                                                 class="btn btn-sm btn-primary ">Back</a></span>
                                     </div>
                                         </div>
@@ -498,7 +498,7 @@
                                         <button type="submit" class="btn btn-sm btn-success" id="submitButton" disabled>
                                             Save &amp; Submit
                                         </button>
-                                        <span><a href="{{ route('list-projects') }}"
+                                        <span><a href="#" onclick="history.back()"
                                                 class="btn btn-sm btn-primary ">Back</a></span>
                                     </div>
                                         </div>
