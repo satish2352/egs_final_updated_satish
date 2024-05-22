@@ -103,7 +103,7 @@ class AreaRepository
 
             // Assuming 'is_active' is a field in the userr model
             if ($area_data) {
-                $is_active = $area_data->is_active === 1 ? 0 : 1;
+                $is_active = $area_data->is_active === 1 ? false : true;
                 $area_data->is_active = $is_active;
                 $area_data->is_new = 1;
                 // $area_data->save();
