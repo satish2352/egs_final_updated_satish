@@ -34,15 +34,15 @@ class AreaServices
             $chk_dup = $this->repo->checkDupCredentials($request);
             if(sizeof($chk_dup)>0)
             {
-                return ['status'=>'failed','msg'=>'Registration Failed. The name has already been taken.'];
+                return ['status'=>'failed','msg'=>'The District name has already been taken.'];
             }
             else
             {
                 $last_id = $this->repo->addDistrictInsert($request);
                 if ($last_id) {
-                    return ['status' => 'success', 'msg' => 'User Added Successfully.'];
+                    return ['status' => 'success', 'msg' => 'District Added Successfully.'];
                 } else {
-                    return ['status' => 'error', 'msg' => 'User get Not Added.'];
+                    return ['status' => 'error', 'msg' => 'District get Not Added.'];
                 }  
             }
 
@@ -58,16 +58,16 @@ class AreaServices
 
     public function updateDistrict($request) {
         $user_register_id = $this->repo->updateDistrict($request);
-        return ['status'=>'success','msg'=>'Data Updated Successful.'];
+        return ['status'=>'success','msg'=>'District Updated Successful.'];
 }  
 
 public function deleteDistrict($id){
     try {
         $delete = $this->repo->deleteDistrict($id);
         if ($delete) {
-            return ['status' => 'success', 'msg' => 'Deleted Successfully.'];
+            return ['status' => 'success', 'msg' => 'DistrictDeleted Successfully.'];
         } else {
-            return ['status' => 'error', 'msg' => ' Not Deleted.'];
+            return ['status' => 'error', 'msg' => 'District Not Deleted.'];
         }  
     } catch (Exception $e) {
         return ['status' => 'error', 'msg' => $e->getMessage()];
@@ -90,15 +90,15 @@ public function deleteDistrict($id){
             $chk_dup = $this->repo->checkDupCredentials($request);
             if(sizeof($chk_dup)>0)
             {
-                return ['status'=>'failed','msg'=>'Registration Failed. The name has already been taken.'];
+                return ['status'=>'failed','msg'=>'The Taluka name has already been taken.'];
             }
             else
             {
                 $last_id = $this->repo->addTalukaInsert($request);
                 if ($last_id) {
-                    return ['status' => 'success', 'msg' => 'User Added Successfully.'];
+                    return ['status' => 'success', 'msg' => 'Taluka Added Successfully.'];
                 } else {
-                    return ['status' => 'error', 'msg' => 'User get Not Added.'];
+                    return ['status' => 'error', 'msg' => 'Taluka get Not Added.'];
                 }  
             }
 
@@ -114,16 +114,16 @@ public function deleteDistrict($id){
 
     public function updateTaluka($request) {
         $user_register_id = $this->repo->updateTaluka($request);
-        return ['status'=>'success','msg'=>'Data Updated Successful.'];
+        return ['status'=>'success','msg'=>'Taluka Updated Successful.'];
     }
 
     public function deleteTaluka($id){
         try {
             $delete = $this->repo->deleteTaluka($id);
             if ($delete) {
-                return ['status' => 'success', 'msg' => 'Deleted Successfully.'];
+                return ['status' => 'success', 'msg' => 'Taluka Deleted Successfully.'];
             } else {
-                return ['status' => 'error', 'msg' => ' Not Deleted.'];
+                return ['status' => 'error', 'msg' => 'Taluka Not Deleted.'];
             }  
         } catch (Exception $e) {
             return ['status' => 'error', 'msg' => $e->getMessage()];
@@ -146,15 +146,15 @@ public function deleteDistrict($id){
             $chk_dup = $this->repo->checkDupCredentials($request);
             if(sizeof($chk_dup)>0)
             {
-                return ['status'=>'failed','msg'=>'Registration Failed. The name has already been taken.'];
+                return ['status'=>'failed','msg'=>'The Village name has already been taken.'];
             }
             else
             {
                 $last_id = $this->repo->addVillageInsert($request);
                 if ($last_id) {
-                    return ['status' => 'success', 'msg' => 'User Added Successfully.'];
+                    return ['status' => 'success', 'msg' => 'Village Added Successfully.'];
                 } else {
-                    return ['status' => 'error', 'msg' => 'User get Not Added.'];
+                    return ['status' => 'error', 'msg' => 'Village get Not Added.'];
                 }  
             }
 
@@ -174,16 +174,16 @@ public function deleteDistrict($id){
 
     public function updateVillage($request) {
         $user_register_id = $this->repo->updateVillage($request);
-        return ['status'=>'success','msg'=>'Data Updated Successful.'];
+        return ['status'=>'success','msg'=>'Village Updated Successful.'];
     }
 
     public function deleteVillage($id){
         try {
             $delete = $this->repo->deleteVillage($id);
             if ($delete) {
-                return ['status' => 'success', 'msg' => 'Deleted Successfully.'];
+                return ['status' => 'success', 'msg' => 'VillageDeleted Successfully.'];
             } else {
-                return ['status' => 'error', 'msg' => ' Not Deleted.'];
+                return ['status' => 'error', 'msg' => 'Village Not Deleted.'];
             }  
         } catch (Exception $e) {
             return ['status' => 'error', 'msg' => $e->getMessage()];
@@ -192,7 +192,7 @@ public function deleteDistrict($id){
 
     public function update($request) {
             $user_register_id = $this->repo->update($request);
-            return ['status'=>'success','msg'=>'Data Updated Successful.'];
+            return ['status'=>'success','msg'=>'Village Updated Successful.'];
     }    
 
     public function editUsers($request) {

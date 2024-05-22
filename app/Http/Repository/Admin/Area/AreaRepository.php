@@ -233,21 +233,39 @@ class AreaRepository
         }
     }
 
-    public function getVillageList() {
-        $data_village = TblArea::leftJoin('tbl_area as taluka_data', 'tbl_area.parent_id', '=', 'taluka_data.location_id')
-                        ->leftJoin('tbl_area as district_data', 'taluka_data.parent_id', '=', 'district_data.location_id')
-                        ->where('tbl_area.location_type','=','4')
+	public function getVillageList() {
+		$data_village = TblArea::leftJoin('tbl_area as taluka_data', 'tbl_area.parent_id', '=', 'taluka_data.location_id')
+						->leftJoin('tbl_area as district_data', 'taluka_data.parent_id', '=', 'district_data.location_id')
+						->where('tbl_area.location_type','=','4')
 						->select('tbl_area.location_id',
 								'tbl_area.name',
-                                'tbl_area.is_active',
-                                'taluka_data.name as taluka_name',
-                                'district_data.name as district_name',
+								'tbl_area.is_active',
+								'taluka_data.name as taluka_name',
+								'district_data.name as district_name',
 							)
 							->orderBy('taluka_data.name', 'asc')
-							->get();
-							
+							->paginate(50);
+	// dd($data_village);
 		return $data_village;
 	}
+	
+    // public function getVillageList() {
+    //     $data_village = TblArea::leftJoin('tbl_area as taluka_data', 'tbl_area.parent_id', '=', 'taluka_data.location_id')
+    //                     ->leftJoin('tbl_area as district_data', 'taluka_data.parent_id', '=', 'district_data.location_id')
+    //                     ->where('tbl_area.location_type','=','4')
+	// 					->select('tbl_area.location_id',
+	// 							'tbl_area.name',
+    //                             'tbl_area.is_active',
+    //                             'taluka_data.name as taluka_name',
+    //                             'district_data.name as district_name',
+	// 						)
+	// 						->orderBy('taluka_data.name', 'asc')
+	// 						// ->get()
+	// 						->paginate(20);
+	// 	dd($data_village);					
+							
+	// 	return $data_village;
+	// }
 
     public function addVillageInsert($request)
 	{
@@ -688,7 +706,121 @@ class AreaRepository
                 'status' => 'error'
             ];
         }
-    }	
+    }
+
+	public function getProfile()
+	{
+		$user_detail = User::where('is_active', true)
+			->where('id', session()->get('user_id'))
+			->select('id', 'f_name', 'm_name', 'l_name', 'email', 'password', 'number', 'designation','user_profile')
+			->first();
+		return $user_detail;
+	}
+
+
+	public function updateProfile($request)
+	{
+		try {
+			
+			$return_data = array();
+			$otp = rand(6, 999999);
+
+			
+			$update_data = [
+				'f_name' => $request->f_name,
+				'm_name' => $request->m_name,
+				'l_name' => $request->l_name,
+				'designation' => $request->designation,
+			];
+			
+			if (isset($return_data['user_profile'])) {
+				$previousUserProfile = $update_data->user_profile;
+			}
+			// if ($request->hasFile('user_profile')) {
+			// 	$profileImage = $request->file('user_profile');
+			// 	$newImagePathOrFilename = $profileImage->store('profile_images');
+			// 	$update_data['user_profile'] = $newImagePathOrFilename;
+			// }
+
+			if (($request->number != $request->old_number) && !isset($request->password)) {
+				$this->sendOTPEMAIL($otp, $request);
+				info("only mobile change");
+				$return_data['password_change'] = 'no';
+				$update_data['otp'] = $otp;
+				$return_data['mobile_change'] = 'yes';
+				$return_data['user_id'] = $request->edit_user_id;
+				$return_data['new_mobile_number'] = $request->number;
+				$return_data['password_new'] = '';
+				$return_data['msg'] = "OTP sent on registered on email";
+				$return_data['msg_alert'] = "green";
+
+			}
+
+			if ((isset($request->password) && $request->password !== '') && ($request->number == $request->old_number)) {
+				info("only password change");
+				// $update_data['password'] = bcrypt($request->password);
+				$return_data['password_change'] = 'yes';
+				$return_data['mobile_change'] = 'no';
+				$update_data['otp'] = $otp;
+				$return_data['user_id'] = $request->edit_user_id;
+				$return_data['password_new'] = bcrypt($request->password);
+				$return_data['new_mobile_number'] = '';
+				$return_data['msg'] = "OTP sent on registered on email";
+				$return_data['msg_alert'] = "green";
+
+				$this->sendOTPEMAIL($otp, $request);
+			}
+
+			if ((isset($request->password) && $request->password !== '') && ($request->number != $request->old_number)) {
+				info("only password and mobile number changed");
+				$update_data['otp'] = $otp;
+				$return_data['password_new'] = bcrypt($request->password);
+				$return_data['password_change'] = 'yes';
+				$return_data['mobile_change'] = 'yes';
+				$return_data['user_id'] = $request->edit_user_id;
+				$return_data['new_mobile_number'] = $request->number;
+				$return_data['msg'] = "OTP sent on registered on email";
+				$return_data['msg_alert'] = "green";
+
+				$this->sendOTPEMAIL($otp, $request);
+			}
+			
+			User::where('id', $request->edit_user_id)->update($update_data);
+
+			$user_data = User::find($request->edit_user_id);
+			$previousUserProfile = $user_data->english_image;
+			$last_insert_id = $user_data->id;
+
+            $return_data['last_insert_id'] = $last_insert_id;
+            $return_data['user_profile'] = $previousUserProfile;
+			return $return_data;
+
+
+		} catch (\Exception $e) {
+			info($e);
+		}
+
+		// return $update_data;
+	}
+
+	public function sendOTPEMAIL($otp, $request) {
+		try {
+			$email_data = [
+				'otp' => $otp,
+			];
+			$toEmail = $request->email;
+			$senderSubject = 'Disaster Management OTP ' . date('d-m-Y H:i:s');
+			$fromEmail = env('MAIL_USERNAME');
+			Mail::send('admin.email.emailotp', ['email_data' => $email_data], function ($message) use ($toEmail, $fromEmail, $senderSubject) {
+				$message->to($toEmail)->subject($senderSubject);
+				$message->from($fromEmail, 'Disaster Management OTP');
+			});
+			return 'ok';
+		} catch (\Exception $e) {
+			info($e);
+		}
+	}
+	
 	// public function checkEmailExists(Request $request) {
     
 
