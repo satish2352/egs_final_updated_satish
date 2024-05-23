@@ -174,16 +174,20 @@ public function index(Request $request)
             ->count();  
            
 
+            $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
+            ->where('users.id', $sess_user_id)
+            ->first();
 
-
-             $todayCount = Labour::where('updated_at', '>=', $fromDate)
-            ->where('updated_at', '<=', $toDate)
-            // ->where('is_approved', 2)
+             $todayCount = Labour::where('created_at', '>=', $fromDate)
+            ->where('created_at', '<=', $toDate)
+            ->whereIn('labour.user_id',$data_user_output)
             ->get()
             ->count();
 
             $currentYearCount = Labour::whereYear('updated_at', date('Y'))
                 ->where('user_id', $sess_user_id)
+                ->whereIn('labour.user_id',$data_user_output)
+
                 // ->where('is_approved', 2)
                 ->get()
                 ->count();
@@ -266,7 +270,7 @@ public function index(Request $request)
             $todayCount = Labour::where('updated_at', '>=', $fromDate)
             ->where('updated_at', '<=', $toDate)
             ->where('user_id', $sess_user_id)
-            ->where('is_approved', 2)
+            // ->where('is_approved', 2)
             ->get()
             ->count();
 
