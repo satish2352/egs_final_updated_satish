@@ -362,7 +362,7 @@ public function index(Request $request)
                             }
                         }
             
-                        $documentCounts = GramPanchayatDocuments::where('user_id', $user_working_vil)
+                        $documentCounts = GramPanchayatDocuments::where('user_id', $sess_user_id)
                             ->selectRaw('is_approved,is_resubmitted, COUNT(*) as count')
                             // ->where('is_resubmitted', 0)
                             ->groupBy('is_approved','is_resubmitted')
@@ -390,10 +390,6 @@ public function index(Request $request)
                             }
                         }  
             
-                        $documentRequestCounts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $user_working_vil)
-                            ->where('is_resubmitted', 1)
-                            ->where('is_approved', 1)
-                            ->count();
         }
 
 
