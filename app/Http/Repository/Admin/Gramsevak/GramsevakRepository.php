@@ -238,10 +238,38 @@ class GramsevakRepository
 		}
 		else if($sess_user_role=='3')
 		{
-			        
+			$data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
+                ->where('users.id', $sess_user_id)
+                ->first();
+
+            $utype=$data_output->user_type;
+            $user_working_dist=$data_output->user_district;
+            $user_working_tal=$data_output->user_taluka;
+            $user_working_vil=$data_output->user_village;
 
 
-			$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
+            if($utype=='1')
+            {
+            $data_user_output = User::where('users.user_district', $user_working_dist)
+            ->select('id')
+                ->get()
+				->toArray();
+            }else if($utype=='2')
+            {
+                $data_user_output = User::where('users.user_taluka', $user_working_tal)
+                ->select('id')
+                ->get()
+				->toArray();
+            }else if($utype=='3')
+            {
+                $data_user_output = User::where('users.user_village', $user_working_vil)
+                ->select('id')
+                ->get()
+				->toArray();
+            }         
+
+
+		$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
 				->leftJoin('tbl_area as district_user', 'users.user_district', '=', 'district_user.location_id')
 				->leftJoin('tbl_area as taluka_user', 'users.user_taluka', '=', 'taluka_user.location_id')
 				->leftJoin('tbl_area as village_user', 'users.user_village', '=', 'village_user.location_id')
@@ -410,6 +438,50 @@ class GramsevakRepository
 				'users.address','users.pincode','users.user_profile','roles.role_name',
 				'district_user.name as district','taluka_user.name as taluka','village_user.name as village')
 				->get();
+		}else if($sess_user_role=='3')
+		{
+			$data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
+                ->where('users.id', $sess_user_id)
+                ->first();
+
+            $utype=$data_output->user_type;
+            $user_working_dist=$data_output->user_district;
+            $user_working_tal=$data_output->user_taluka;
+            $user_working_vil=$data_output->user_village;
+
+
+            if($utype=='1')
+            {
+            $data_user_output = User::where('users.user_district', $user_working_dist)
+            ->select('id')
+                ->get()
+				->toArray();
+            }else if($utype=='2')
+            {
+                $data_user_output = User::where('users.user_taluka', $user_working_tal)
+                ->select('id')
+                ->get()
+				->toArray();
+            }else if($utype=='3')
+            {
+                $data_user_output = User::where('users.user_village', $user_working_vil)
+                ->select('id')
+                ->get()
+				->toArray();
+            }         
+
+
+		$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
+				->leftJoin('tbl_area as district_user', 'users.user_district', '=', 'district_user.location_id')
+				->leftJoin('tbl_area as taluka_user', 'users.user_taluka', '=', 'taluka_user.location_id')
+				->leftJoin('tbl_area as village_user', 'users.user_village', '=', 'village_user.location_id')
+				->where('users.role_id','3')
+                ->where('users.id',$sess_user_id)
+                ->whereIn('users.id',$doc_output)
+				->select('users.id','users.f_name','users.m_name','users.l_name','users.email','users.number','users.aadhar_no',
+				'users.address','users.pincode','users.user_profile','roles.role_name',
+				'district_user.name as district','taluka_user.name as taluka','village_user.name as village')
+				->get();
 		}		
 
 		return $data_users;
@@ -505,12 +577,14 @@ class GramsevakRepository
 		$sess_user_type=session()->get('user_type');
 		$sess_user_role=session()->get('role_id');
 
-		if($sess_user_role=='1')
-		{
-			$doc_output = GramPanchayatDocuments::where('tbl_gram_panchayat_documents.is_approved', '3')
+		$doc_output = GramPanchayatDocuments::where('tbl_gram_panchayat_documents.is_approved', '3')
 				->select('user_id')
                 ->get()
 				->toArray();
+
+		if($sess_user_role=='1')
+		{
+			
 
 			// $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
 			//         ->where('users.id', $sess_user_id)
@@ -603,7 +677,52 @@ class GramsevakRepository
 				'users.address','users.pincode','users.user_profile','roles.role_name',
 				'district_user.name as district','taluka_user.name as taluka','village_user.name as village')
 				->get();
-			}		
+			}
+			else if($sess_user_role=='3')
+		{
+			$data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
+                ->where('users.id', $sess_user_id)
+                ->first();
+
+            $utype=$data_output->user_type;
+            $user_working_dist=$data_output->user_district;
+            $user_working_tal=$data_output->user_taluka;
+            $user_working_vil=$data_output->user_village;
+
+
+            if($utype=='1')
+            {
+            $data_user_output = User::where('users.user_district', $user_working_dist)
+            ->select('id')
+                ->get()
+				->toArray();
+            }else if($utype=='2')
+            {
+                $data_user_output = User::where('users.user_taluka', $user_working_tal)
+                ->select('id')
+                ->get()
+				->toArray();
+            }else if($utype=='3')
+            {
+                $data_user_output = User::where('users.user_village', $user_working_vil)
+                ->select('id')
+                ->get()
+				->toArray();
+            }         
+
+
+		$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
+				->leftJoin('tbl_area as district_user', 'users.user_district', '=', 'district_user.location_id')
+				->leftJoin('tbl_area as taluka_user', 'users.user_taluka', '=', 'taluka_user.location_id')
+				->leftJoin('tbl_area as village_user', 'users.user_village', '=', 'village_user.location_id')
+				->where('users.role_id','3')
+                ->where('users.id',$sess_user_id)
+                ->whereIn('users.id',$doc_output)
+				->select('users.id','users.f_name','users.m_name','users.l_name','users.email','users.number','users.aadhar_no',
+				'users.address','users.pincode','users.user_profile','roles.role_name',
+				'district_user.name as district','taluka_user.name as taluka','village_user.name as village')
+				->get();
+		}		
 		return $data_users;
 	}
 
@@ -781,10 +900,38 @@ class GramsevakRepository
 		}
 		else if($sess_user_role=='3')
 		{
-			 
+			$data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
+                ->where('users.id', $sess_user_id)
+                ->first();
+
+            $utype=$data_output->user_type;
+            $user_working_dist=$data_output->user_district;
+            $user_working_tal=$data_output->user_taluka;
+            $user_working_vil=$data_output->user_village;
 
 
-			$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
+            if($utype=='1')
+            {
+            $data_user_output = User::where('users.user_district', $user_working_dist)
+            ->select('id')
+                ->get()
+				->toArray();
+            }else if($utype=='2')
+            {
+                $data_user_output = User::where('users.user_taluka', $user_working_tal)
+                ->select('id')
+                ->get()
+				->toArray();
+            }else if($utype=='3')
+            {
+                $data_user_output = User::where('users.user_village', $user_working_vil)
+                ->select('id')
+                ->get()
+				->toArray();
+            }         
+
+
+		$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
 				->leftJoin('tbl_area as district_user', 'users.user_district', '=', 'district_user.location_id')
 				->leftJoin('tbl_area as taluka_user', 'users.user_taluka', '=', 'taluka_user.location_id')
 				->leftJoin('tbl_area as village_user', 'users.user_village', '=', 'village_user.location_id')
@@ -795,7 +942,7 @@ class GramsevakRepository
 				'users.address','users.pincode','users.user_profile','roles.role_name',
 				'district_user.name as district','taluka_user.name as taluka','village_user.name as village')
 				->get();
-		}
+		}	
 		return $data_users;
 	}
 
