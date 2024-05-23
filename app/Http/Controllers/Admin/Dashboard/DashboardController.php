@@ -193,7 +193,7 @@ public function index(Request $request)
             // ->where('projects.end_date', '>=',date('Y-m-d'))
             // ->whereIn('projects.District', $user_working_dist)
             ->where('projects.is_active', true)
-            ->where('users.user_district', $user_working_dist)
+            ->where('projects.district', $user_working_dist)
             ->count();      
            
             $projectCountCompleted= Project::leftJoin('users', 'projects.district', '=', 'users.user_district')  
