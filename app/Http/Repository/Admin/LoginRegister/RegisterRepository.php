@@ -426,7 +426,7 @@ class RegisterRepository
 	{
 		$user_detail = User::where('is_active', true)
 			->where('id', session()->get('user_id'))
-			->select('id', 'f_name', 'm_name', 'l_name', 'email', 'password', 'number','user_profile')
+			->select('id', 'f_name', 'm_name', 'l_name', 'email', 'number','user_profile')
 			->first();
 		return $user_detail;
 	}
@@ -444,6 +444,8 @@ class RegisterRepository
 				'f_name' => $request->f_name,
 				'm_name' => $request->m_name,
 				'l_name' => $request->l_name,
+				'number' => $request->number,
+				'email' => $request->email,
 				
 			];
 			
@@ -456,63 +458,63 @@ class RegisterRepository
 			// 	$update_data['user_profile'] = $newImagePathOrFilename;
 			// }
 
-			if (($request->number != $request->old_number) && !isset($request->password)) {
-				$this->sendOTPEMAIL($otp, $request);
+			// if (($request->number != $request->old_number) && !isset($request->password)) {
+				// $this->sendOTPEMAIL($otp, $request);
 
 				// dd($request->number, $request->old_number);
 				
-				info("only mobile change");
-				$return_data['password_change'] = 'no';
-				$update_data['otp'] = $otp;
-				$return_data['mobile_change'] = 'yes';
-				$return_data['user_id'] = $request->edit_user_id;
-				$return_data['new_mobile_number'] = $request->number;
-				$return_data['u_password_new'] = '';
-				$return_data['msg'] = "OTP sent on registered on email";
-				$return_data['msg_alert'] = "green";
+				// info("only mobile change");
+				// $return_data['password_change'] = 'no';
+				// // $update_data['otp'] = $otp;
+				// $return_data['mobile_change'] = 'yes';
+				// $return_data['user_id'] = $request->edit_user_id;
+				// $return_data['new_mobile_number'] = $request->number;
+				// $return_data['u_password_new'] = '';
+				// $return_data['msg'] = "OTP sent on registered on email";
+				// $return_data['msg_alert'] = "green";
 
-			}
+			// }
 
-			if ((isset($request->password) && $request->password !== '') && ($request->number == $request->old_number)) {
-				info("only password change");
-				// $update_data['password'] = bcrypt($request->password);
-				$return_data['password_change'] = 'yes';
-				$return_data['mobile_change'] = 'no';
-				$update_data['otp'] = $otp;
-				$return_data['user_id'] = $request->edit_user_id;
-				$return_data['u_password_new'] = bcrypt($request->password);
-				$return_data['new_mobile_number'] = '';
-				$return_data['msg'] = "OTP sent on registered on email";
-				$return_data['msg_alert'] = "green";
+			// if ((isset($request->password) && $request->password !== '') && ($request->number == $request->old_number)) {
+			// 	info("only password change");
+			// 	// $update_data['password'] = bcrypt($request->password);
+			// 	$return_data['password_change'] = 'yes';
+			// 	$return_data['mobile_change'] = 'no';
+			// 	$update_data['otp'] = $otp;
+			// 	$return_data['user_id'] = $request->edit_user_id;
+			// 	$return_data['u_password_new'] = bcrypt($request->password);
+			// 	$return_data['new_mobile_number'] = '';
+			// 	$return_data['msg'] = "OTP sent on registered on email";
+			// 	$return_data['msg_alert'] = "green";
 
-				$this->sendOTPEMAIL($otp, $request);
-			}
+			// 	$this->sendOTPEMAIL($otp, $request);
+			// }
 
-			if ((isset($request->password) && $request->password !== '') && ($request->number != $request->old_number)) {
-				info("only password and mobile number changed");
-				$update_data['otp'] = $otp;
-				$return_data['u_password_new'] = bcrypt($request->password);
-				$return_data['password_change'] = 'yes';
-				$return_data['mobile_change'] = 'yes';
-				$return_data['user_id'] = $request->edit_user_id;
-				$return_data['new_mobile_number'] = $request->number;
-				$return_data['msg'] = "OTP sent on registered on email";
-				$return_data['msg_alert'] = "green";
+			// if ((isset($request->password) && $request->password !== '') && ($request->number != $request->old_number)) {
+			// 	info("only password and mobile number changed");
+			// 	$update_data['otp'] = $otp;
+			// 	$return_data['u_password_new'] = bcrypt($request->password);
+			// 	$return_data['password_change'] = 'yes';
+			// 	$return_data['mobile_change'] = 'yes';
+			// 	$return_data['user_id'] = $request->edit_user_id;
+			// 	$return_data['new_mobile_number'] = $request->number;
+			// 	$return_data['msg'] = "OTP sent on registered on email";
+			// 	$return_data['msg_alert'] = "green";
 
-				$this->sendOTPEMAIL($otp, $request);
-			}
+			// 	$this->sendOTPEMAIL($otp, $request);
+			// }
 			
 			User::where('id', $request->edit_user_id)->update($update_data);
 
 			$user_data = User::find($request->edit_user_id);
-			$previousUserProfile = $user_data->english_image;
+			$previousUserProfile = $user_data->user_profile;
 			$last_insert_id = $user_data->id;
 
             $return_data['last_insert_id'] = $last_insert_id;
             $return_data['user_profile'] = $previousUserProfile;
 
-		dd($last_insert_id);
-		die();
+		// dd($last_insert_id);
+		// die();
 
 			return $return_data;
 

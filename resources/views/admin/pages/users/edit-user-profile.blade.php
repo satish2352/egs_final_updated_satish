@@ -93,7 +93,7 @@
 
 
 
-                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                    {{-- <div class="col-lg-6 col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label for="password">Password</label>
                                             <input type="password" class="password form-control mb-2" name="password"
@@ -108,8 +108,8 @@
                                                 <i class="fa fa-eye-slash"></i>
                                             </span>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                    </div> --}}
+                                    {{--<div class="col-lg-6 col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label for="password_confirmation">Confirm Password</label>
                                             <input type="password" class="password_confirmation form-control mb-2"
@@ -126,7 +126,7 @@
                                                 <i class="fa fa-eye-slash"></i>
                                             </span>
                                         </div>
-                                    </div>
+                                    </div>--}}
                                     {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="password">Password</label>&nbsp<span class="red-text">*</span>
