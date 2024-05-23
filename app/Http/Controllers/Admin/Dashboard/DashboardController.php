@@ -178,6 +178,31 @@ public function index(Request $request)
             ->where('users.id', $sess_user_id)
             ->first();
 
+            $utype=$data_output->user_type;
+            $user_working_dist=$data_output->user_district;
+            $user_working_tal=$data_output->user_taluka;
+            $user_working_vil=$data_output->user_village;
+
+            if($utype=='1')
+            {
+            $data_user_output = User::where('users.user_district', $user_working_dist)
+            ->select('id')
+                ->get()
+				->toArray();
+            }else if($utype=='2')
+            {
+                $data_user_output = User::where('users.user_taluka', $user_working_tal)
+                ->select('id')
+                ->get()
+				->toArray();
+            }else if($utype=='3')
+            {
+                $data_user_output = User::where('users.user_village', $user_working_vil)
+                ->select('id')
+                ->get()
+				->toArray();
+            } 
+
              $todayCount = Labour::where('created_at', '>=', $fromDate)
             ->where('created_at', '<=', $toDate)
             ->whereIn('labour.user_id',$data_user_output)

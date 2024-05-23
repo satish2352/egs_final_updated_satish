@@ -214,9 +214,6 @@ class LabourRepository
             $user_working_tal=$data_output->user_taluka;
             $user_working_vil=$data_output->user_village;
 
-			$data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
-                ->where('users.id', $sess_user_id)
-                ->first();
 
             if($utype=='1')
             {
