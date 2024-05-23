@@ -58,25 +58,24 @@
                                             <span class="red-text"><?php echo $errors->first('village_id', ':message'); ?></span>
                                         @endif
                                     </div>
-                                </div>                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                <div class="form-group">
-                                    <select class="form-control" name="project_id" id="project_id">
-                                        <option value="">Select Project</option>
-                                        <?php  $cnt=1;?>
-                                        @foreach ($projects_data as $project_for_data) 
-                                        @if($cnt=='1')   
-                                        <option value="{{ $project_for_data['id'] }}" selected>{{ $project_for_data['project_name'] }}</option>
-                                        @else
-                                        <option value="{{ $project_for_data['id'] }}">{{ $project_for_data['project_name'] }}</option>
+                                </div>   
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <select class="form-control" name="project_id" id="project_id">
+                                            <option value="">Select Project</option>
+                                            <?php  $cnt=1;?>
+                                            @foreach ($projects_data as $project_for_data) 
+                                            <option value="{{ $project_for_data['id'] }}">{{ $project_for_data['project_name'] }}</option>
+                                            <?php $cnt++; ?>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('project_id'))
+                                            <span class="red-text"><?php echo $errors->first('project_id', ':message'); ?></span>
                                         @endif
-                                        <?php $cnt++; ?>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('project_id'))
-                                        <span class="red-text"><?php echo $errors->first('project_id', ':message'); ?></span>
-                                    @endif
+                                    </div>
                                 </div>
-                            </div>
+
+                                
 
                             <div class="col-lg-3 col-md-3 col-sm-3">
                                 <div class="form-group">

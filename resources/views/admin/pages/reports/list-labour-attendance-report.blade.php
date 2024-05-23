@@ -145,17 +145,45 @@
                                                     <th>Sr. No.</th>
                                                     <th>Skill Name</th>
                                                     <th>Avarage Attendance</th>
+                                                    <!-- <th>skill Name</th>
+                                                    <th>Mobile Number</th>
+                                                    <th>Mgnrega ID</th>
+                                                    <th>Status</th> -->
+                                                    <!-- <th>Action</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($labour_ajax_data as $item)
                                                 
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $item['skill_name'] }}</td>
-                                                        <td>{{ $item['average_attendance_percentage'] }}</td>
-                                                    </tr>
-                                                @endforeach 
+                                                <!-- @foreach ($labours as $item) -->
+                                                
+                                                    <!-- <tr> -->
+                                                    
+                                                        <!-- <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $item->f_name }} {{ $item->m_name }} {{ $item->l_name }}</td>
+                                                        <td>{{ $item->full_name }}</td>
+                                                        <td>{{ $item->mobile_number }}</td>
+                                                        <td>{{ $item->mgnrega_card_id }}</td>
+                                                        <td>
+                                                        
+                                                            @if ($item->is_approved=='1')
+                                                                Received For Approval
+                                                            @elseif($item->is_approved=='2')
+                                                                Approved
+                                                            @elseif($item->is_approved=='3')
+                                                                Send For Correction
+                                                            @endif
+                                                        </td>
+                                                        <td class="d-flex">
+                                                       
+
+                                                            <a data-id="{{ $item->id }}"
+                                                                class="show-btn btn btn-sm btn-outline-primary m-1"><i
+                                                                    class="fas fa-eye"></i></a>
+                                                           
+
+                                                        </td> -->
+                                                    <!-- </tr> -->
+                                                <!-- @endforeach -->
 
                                             </tbody>
                                         </table>
