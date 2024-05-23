@@ -153,26 +153,6 @@ public function index(Request $request)
         }
 
         elseif ($roleId== 2 && $utype == 1) {
-            $userCount = User::where('role_id', 2)
-            ->orWhere('role_id', 3)
-            ->where('id', $user_working_dist)
-            ->count();
-
-
-            $projectCount= Project::leftJoin('users', 'projects.district', '=', 'users.user_district')  
-            // ->where('projects.end_date', '>=',date('Y-m-d'))
-            // ->whereIn('projects.District', $user_working_dist)
-            ->where('projects.is_active', true)
-            ->where('users.user_district', $user_working_dist)
-            ->count();      
-           
-            $projectCountCompleted= Project::leftJoin('users', 'projects.district', '=', 'users.user_district')  
-            ->where('projects.end_date', '<=',date('Y-m-d'))
-            // ->whereIn('projects.District', $user_working_dist)
-            ->where('projects.is_active', true)
-            ->where('users.user_district', $user_working_dist)
-            ->count();  
-           
 
             $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
             ->where('users.id', $sess_user_id)
@@ -202,6 +182,31 @@ public function index(Request $request)
                 ->get()
 				->toArray();
             } 
+            
+            $userCount = User::where('role_id', 2)
+            ->orWhere('role_id', 3)
+            ->where('id', $user_working_dist)
+            ->count();
+
+
+            $projectCount= Project::leftJoin('users', 'projects.district', '=', 'users.user_district')  
+            // ->where('projects.end_date', '>=',date('Y-m-d'))
+            // ->whereIn('projects.District', $user_working_dist)
+            ->where('projects.is_active', true)
+            ->where('users.user_district', $user_working_dist)
+            ->count();      
+           
+            $projectCountCompleted= Project::leftJoin('users', 'projects.district', '=', 'users.user_district')  
+            ->where('projects.end_date', '<=',date('Y-m-d'))
+            // ->whereIn('projects.District', $user_working_dist)
+            ->where('projects.is_active', true)
+            ->where('users.user_district', $user_working_dist)
+            ->count();  
+           
+
+            
+
+            
 
              $todayCount = Labour::where('created_at', '>=', $fromDate)
             ->where('created_at', '<=', $toDate)
@@ -217,7 +222,7 @@ public function index(Request $request)
                 ->get()
                 ->count();
 
-            $labourCounts = Labour::where('user_id', $sess_user_id)
+            $labourCounts = Labour::whereIn('labour.user_id',$data_user_output)
                 ->selectRaw('is_approved, COUNT(*) as count')
                 ->where('is_resubmitted', 0)
                 ->groupBy('is_approved')
@@ -233,7 +238,7 @@ public function index(Request $request)
                 }
             }
 
-            $documentCounts = GramPanchayatDocuments::where('user_id', $user_working_dist)
+            $documentCounts = GramPanchayatDocuments::whereIn('tbl_gram_panchayat_documents.user_id',$data_user_output)
                 ->selectRaw('is_approved, COUNT(*) as count')
                 ->where('is_resubmitted', 0)
                 ->groupBy('is_approved')
