@@ -194,6 +194,7 @@ public function index(Request $request)
             // ->whereIn('projects.District', $user_working_dist)
             ->where('projects.is_active', true)
             ->where('projects.district', $user_working_dist)
+            ->groupBy('users.id')
             ->count();      
            
             $projectCountCompleted= Project::leftJoin('users', 'projects.district', '=', 'users.user_district')  

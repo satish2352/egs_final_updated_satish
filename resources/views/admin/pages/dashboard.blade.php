@@ -225,6 +225,7 @@
                                     {{-- @if ($sess_user_role == 1 || $sess_user_role == 2) --}}
                                     @if ($sess_user_role == '1' || $sess_user_role == '2')
                                         <div class="row">
+                                        @if ($sess_user_role == '1')
                                             <div class="col-md-3">
                                                 <a href="{{ route('list-users') }}">
                                                     <div class="card">
@@ -246,6 +247,7 @@
                                                     </div>
                                                 </a>
                                             </div>
+                                        @endif    
                                             <div class="col-md-3">
                                                 <a href="#">
                                                     <div class="card">
@@ -300,8 +302,7 @@
                                                                 </div>
                                                                 <div class="row align-items-center mb-2 d-flex">
                                                                     <div class="col-8">
-                                                                        <h2
-                                                                            class="d-flex align-items-center mb-0 dash_count">
+                                                                        <h2 class="d-flex align-items-center mb-0 dash_count">
                                                                             {{ $return_data['project_count'] }}</h2>
                                                                     </div>
                                                                 </div>
