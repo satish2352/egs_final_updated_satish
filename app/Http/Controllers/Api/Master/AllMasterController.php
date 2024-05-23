@@ -34,7 +34,7 @@ class AllMasterController extends Controller
             // dd($data);
             return response()->json(['status' => 'success', 'message' => 'All data retrieved successfully', 'data' => $data], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'false', 'message' => $e->getMessage()], 500);
+            return response()->json(['status' => 'false', 'message' => 'Data not found', 'error' => $e->getMessage()], 500);
         }
     }
     public function getAllMastersUpdated(Request $request){

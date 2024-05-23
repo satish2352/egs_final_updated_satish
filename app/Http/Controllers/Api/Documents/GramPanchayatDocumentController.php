@@ -51,9 +51,9 @@ class GramPanchayatDocumentController extends Controller
     
             $document_data->document_pdf = $document_data->document_pdf;
     
-            return response()->json(['status' => 'true', 'message' => 'Document Uploaded successfully',  'data' => $document_data], 200);
+            return response()->json(['status' => 'true', 'message' => 'Document uploaded successfully',  'data' => $document_data], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'false', 'message' => 'Document Uploaded failed', 'error' => $e->getMessage()], 500);
+            return response()->json(['status' => 'false', 'message' => 'Document uploaded failed', 'error' => $e->getMessage()], 500);
         }
     }
     public function getAllDocuments(Request $request){
@@ -160,7 +160,7 @@ class GramPanchayatDocumentController extends Controller
                 }
             return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', "totalRecords" => $totalRecords, "totalPages"=>$totalPages, 'page_no_to_hilight'=>$page, 'data' => $data_output], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'false', 'message' => 'Document List Get Fail', 'error' => $e->getMessage()], 500);
+            return response()->json(['status' => 'false', 'message' => 'Document list get fail', 'error' => $e->getMessage()], 500);
         }
     }
     public function updateDocuments(Request $request){
@@ -278,7 +278,7 @@ class GramPanchayatDocumentController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'false',
-                'message' => 'Error occurred',
+                'message' => 'Counts get failed',
                 'error' => $e->getMessage()
             ], 500);
         }

@@ -46,7 +46,7 @@ class UserProfileController extends Controller
         
                 return response()->json(['status' => 'true', 'message' => 'User data retrieved successfully','data' => $data_output], 200);
             } catch (\Exception $e) {
-                return response()->json(['status' => 'false', 'message' => 'User Details Get Fail','error' => $e->getMessage()], 500);
+                return response()->json(['status' => 'false', 'message' => 'User details get fail','error' => $e->getMessage()], 500);
             }
     }
     

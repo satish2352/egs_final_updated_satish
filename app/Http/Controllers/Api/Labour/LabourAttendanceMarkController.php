@@ -52,7 +52,7 @@ class LabourAttendanceMarkController extends Controller
                                             ->first();
 
             if ($existingEntry  && $existingEntry->attendance_day =='full_day') {
-                return response()->json(['status' => 'false', 'message' => 'Attendance for this card ID full day already marked for today'], 200);
+                return response()->json(['status' => 'false', 'message' => 'Attendance for same MGNREGA ID full day already marked for today'], 200);
             } 
             
             else {
@@ -93,18 +93,18 @@ class LabourAttendanceMarkController extends Controller
                             }
                     
                         }  else {
-                            return response()->json(['status' => 'false', 'message' => 'Attendance cant be mark as half/full day because halday alreay present for today'], 200);
+                            return response()->json(['status' => 'false', 'message' => 'Attendance cant be mark as half/full day because half day already present for today'], 200);
                         }
                     }
                     elseif ($existingEntry->attendance_day == 'half_day' && now()->format('H:i:s') < '13:00:00') {
-                        return response()->json(['status' => 'false', 'message' => 'Attendance for this card ID half day already marked for today 1st half'], 200);
+                        return response()->json(['status' => 'false', 'message' => 'Attendance for this MGNREGA ID half day already marked for today 1st half'], 200);
                     }    
                 } elseif((count($secondHalfWorkAttendance)>=1) && ($secondHalfWorkAttendance[0]['project_id'] == $request->project_id) ) {
-                    return response()->json(['status' => 'false', 'message' => 'Attendance cant be mark as half/full day because half day alreay present for today'], 200);
+                    return response()->json(['status' => 'false', 'message' => 'Attendance cant be mark as half/full day because half day already present for today'], 200);
                 
                 }
                 elseif ($existingEntry  && $existingEntry->attendance_day =='half_day') {
-                        return response()->json(['status' => 'false', 'message' => 'Attendance for this card ID half day already marked for today'], 200);
+                        return response()->json(['status' => 'false', 'message' => 'Attendance for this MGNREGA ID half day already marked for today'], 200);
                     } 
                 
                 else {
@@ -119,7 +119,7 @@ class LabourAttendanceMarkController extends Controller
 
             }
 
-            return response()->json(['status' => 'true', 'message' => 'Attendance Mark successfully added'], 200);
+            return response()->json(['status' => 'true', 'message' => 'Attendance marked successfully'], 200);
         } catch (\Exception $e) {
             return response()->json(['status' => 'false', 'message' => 'Attendance Mark Fail','error' => $e->getMessage()], 500);
         }
@@ -253,7 +253,7 @@ class LabourAttendanceMarkController extends Controller
                                    }
 
                                 else{
-                                    return response()->json(['status' => 'false', 'message' => 'please select other project for 2nd half day'], 200);
+                                    return response()->json(['status' => 'false', 'message' => 'Please select other project for 2nd half day'], 200);
                                 }
                         
                         }                        
@@ -280,7 +280,7 @@ class LabourAttendanceMarkController extends Controller
                             //     }
 
                                 else{
-                                        return response()->json(['status' => 'false', 'message' => 'Please slecte 1st half project for update attedance full day'], 200);
+                                        return response()->json(['status' => 'false', 'message' => 'Please select the 1st half project for update attedance full day'], 200);
                                     }
                                 // elseif($mgnregaCardCount <= 2){
                                 //     if($existingEntry->created_at > date('Y-m-d').' 13:00:00' &&  $existingEntry->project_id != $request->project_id){

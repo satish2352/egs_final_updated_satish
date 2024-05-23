@@ -219,11 +219,11 @@ class LabourController extends Controller
 
                 return response()->json([
                     'status' => 'true',
-                    'message' => 'Labor added successfully',
+                    'message' => 'Labour added successfully',
                 ]);
             }
         } catch (\Exception $e) {
-            return response()->json(['status' => 'false', 'message' => 'An error occurred',
+            return response()->json(['status' => 'false', 'message' => 'Labour not added',
              'error' => $e->getMessage()], 500);
         }
     }
@@ -441,7 +441,7 @@ class LabourController extends Controller
 
             // Check if the mgnrega_card_id can be updated based on is_approved
             if ($labour_data->is_approved == 2) {
-                return response()->json(['status' => 'false', 'message' => 'Cannot update mgnrega card id when labour is approved'], 200);
+                return response()->json(['status' => 'false', 'message' => 'Can not update MGNREGA ID when labour is approved'], 200);
             }
 
             // Check if the provided mgnrega_card_id already exists in the database
@@ -451,7 +451,7 @@ class LabourController extends Controller
             if ($existingLabour) {
                 if ($existingLabour->is_approved == 2) {
                     // If is_approved is 2, do not update the MGNREGA card ID
-                    return response()->json(['status' => 'false', 'message' => 'MGNREGA card ID already exists and is not approved for update'], 200);
+                    return response()->json(['status' => 'false', 'message' => 'MGNREGA ID already exists and is not approved for update'], 200);
                 } else {
                     // If is_approved is 1 or 3, update the MGNREGA card ID
                     if ($existingLabour->id !== $labour_data->id) {
@@ -636,23 +636,6 @@ class LabourController extends Controller
             // $labour_data->is_approved = 3;
             $labour_data->save();
 
-        //     $familyDetails = [];
-        //     $familyDetailNew = json_decode($request->family,true);
-                
-        //     if ($labour_data->id > 0) {
-        //     foreach ($familyDetailNew as $key => $familyMember) {
-        //         $familyDetail = new LabourFamilyDetails();
-        //         $familyDetail->labour_id = $labour_data->id;
-        //         $familyDetail->full_name = $familyMember['full_name'];
-        //         $familyDetail->gender_id = $familyMember['gender_id'];
-        //         $familyDetail->relationship_id = $familyMember['relationship_id'];
-        //         $familyDetail->married_status_id = $familyMember['married_status_id'];
-        //         $familyDetail->date_of_birth = $familyMember['date_of_birth'];           
-        //         $familyDetail->save();
-        //         $familyDetails[] = $familyDetail; // Collect family details
-        //     }
-        // }
-
         $familyDetails = [];
 
         if ($request->has('family')) {
@@ -771,7 +754,7 @@ class LabourController extends Controller
             ], 200);
     
         } catch (\Exception $e) {
-            return response()->json(['status' => 'false', 'message' => 'Error occurred', 'error' => $e->getMessage()], 500);
+            return response()->json(['status' => 'false', 'message' => 'Counts get failed', 'error' => $e->getMessage()], 500);
         }
     }
     public function mgnregaCardIdAlreadyExist(Request $request) {
@@ -789,10 +772,10 @@ class LabourController extends Controller
                                     ->first();
     
             if ($existingLabour) {
-                return response()->json(['status' => 'false', 'message' => 'MGNREGA card ID already exists for another labour'], 200);
+                return response()->json(['status' => 'false', 'message' => 'MGNREGA ID already exists for another labour'], 200);
             }
     
-            return response()->json(['status' => 'true', 'message' => 'MGNREGA card ID does not exist for any labour'], 200);
+            return response()->json(['status' => 'true', 'message' => 'MGNREGA ID does not exist for any labour'], 200);
     
         } catch (\Exception $e) {
             return response()->json(['status' => 'false', 'message' => 'Update failed', 'error' => $e->getMessage()], 500);
@@ -805,7 +788,7 @@ class LabourController extends Controller
         $mgnrega_card_id = $request->input('mgnrega_card_id');
 
         if (!$mgnrega_card_id) {
-            return response()->json(['status' => 'false', 'message' => 'MGNREGA card ID is required'], 200);
+            return response()->json(['status' => 'false', 'message' => 'MGNREGA ID is required'], 200);
         }
             $data_output = Labour::where('labour.user_id', $user)
             ->where('labour.is_approved', 2)
