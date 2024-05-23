@@ -255,7 +255,7 @@ public function index(Request $request)
                 // ->where('is_resubmitted', 0)
                 ->groupBy('is_approved','is_resubmitted')
                 ->get();
-dd($documentCounts);
+
             // foreach ($documentCounts as $countdoc) {
             //     if ($countdoc->is_approved == 1) {
             //         $documentRequestCounts['Sent For Approval Documents'] += $countdoc->count;
