@@ -401,7 +401,7 @@
                                         </div>
                                     @endif
 
-                                    <!-- <div class="row">
+                                    <div class="row">
                                         @forelse($return_data['labourRequestCounts'] as $key => $count)
                                             <div class="col-xl-3 col-lg-6">
                                                 @php
@@ -506,7 +506,7 @@
                                         @empty
                                             <h4>No Data Found For Dashboard</h4>
                                         @endforelse
-                                    </div> -->
+                                    </div> 
 
 
 

@@ -115,7 +115,7 @@ public function index(Request $request)
 
             
             $labourCounts = Labour::selectRaw('is_approved,is_resubmitted, COUNT(*) as count')
-                ->where('is_resubmitted', 0)
+                // ->where('is_resubmitted', 0)
                 ->groupBy('is_approved','is_resubmitted')
                 ->get();
             
@@ -130,9 +130,8 @@ public function index(Request $request)
                     $labourRequestCounts['Resubmitted Labours'] += $count->count;
                 }
             }
-
             $documentCounts = GramPanchayatDocuments::selectRaw('is_approved,is_resubmitted, COUNT(*) as count')
-                ->where('is_resubmitted', 0)
+                // ->where('is_resubmitted', 0)
                 ->groupBy('is_approved','is_resubmitted')
                 ->get();
 
@@ -148,10 +147,10 @@ public function index(Request $request)
                 }
             }
 
-            $documentRequestCounts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $sess_user_id)
-                ->where('is_resubmitted', 1)
-                ->where('is_approved', 1)
-                ->count();
+            // $documentRequestCounts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $sess_user_id)
+            //     ->where('is_resubmitted', 1)
+            //     ->where('is_approved', 1)
+            //     ->count();
 
            
         }
