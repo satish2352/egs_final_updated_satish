@@ -139,9 +139,9 @@ class OfficerController extends Controller
                         ->get();
                 }
 
-                    return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', 'data' => $data_labour], 200);
+                    return response()->json(['status' => 'true', 'message' => 'Data retrieved successfully', 'data' => $data_labour], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'false', 'message' => 'Failed to retrieve labour list','error' => $e->getMessage()], 500);
+            return response()->json(['status' => 'false', 'message' => 'Failed to retrieve labour','error' => $e->getMessage()], 500);
         }
     }    
     public function getLabourStatusListReceived(Request $request){
@@ -242,7 +242,7 @@ class OfficerController extends Controller
                 }
             return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', "totalRecords" => $totalRecords, "totalPages"=>$totalPages, 'page_no_to_hilight'=>$page, 'data' => $data_output], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'false', 'message' => 'Document List Get Fail', 'error' => $e->getMessage()], 500);
+            return response()->json(['status' => 'false', 'message' => 'Labour list get fail', 'error' => $e->getMessage()], 500);
         }
     }
     // public function updateLabourStatusApproved(Request $request){
@@ -302,7 +302,7 @@ class OfficerController extends Controller
                 ->first();
     
             if ($existingRecord) {
-                return response()->json(['status' => 'false', 'message' => 'MGNREGA card ID already exists with approved status. Please change the MGNREGA card ID.'], 200);
+                return response()->json(['status' => 'false', 'message' => 'MGNREGA ID already exists with approved status. Please change MGNREGA ID.'], 200);
             }
     
             $labour = Labour::find($labour_id);
@@ -312,7 +312,7 @@ class OfficerController extends Controller
             }
     
             if ($labour->mgnrega_card_id !== $mgnrega_card_id) {
-                return response()->json(['status' => 'false', 'message' => 'Mismatch in provided labour ID and MGNREGA card ID'], 200);
+                return response()->json(['status' => 'false', 'message' => 'Mismatch in provided labour ID and MGNREGA ID'], 200);
             }
     
             if ($labour->is_approved === 2) {
@@ -480,7 +480,7 @@ class OfficerController extends Controller
     
         } catch (\Exception $e) {
             // Return error if any exception occurs
-            return response()->json(['status' => 'false', 'message' => 'Error occurred', 'error' => $e->getMessage()], 500);
+            return response()->json(['status' => 'false', 'message' => 'Counts get failed', 'error' => $e->getMessage()], 500);
         }
     }
 

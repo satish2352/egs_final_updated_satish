@@ -103,7 +103,7 @@ class OfficerGramDocAppNotAppController extends Controller
                 }
             return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', "totalRecords" => $totalRecords, "totalPages"=>$totalPages, 'page_no_to_hilight'=>$page, 'data' => $data_output], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'false', 'message' => 'Document List Get Fail', 'error' => $e->getMessage()], 500);
+            return response()->json(['status' => 'false', 'message' => 'Document list get fail', 'error' => $e->getMessage()], 500);
         }
     }
     public function getReceivedDocumentListForAppNotApp(Request $request){
@@ -229,7 +229,7 @@ class OfficerGramDocAppNotAppController extends Controller
                 }
             return response()->json(['status' => 'true', 'message' => 'All data retrieved successfully', "totalRecords" => $totalRecords, "totalPages"=>$totalPages, 'page_no_to_hilight'=>$page, 'data' => $data_output], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'false', 'message' => 'Document List Get Fail', 'error' => $e->getMessage()], 500);
+            return response()->json(['status' => 'false', 'message' => 'Document list get fail', 'error' => $e->getMessage()], 500);
         }
     }
     public function updateDocumentStatusApproved(Request $request){
@@ -309,7 +309,7 @@ class OfficerGramDocAppNotAppController extends Controller
     
                 return response()->json(['status' => 'true', 'message' => 'Document status updated successfully'], 200);
             } else {
-                return response()->json(['status' => 'false', 'message' => 'No document found with the provided Document Id or status is not approved'], 200);
+                return response()->json(['status' => 'false', 'message' => 'No document found or not approved with the provided Document Id'], 200);
             }
     
         } catch (\Exception $e) {
@@ -374,7 +374,7 @@ class OfficerGramDocAppNotAppController extends Controller
     
         } catch (\Exception $e) {
             // Return error if any exception occurs
-            return response()->json(['status' => 'false', 'message' => 'Error occurred', 'error' => $e->getMessage()], 500);
+            return response()->json(['status' => 'false', 'message' => 'Counts get failed', 'error' => $e->getMessage()], 500);
         }
     }
 }
