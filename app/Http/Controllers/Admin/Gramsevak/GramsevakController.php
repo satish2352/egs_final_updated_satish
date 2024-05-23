@@ -603,7 +603,325 @@ class GramsevakController extends Controller {
         // dd($data_gram_doc_details);
         return view('admin.pages.gramsevak.list-resubmitted-documents', compact('data_gram_doc_details','dynamic_registrationstatus','dynamic_reasons'));
     }
+
+    public function ListGrampanchayatDocumentsNewFilter(Request $request)
+	{
+		$sess_user_id=session()->get('user_id');
+		$sess_user_type=session()->get('user_type');
+		$sess_user_role=session()->get('role_id');
+        $districtId = $request->input('districtId');
+        $talukaId = $request->input('talukaId');
+        $villageId = $request->input('villageId');
+
+		$doc_output = GramPanchayatDocuments::where('tbl_gram_panchayat_documents.is_approved', '1')
+		->where('tbl_gram_panchayat_documents.is_resubmitted', '0')
+		->select('user_id')
+		->get()
+		->toArray();
+		if($sess_user_role=='1')
+		{
+
+            
+			
+		$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
+				->leftJoin('tbl_area as district_user', 'users.user_district', '=', 'district_user.location_id')
+				->leftJoin('tbl_area as taluka_user', 'users.user_taluka', '=', 'taluka_user.location_id')
+				->leftJoin('tbl_area as village_user', 'users.user_village', '=', 'village_user.location_id')
+				->where('users.role_id','3')
+                // ->whereIn('users.id',$data_user_output)
+                ->whereIn('users.id',$doc_output)
+                ->when($request->get('districtId'), function($query) use ($request) {
+                    $query->where('users.user_district', $request->districtId);
+                })
+                ->when($request->get('talukaId'), function($query) use ($request) {
+                    $query->where('users.user_taluka', $request->talukaId);
+                })
+                ->when($request->get('villageId'), function($query) use ($request) {
+                    $query->where('users.user_village', $request->villageId);
+                })
+				->select('users.id','users.f_name','users.m_name','users.l_name','users.email','users.number','users.aadhar_no',
+				'users.address','users.pincode','users.user_profile','roles.role_name',
+				'district_user.name as district','taluka_user.name as taluka','village_user.name as village');
+
+                $data_output = $data_users->get();
+		}else if($sess_user_role=='2')
+		{
+			$data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
+                ->where('users.id', $sess_user_id)
+                ->first();
+
+            $utype=$data_output->user_type;
+            $user_working_dist=$data_output->user_district;
+            $user_working_tal=$data_output->user_taluka;
+            $user_working_vil=$data_output->user_village;
+
+            // }         
+
+
+		$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
+				->leftJoin('tbl_area as district_user', 'users.user_district', '=', 'district_user.location_id')
+				->leftJoin('tbl_area as taluka_user', 'users.user_taluka', '=', 'taluka_user.location_id')
+				->leftJoin('tbl_area as village_user', 'users.user_village', '=', 'village_user.location_id')
+				->where('users.role_id','3')
+                // ->whereIn('users.id',$data_user_output)
+                ->whereIn('users.id',$doc_output)
+                ->when($request->get('districtId'), function($data_users) use ($request) {
+                    $data_users->where('users.user_district', $request->districtId);
+                })
+                ->when($request->get('talukaId'), function($data_users) use ($request) {
+                    $data_users->where('users.user_taluka', $request->talukaId);
+                })
+                ->when($request->get('villageId'), function($data_users) use ($request) {
+                    $data_users->where('users.user_village', $request->villageId);
+                })
+				->select('users.id','users.f_name','users.m_name','users.l_name','users.email','users.number','users.aadhar_no',
+				'users.address','users.pincode','users.user_profile','roles.role_name',
+				'district_user.name as district','taluka_user.name as taluka','village_user.name as village');
+                $data_output = $data_users->get();
+
+		}		
+        return response()->json(['documents_ajax_data' => $data_output]);
+		// return $data_users;/
+	}
+    public function ListGrampanchayatDocumentsApprovedFilter(Request $request)
+	{
+		$sess_user_id=session()->get('user_id');
+		$sess_user_type=session()->get('user_type');
+		$sess_user_role=session()->get('role_id');
+        $districtId = $request->input('districtId');
+        $talukaId = $request->input('talukaId');
+        $villageId = $request->input('villageId');
+
+		$doc_output = GramPanchayatDocuments::where('tbl_gram_panchayat_documents.is_approved', '2')
+				->select('user_id')
+                ->get()
+				->toArray();
+		if($sess_user_role=='1')
+		{
+
+            
+			
+		$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
+				->leftJoin('tbl_area as district_user', 'users.user_district', '=', 'district_user.location_id')
+				->leftJoin('tbl_area as taluka_user', 'users.user_taluka', '=', 'taluka_user.location_id')
+				->leftJoin('tbl_area as village_user', 'users.user_village', '=', 'village_user.location_id')
+				->where('users.role_id','3')
+                // ->whereIn('users.id',$data_user_output)
+                ->whereIn('users.id',$doc_output)
+                ->when($request->get('districtId'), function($query) use ($request) {
+                    $query->where('users.user_district', $request->districtId);
+                })
+                ->when($request->get('talukaId'), function($query) use ($request) {
+                    $query->where('users.user_taluka', $request->talukaId);
+                })
+                ->when($request->get('villageId'), function($query) use ($request) {
+                    $query->where('users.user_village', $request->villageId);
+                })
+				->select('users.id','users.f_name','users.m_name','users.l_name','users.email','users.number','users.aadhar_no',
+				'users.address','users.pincode','users.user_profile','roles.role_name',
+				'district_user.name as district','taluka_user.name as taluka','village_user.name as village');
+
+                $data_output = $data_users->get();
+		}else if($sess_user_role=='2')
+		{
+			$data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
+                ->where('users.id', $sess_user_id)
+                ->first();
+
+            $utype=$data_output->user_type;
+            $user_working_dist=$data_output->user_district;
+            $user_working_tal=$data_output->user_taluka;
+            $user_working_vil=$data_output->user_village;
+
+            // }         
+
+
+		$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
+				->leftJoin('tbl_area as district_user', 'users.user_district', '=', 'district_user.location_id')
+				->leftJoin('tbl_area as taluka_user', 'users.user_taluka', '=', 'taluka_user.location_id')
+				->leftJoin('tbl_area as village_user', 'users.user_village', '=', 'village_user.location_id')
+				->where('users.role_id','3')
+                // ->whereIn('users.id',$data_user_output)
+                ->whereIn('users.id',$doc_output)
+                ->when($request->get('districtId'), function($data_users) use ($request) {
+                    $data_users->where('users.user_district', $request->districtId);
+                })
+                ->when($request->get('talukaId'), function($data_users) use ($request) {
+                    $data_users->where('users.user_taluka', $request->talukaId);
+                })
+                ->when($request->get('villageId'), function($data_users) use ($request) {
+                    $data_users->where('users.user_village', $request->villageId);
+                })
+				->select('users.id','users.f_name','users.m_name','users.l_name','users.email','users.number','users.aadhar_no',
+				'users.address','users.pincode','users.user_profile','roles.role_name',
+				'district_user.name as district','taluka_user.name as taluka','village_user.name as village');
+                $data_output = $data_users->get();
+
+		}		
+        return response()->json(['documents_ajax_data' => $data_output]);
+		// return $data_users;/
+	}
+
+
+    public function ListGrampanchayatDocumentsNotApprovedFilter(Request $request)
+	{
+		$sess_user_id=session()->get('user_id');
+		$sess_user_type=session()->get('user_type');
+		$sess_user_role=session()->get('role_id');
+        $districtId = $request->input('districtId');
+        $talukaId = $request->input('talukaId');
+        $villageId = $request->input('villageId');
+
+		$doc_output = GramPanchayatDocuments::where('tbl_gram_panchayat_documents.is_approved', '3')
+				->select('user_id')
+                ->get()
+				->toArray();
+		if($sess_user_role=='1')
+		{
+
+            
+			
+		$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
+				->leftJoin('tbl_area as district_user', 'users.user_district', '=', 'district_user.location_id')
+				->leftJoin('tbl_area as taluka_user', 'users.user_taluka', '=', 'taluka_user.location_id')
+				->leftJoin('tbl_area as village_user', 'users.user_village', '=', 'village_user.location_id')
+				->where('users.role_id','3')
+                // ->whereIn('users.id',$data_user_output)
+                ->whereIn('users.id',$doc_output)
+                ->when($request->get('districtId'), function($query) use ($request) {
+                    $query->where('users.user_district', $request->districtId);
+                })
+                ->when($request->get('talukaId'), function($query) use ($request) {
+                    $query->where('users.user_taluka', $request->talukaId);
+                })
+                ->when($request->get('villageId'), function($query) use ($request) {
+                    $query->where('users.user_village', $request->villageId);
+                })
+				->select('users.id','users.f_name','users.m_name','users.l_name','users.email','users.number','users.aadhar_no',
+				'users.address','users.pincode','users.user_profile','roles.role_name',
+				'district_user.name as district','taluka_user.name as taluka','village_user.name as village');
+
+                $data_output = $data_users->get();
+		}else if($sess_user_role=='2')
+		{
+			$data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
+                ->where('users.id', $sess_user_id)
+                ->first();
+
+            $utype=$data_output->user_type;
+            $user_working_dist=$data_output->user_district;
+            $user_working_tal=$data_output->user_taluka;
+            $user_working_vil=$data_output->user_village;
+
+            // }         
+
+
+		$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
+				->leftJoin('tbl_area as district_user', 'users.user_district', '=', 'district_user.location_id')
+				->leftJoin('tbl_area as taluka_user', 'users.user_taluka', '=', 'taluka_user.location_id')
+				->leftJoin('tbl_area as village_user', 'users.user_village', '=', 'village_user.location_id')
+				->where('users.role_id','3')
+                // ->whereIn('users.id',$data_user_output)
+                ->whereIn('users.id',$doc_output)
+                ->when($request->get('districtId'), function($data_users) use ($request) {
+                    $data_users->where('users.user_district', $request->districtId);
+                })
+                ->when($request->get('talukaId'), function($data_users) use ($request) {
+                    $data_users->where('users.user_taluka', $request->talukaId);
+                })
+                ->when($request->get('villageId'), function($data_users) use ($request) {
+                    $data_users->where('users.user_village', $request->villageId);
+                })
+				->select('users.id','users.f_name','users.m_name','users.l_name','users.email','users.number','users.aadhar_no',
+				'users.address','users.pincode','users.user_profile','roles.role_name',
+				'district_user.name as district','taluka_user.name as taluka','village_user.name as village');
+                $data_output = $data_users->get();
+
+		}		
+        return response()->json(['documents_ajax_data' => $data_output]);
+		// return $data_users;/
+	}
    
+    public function ListGrampanchayatDocumentsResubmittedFilter(Request $request)
+	{
+		$sess_user_id=session()->get('user_id');
+		$sess_user_type=session()->get('user_type');
+		$sess_user_role=session()->get('role_id');
+        $districtId = $request->input('districtId');
+        $talukaId = $request->input('talukaId');
+        $villageId = $request->input('villageId');
+
+		$doc_output = GramPanchayatDocuments::where('tbl_gram_panchayat_documents.is_approved', '1')
+				->where('tbl_gram_panchayat_documents.is_resubmitted', '1')
+				->select('user_id')
+                ->get()
+				->toArray();
+                
+		if($sess_user_role=='1')
+		{
+
+            
+			
+		$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
+				->leftJoin('tbl_area as district_user', 'users.user_district', '=', 'district_user.location_id')
+				->leftJoin('tbl_area as taluka_user', 'users.user_taluka', '=', 'taluka_user.location_id')
+				->leftJoin('tbl_area as village_user', 'users.user_village', '=', 'village_user.location_id')
+				->where('users.role_id','3')
+                // ->whereIn('users.id',$data_user_output)
+                ->whereIn('users.id',$doc_output)
+                ->when($request->get('districtId'), function($query) use ($request) {
+                    $query->where('users.user_district', $request->districtId);
+                })
+                ->when($request->get('talukaId'), function($query) use ($request) {
+                    $query->where('users.user_taluka', $request->talukaId);
+                })
+                ->when($request->get('villageId'), function($query) use ($request) {
+                    $query->where('users.user_village', $request->villageId);
+                })
+				->select('users.id','users.f_name','users.m_name','users.l_name','users.email','users.number','users.aadhar_no',
+				'users.address','users.pincode','users.user_profile','roles.role_name',
+				'district_user.name as district','taluka_user.name as taluka','village_user.name as village');
+
+                $data_output = $data_users->get();
+		}else if($sess_user_role=='2')
+		{
+			$data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
+                ->where('users.id', $sess_user_id)
+                ->first();
+
+            $utype=$data_output->user_type;
+            $user_working_dist=$data_output->user_district;
+            $user_working_tal=$data_output->user_taluka;
+            $user_working_vil=$data_output->user_village;
+
+            // }         
+
+
+		$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
+				->leftJoin('tbl_area as district_user', 'users.user_district', '=', 'district_user.location_id')
+				->leftJoin('tbl_area as taluka_user', 'users.user_taluka', '=', 'taluka_user.location_id')
+				->leftJoin('tbl_area as village_user', 'users.user_village', '=', 'village_user.location_id')
+				->where('users.role_id','3')
+                // ->whereIn('users.id',$data_user_output)
+                ->whereIn('users.id',$doc_output)
+                ->when($request->get('districtId'), function($data_users) use ($request) {
+                    $data_users->where('users.user_district', $request->districtId);
+                })
+                ->when($request->get('talukaId'), function($data_users) use ($request) {
+                    $data_users->where('users.user_taluka', $request->talukaId);
+                })
+                ->when($request->get('villageId'), function($data_users) use ($request) {
+                    $data_users->where('users.user_village', $request->villageId);
+                })
+				->select('users.id','users.f_name','users.m_name','users.l_name','users.email','users.number','users.aadhar_no',
+				'users.address','users.pincode','users.user_profile','roles.role_name',
+				'district_user.name as district','taluka_user.name as taluka','village_user.name as village');
+                $data_output = $data_users->get();
+
+		}		
+        return response()->json(['documents_ajax_data' => $data_output]);
+		// return $data_users;/
+	}
 
    
 }

@@ -145,7 +145,6 @@ public function index(Request $request)
                     $documentRequestCounts['Resubmitted Documents'] += $countdoc->count;
                 }
             }
-            dd($documentRequestCounts);
 
             // $documentRequestCounts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $sess_user_id)
             //     ->where('is_resubmitted', 1)

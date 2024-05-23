@@ -64,8 +64,6 @@
 
                             <div class="col-lg-3 col-md-3 col-sm-3">
                                 <div class="form-group">
-                                <label for="to_date">Project</label>&nbsp<span
-                                        class="red-text">*</span>
                                     <select class="form-control" name="project_id" id="project_id">
                                         <option value="">Select Project</option>
                                         @foreach ($dynamic_projects as $projects_for_data)    
@@ -254,7 +252,7 @@
             });
         </script>
 
-<script>
+        <script>
             $(document).ready(function() {
 
                 $('#submitButton').click(function(e) {
@@ -273,30 +271,33 @@
                     // console.log(talukaId);
                     // $('#village_id').html('<option value="">Select Village</option>');
 
-                    if (districtId !== '' || talukaId !== '' || villageId !== '' ||
-                        ProjectId !== '' || (FromDate !== '' && ToDate !== '')) {
+                    if (districtId !== '' || talukaId !== '' || villageId !== '') {
                         $.ajax({
-                            url: '{{ route('list-labours-attendance-filter') }}',
+                            url: '{{ route('list-grampanchayt-doc-approved-filter') }}',
                             type: 'GET',
                             data: {
                                 districtId: districtId,
                                 talukaId: talukaId,
                                 villageId: villageId,
-                                FromDate: FromDate,
-                                ToDate: ToDate,
-                                ProjectId: ProjectId,
                             },
                             // headers: {
                             //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             // },
                             success: function(response) {
-                                if (response.labour_attendance_ajax_data.length > 0) {
-                                    $('#order-listing tbody').empty();
+                                console.log(response);
+                                if (response.documents_ajax_data.length > 0) {
+
+                                    var table = $('#order-listing').DataTable();
+                                    table.clear().draw(); 
                                     
-                                    $.each(response.labour_attendance_ajax_data, function(index, labour_attendance_data) {
-                                        console.log(labour_attendance_data.created_at);
-                                        var lid=index + parseInt(1);
-                                        $('#order-listing tbody').append('<tr><td>' + lid +'</td><td>' + labour_attendance_data.project_name + '</td><td>' + labour_attendance_data.full_name +'</td><td>' + labour_attendance_data.mobile_number + '</td><td>' + labour_attendance_data.mgnrega_card_id + '</td><td>' + labour_attendance_data.attendance_day+ '</td><td>' + labour_attendance_data.created_at + '</td></tr>');
+                                    $.each(response.documents_ajax_data, function(index, documents_data) {
+                                        index++;
+                                        table.row.add([ index,
+                                            documents_data.f_name + ' ' + documents_data.m_name + ' ' + documents_data.l_name,
+                                            documents_data.district,
+                                            documents_data.taluka,
+                                            documents_data.village,
+                                            '<a onClick="getData(' + documents_data.id + ')" class="show-btn btn btn-sm btn-outline-primary m-1"><i class="fas fa-eye"></i></a>']).draw(false);  
                                     });
                                 }else{
                                     $('#order-listing tbody').empty();
@@ -310,8 +311,16 @@
                     }
                 });
             });
-        </script>
-     
+        </script>   
+     <script>
+
+// $(document).ready(() => {
+    function getData(data){
+    $("#show_id").val(data);
+    $("#showform").submit();
+}
+// });
+</script>
         <form method="POST" action="{{ url('/show-gramsevak-doc-approved') }}" id="showform">
             @csrf
             <input type="hidden" name="show_id" id="show_id" value="">

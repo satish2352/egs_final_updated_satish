@@ -100,6 +100,12 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/list-resubmitted-documents', ['as' => 'list-resubmitted-documents', 'uses' => 'App\Http\Controllers\Admin\Gramsevak\GramsevakController@ListResubmittedDocuments']);
 
 
+    Route::get('/list-grampanchayt-doc-approved-filter', ['as' => 'list-grampanchayt-doc-approved-filter', 'uses' => 'App\Http\Controllers\Admin\Gramsevak\GramsevakController@ListGrampanchayatDocumentsApprovedFilter']);
+    Route::get('/list-grampanchayt-doc-new-filter', ['as' => 'list-grampanchayt-doc-new-filter', 'uses' => 'App\Http\Controllers\Admin\Gramsevak\GramsevakController@ListGrampanchayatDocumentsNewFilter']);
+    Route::get('/list-grampanchayt-doc-not-approved-filter', ['as' => 'list-grampanchayt-doc-not-approved-filter', 'uses' => 'App\Http\Controllers\Admin\Gramsevak\GramsevakController@ListGrampanchayatDocumentsNotApprovedFilter']);
+    Route::get('/list-grampanchayt-doc-resubmitted-filter', ['as' => 'list-grampanchayt-doc-resubmitted-filter', 'uses' => 'App\Http\Controllers\Admin\Gramsevak\GramsevakController@ListGrampanchayatDocumentsResubmittedFilter']);
+
+
 
     // Route::post('/list-sended-for-approval', ['as' => 'list-sended-for-approval', 'uses' => 'App\Http\Controllers\Admin\Gramsevak\GramsevakController@ListSendedForApproval']);
 

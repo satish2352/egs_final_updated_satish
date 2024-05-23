@@ -377,7 +377,7 @@ class ReportsController extends Controller
                 $query->where('projects.taluka', $request->talukaId);
             })
             ->when($request->get('villageId'), function($query) use ($request) {
-                $query->where('projects.taluka', $request->villageId);
+                $query->where('projects.village', $request->villageId);
             })
             ->when($request->get('SkillId'), function($query) use ($request) {
                 // dd($request->SkillId);

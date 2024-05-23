@@ -64,8 +64,6 @@
 
                             <div class="col-lg-3 col-md-3 col-sm-3">
                                 <div class="form-group">
-                                <label for="to_date">Project</label>&nbsp<span
-                                        class="red-text">*</span>
                                     <select class="form-control" name="project_id" id="project_id">
                                         <option value="">Select Project</option>
                                         @foreach ($dynamic_projects as $projects_for_data)    
