@@ -224,7 +224,7 @@ public function index(Request $request)
 
             $labourCounts = Labour::whereIn('labour.user_id',$data_user_output)
                 ->selectRaw('is_approved, COUNT(*) as count')
-                ->where('is_resubmitted', 0)
+                // ->where('is_resubmitted', 0)
                 ->groupBy('is_approved')
                 ->get();
             
