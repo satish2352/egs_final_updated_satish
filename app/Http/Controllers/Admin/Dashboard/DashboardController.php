@@ -335,36 +335,60 @@ public function index(Request $request)
                 ->count();
 
                          $labourCounts = Labour::where('user_id', $sess_user_id)
-                            ->selectRaw('is_approved, COUNT(*) as count')
-                            ->where('is_resubmitted', 0)
-                            ->groupBy('is_approved')
+                            ->selectRaw('is_approved,is_resubmitted, COUNT(*) as count')
+                            // ->where('is_resubmitted', 0)
+                            ->groupBy('is_approved','is_resubmitted')
                             ->get();
                         //   dd( $labourCounts);
+                        // foreach ($labourCounts as $count) {
+                        //     if ($count->is_approved == 1) {
+                        //         $labourRequestCounts['Sent For Approval Labours'] += $count->count;
+                        //     } elseif ($count->is_approved == 2) {
+                        //         $labourRequestCounts['Approved Labours'] += $count->count;
+                        //     } elseif ($count->is_approved == 3) {
+                        //         $labourRequestCounts['Not Approved Labours'] += $count->count;
+                        //     }
+                        // }
+
                         foreach ($labourCounts as $count) {
-                            if ($count->is_approved == 1) {
+                            if ($count->is_approved == 1 && $count->is_resubmitted == 0) {
                                 $labourRequestCounts['Sent For Approval Labours'] += $count->count;
-                            } elseif ($count->is_approved == 2) {
+                            } elseif ($count->is_approved == 2 && $count->is_resubmitted == 0) {
                                 $labourRequestCounts['Approved Labours'] += $count->count;
-                            } elseif ($count->is_approved == 3) {
+                            } elseif ($count->is_approved == 3 && $count->is_resubmitted == 0) {
                                 $labourRequestCounts['Not Approved Labours'] += $count->count;
+                            } elseif ($count->is_approved == 1 && $count->is_resubmitted == 1) {
+                                $labourRequestCounts['Resubmitted Labours'] += $count->count;
                             }
                         }
             
                         $documentCounts = GramPanchayatDocuments::where('user_id', $user_working_vil)
-                            ->selectRaw('is_approved, COUNT(*) as count')
-                            ->where('is_resubmitted', 0)
-                            ->groupBy('is_approved')
+                            ->selectRaw('is_approved,is_resubmitted, COUNT(*) as count')
+                            // ->where('is_resubmitted', 0)
+                            ->groupBy('is_approved','is_resubmitted')
                             ->get();
             
+                        // foreach ($documentCounts as $countdoc) {
+                        //     if ($countdoc->is_approved == 1) {
+                        //         $documentRequestCounts['Sent For Approval Documents'] += $countdoc->count;
+                        //     } elseif ($countdoc->is_approved == 2) {
+                        //         $documentRequestCounts['Approved Documents'] += $countdoc->count;
+                        //     } elseif ($countdoc->is_approved == 3) {
+                        //         $documentRequestCounts['Not Approved Documents'] += $countdoc->count;
+                        //     }
+                        // }
+
                         foreach ($documentCounts as $countdoc) {
-                            if ($countdoc->is_approved == 1) {
+                            if ($countdoc->is_approved == 1  && $countdoc->is_resubmitted == 0) {
                                 $documentRequestCounts['Sent For Approval Documents'] += $countdoc->count;
-                            } elseif ($countdoc->is_approved == 2) {
+                            } elseif ($countdoc->is_approved == 2  && $countdoc->is_resubmitted == 0) {
                                 $documentRequestCounts['Approved Documents'] += $countdoc->count;
-                            } elseif ($countdoc->is_approved == 3) {
+                            } elseif ($countdoc->is_approved == 3  && $countdoc->is_resubmitted == 0) {
                                 $documentRequestCounts['Not Approved Documents'] += $countdoc->count;
+                            } elseif ($countdoc->is_approved == 1  && $countdoc->is_resubmitted == 1) {
+                                $documentRequestCounts['Resubmitted Documents'] += $countdoc->count;
                             }
-                        }
+                        }  
             
                         $documentRequestCounts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $user_working_vil)
                             ->where('is_resubmitted', 1)
