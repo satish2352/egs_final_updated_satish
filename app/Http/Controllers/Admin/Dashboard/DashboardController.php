@@ -92,9 +92,7 @@ public function index(Request $request)
                                 ->orWhere('role_id', 3)
                                 ->count();
 
-              $projectCount= Project::where('projects.end_date', '>=',date('Y-m-d'))
-            //   ->whereIn('projects.District', $data_user_output)
-              ->where('projects.is_active', true)
+              $projectCount= Project::where('projects.is_active', true)
               ->count();  
                         
               $projectCountCompleted= Project::where('projects.end_date', '=',date('Y-m-d'))
@@ -104,12 +102,12 @@ public function index(Request $request)
                 
             $todayCount = Labour::where('updated_at', '>=', $fromDate)
             ->where('updated_at', '<=', $toDate)
-            ->where('is_approved', 2)
+            // ->where('is_approved', 2)
             ->get()
             ->count();
 
             $currentYearCount = Labour::whereYear('updated_at', date('Y'))
-                ->where('is_approved', 2)
+                // ->where('is_approved', 2)
                 ->get()
                 ->count();
 
@@ -162,7 +160,7 @@ public function index(Request $request)
 
 
             $projectCount= Project::leftJoin('users', 'projects.district', '=', 'users.user_district')  
-            ->where('projects.end_date', '>=',date('Y-m-d'))
+            // ->where('projects.end_date', '>=',date('Y-m-d'))
             // ->whereIn('projects.District', $user_working_dist)
             ->where('projects.is_active', true)
             ->where('users.user_district', $user_working_dist)
@@ -180,13 +178,13 @@ public function index(Request $request)
 
              $todayCount = Labour::where('updated_at', '>=', $fromDate)
             ->where('updated_at', '<=', $toDate)
-            ->where('is_approved', 2)
+            // ->where('is_approved', 2)
             ->get()
             ->count();
 
             $currentYearCount = Labour::whereYear('updated_at', date('Y'))
                 ->where('user_id', $sess_user_id)
-                ->where('is_approved', 2)
+                // ->where('is_approved', 2)
                 ->get()
                 ->count();
 
@@ -273,7 +271,7 @@ public function index(Request $request)
             ->count();
 
             $currentYearCount = Labour::whereYear('updated_at', date('Y'))
-                ->where('is_approved', 2)
+                // ->where('is_approved', 2)
                 ->where('user_id', $sess_user_id)
                 ->get()
                 ->count();

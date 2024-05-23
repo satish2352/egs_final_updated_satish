@@ -653,9 +653,7 @@ class GramsevakController extends Controller {
             $utype=$data_output->user_type;
             $user_working_dist=$data_output->user_district;
             $user_working_tal=$data_output->user_taluka;
-            $user_working_vil=$data_output->user_village;
-
-            // }         
+            $user_working_vil=$data_output->user_village; 
 
 
 		$data_users = User::leftJoin('roles', 'roles.id', '=', 'users.role_id')
@@ -856,7 +854,7 @@ class GramsevakController extends Controller {
 				->select('user_id')
                 ->get()
 				->toArray();
-                
+
 		if($sess_user_role=='1')
 		{
 

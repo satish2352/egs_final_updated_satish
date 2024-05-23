@@ -247,7 +247,7 @@
                                                 </a>
                                             </div>
                                             <div class="col-md-3">
-                                                <a href="{{ route('list-todays-approved-labours') }}">
+                                                <a href="#">
                                                     <div class="card">
                                                         <div class="card-body"
                                                             style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
@@ -269,7 +269,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="card">
-                                                    <a href="{{ route('list-approved-labours') }}">
+                                                    <a href="#">
                                                         <div class="card-body"
                                                             style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
                                                             <div class="card-statistic-3 p-4">
@@ -315,7 +315,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="card">
-                                                    <a href="{{ route('list-approved-labours') }}">
+                                                    <a href="#">
                                                         <div class="card-body"
                                                             style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
                                                             <div class="card-statistic-3 p-4">
@@ -336,7 +336,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="card">
-                                                    <a href="{{ route('list-approved-labours') }}">
+                                                    <a href="#">
                                                         <div class="card-body"
                                                             style="background-color:#{{ str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) . str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT) }}">
                                                             <div class="card-statistic-3 p-4">
@@ -356,7 +356,7 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <!-- <div class="col-md-4">
                                                 <div class="card">
                                                     <a href="{{ route('list-projects') }}">
                                                         <div class="card-body"
@@ -376,8 +376,8 @@
                                                         </div>
                                                     </a>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-3">
+                                            </div> -->
+                                            <!-- <div class="col-md-3">
                                                 <div class="card">
                                                     <a href="{{ route('list-projects') }}">
                                                         <div class="card-body"
@@ -397,7 +397,7 @@
                                                         </div>
                                                     </a>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     @endif
 
