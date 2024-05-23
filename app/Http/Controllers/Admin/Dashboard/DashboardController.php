@@ -251,9 +251,9 @@ public function index(Request $request)
             }    
 
             $documentCounts = GramPanchayatDocuments::whereIn('tbl_gram_panchayat_documents.user_id',$data_user_output)
-                ->selectRaw('is_approved, COUNT(*) as count')
+                ->selectRaw('is_approved,is_resubmitted, COUNT(*) as count')
                 // ->where('is_resubmitted', 0)
-                ->groupBy('is_approved')
+                ->groupBy('is_approved','is_resubmitted')
                 ->get();
 
             // foreach ($documentCounts as $countdoc) {
