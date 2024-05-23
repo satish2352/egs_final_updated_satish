@@ -223,9 +223,9 @@ public function index(Request $request)
                 ->count();
 
             $labourCounts = Labour::whereIn('labour.user_id',$data_user_output)
-                ->selectRaw('is_approved, COUNT(*) as count')
+                ->selectRaw('is_approved,is_resubmitted, COUNT(*) as count')
                 // ->where('is_resubmitted', 0)
-                ->groupBy('is_approved')
+                ->groupBy('is_approved','is_resubmitted')
                 ->get();
             
             // foreach ($labourCounts as $count) {
@@ -249,7 +249,7 @@ public function index(Request $request)
                     $labourRequestCounts['Resubmitted Labours'] += $count->count;
                 }
             }    
-
+dd(labourRequestCounts);
 
             $documentCounts = GramPanchayatDocuments::whereIn('tbl_gram_panchayat_documents.user_id',$data_user_output)
                 ->selectRaw('is_approved, COUNT(*) as count')
