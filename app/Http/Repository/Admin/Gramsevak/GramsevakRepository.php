@@ -352,6 +352,7 @@ class GramsevakRepository
 				->select('user_id')
                 ->get()
 				->toArray();
+				dd($doc_output);
 		if($sess_user_role=='1')
 		{
 			
