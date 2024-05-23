@@ -228,36 +228,60 @@ public function index(Request $request)
                 ->groupBy('is_approved')
                 ->get();
             
+            // foreach ($labourCounts as $count) {
+            //     if ($count->is_approved == 1) {
+            //         $labourRequestCounts['Sent For Approval Labours'] += $count->count;
+            //     } elseif ($count->is_approved == 2) {
+            //         $labourRequestCounts['Approved Labours'] += $count->count;
+            //     } elseif ($count->is_approved == 3) {
+            //         $labourRequestCounts['Not Approved Labours'] += $count->count;
+            //     }
+            // }
+
             foreach ($labourCounts as $count) {
-                if ($count->is_approved == 1) {
+                if ($count->is_approved == 1 && $count->is_resubmitted == 0) {
                     $labourRequestCounts['Sent For Approval Labours'] += $count->count;
-                } elseif ($count->is_approved == 2) {
+                } elseif ($count->is_approved == 2 && $count->is_resubmitted == 0) {
                     $labourRequestCounts['Approved Labours'] += $count->count;
-                } elseif ($count->is_approved == 3) {
+                } elseif ($count->is_approved == 3 && $count->is_resubmitted == 0) {
                     $labourRequestCounts['Not Approved Labours'] += $count->count;
+                } elseif ($count->is_approved == 1 && $count->is_resubmitted == 1) {
+                    $labourRequestCounts['Resubmitted Labours'] += $count->count;
                 }
-            }
+            }    
+
 
             $documentCounts = GramPanchayatDocuments::whereIn('tbl_gram_panchayat_documents.user_id',$data_user_output)
                 ->selectRaw('is_approved, COUNT(*) as count')
-                ->where('is_resubmitted', 0)
+                // ->where('is_resubmitted', 0)
                 ->groupBy('is_approved')
                 ->get();
 
-            foreach ($documentCounts as $countdoc) {
-                if ($countdoc->is_approved == 1) {
-                    $documentRequestCounts['Sent For Approval Documents'] += $countdoc->count;
-                } elseif ($countdoc->is_approved == 2) {
-                    $documentRequestCounts['Approved Documents'] += $countdoc->count;
-                } elseif ($countdoc->is_approved == 3) {
-                    $documentRequestCounts['Not Approved Documents'] += $countdoc->count;
-                }
-            }
+            // foreach ($documentCounts as $countdoc) {
+            //     if ($countdoc->is_approved == 1) {
+            //         $documentRequestCounts['Sent For Approval Documents'] += $countdoc->count;
+            //     } elseif ($countdoc->is_approved == 2) {
+            //         $documentRequestCounts['Approved Documents'] += $countdoc->count;
+            //     } elseif ($countdoc->is_approved == 3) {
+            //         $documentRequestCounts['Not Approved Documents'] += $countdoc->count;
+            //     }
+            // }
 
-            $documentRequestCounts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $user_working_dist)
-                ->where('is_resubmitted', 1)
-                ->where('is_approved', 1)
-                ->count();
+            foreach ($documentCounts as $countdoc) {
+                if ($countdoc->is_approved == 1  && $countdoc->is_resubmitted == 0) {
+                    $documentRequestCounts['Sent For Approval Documents'] += $countdoc->count;
+                } elseif ($countdoc->is_approved == 2  && $countdoc->is_resubmitted == 0) {
+                    $documentRequestCounts['Approved Documents'] += $countdoc->count;
+                } elseif ($countdoc->is_approved == 3  && $countdoc->is_resubmitted == 0) {
+                    $documentRequestCounts['Not Approved Documents'] += $countdoc->count;
+                } elseif ($countdoc->is_approved == 1  && $countdoc->is_resubmitted == 1) {
+                    $documentRequestCounts['Resubmitted Documents'] += $countdoc->count;
+                }
+            }    
+            // $documentRequestCounts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $user_working_dist)
+            //     ->where('is_resubmitted', 1)
+            //     ->where('is_approved', 1)
+            //     ->count();
 
            
         } elseif ($roleId== 3 && $utype == 3) {
