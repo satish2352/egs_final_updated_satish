@@ -134,18 +134,18 @@ public function index(Request $request)
                 // ->where('is_resubmitted', 0)
                 ->groupBy('is_approved','is_resubmitted')
                 ->get();
-
             foreach ($documentCounts as $countdoc) {
-                if ($countdoc->is_approved == 1  && $count->is_resubmitted == 0) {
+                if ($countdoc->is_approved == 1  && $countdoc->is_resubmitted == 0) {
                     $documentRequestCounts['Sent For Approval Documents'] += $countdoc->count;
-                } elseif ($countdoc->is_approved == 2  && $count->is_resubmitted == 0) {
+                } elseif ($countdoc->is_approved == 2  && $countdoc->is_resubmitted == 0) {
                     $documentRequestCounts['Approved Documents'] += $countdoc->count;
-                } elseif ($countdoc->is_approved == 3  && $count->is_resubmitted == 0) {
+                } elseif ($countdoc->is_approved == 3  && $countdoc->is_resubmitted == 0) {
                     $documentRequestCounts['Not Approved Documents'] += $countdoc->count;
-                } elseif ($countdoc->is_approved == 1  && $count->is_resubmitted == 1) {
+                } elseif ($countdoc->is_approved == 1  && $countdoc->is_resubmitted == 1) {
                     $documentRequestCounts['Resubmitted Documents'] += $countdoc->count;
                 }
             }
+            dd($documentRequestCounts);
 
             // $documentRequestCounts['resubmitted_document_count'] = GramPanchayatDocuments::where('user_id', $sess_user_id)
             //     ->where('is_resubmitted', 1)
