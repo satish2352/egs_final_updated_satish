@@ -94,7 +94,7 @@
                               @endif
                                 <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-rejection-reasons*')
                                     ? 'nav-link active' : 'nav-link' }}"
-                                          href="{{ route('list-rejection-reasons') }}">Rejection Reasons</a></li>
+                                          href="{{ route('list-rejection-reasons') }}">Labour Rejection Reasons</a></li>
                                 <li class="nav-item d-none d-lg-block"><a class="{{request()->is('list-rejection-reasons-docs*')
                                     ? 'nav-link active' : 'nav-link' }}"
                                           href="{{ route('list-rejection-reason-docs') }}">Document Rejection Reasons</a></li>    

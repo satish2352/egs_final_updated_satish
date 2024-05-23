@@ -237,7 +237,7 @@ class AreaRepository
 	public function getVillageList() {
 		$data_village = TblArea::leftJoin('tbl_area as taluka_data', 'tbl_area.parent_id', '=', 'taluka_data.location_id')
 						->leftJoin('tbl_area as district_data', 'taluka_data.parent_id', '=', 'district_data.location_id')
-						->where('tbl_area.location_type','=','4')
+						->where('tbl_area.location_type','=',4)
 						->select('tbl_area.location_id',
 								'tbl_area.name',
 								'tbl_area.is_active',
@@ -245,29 +245,12 @@ class AreaRepository
 								'district_data.name as district_name',
 							)
 							->orderBy('taluka_data.name', 'asc')
+							->orderBy('tbl_area.name', 'asc')
 							->paginate(50);
 	// dd($data_village);
 		return $data_village;
 	}
 	
-    // public function getVillageList() {
-    //     $data_village = TblArea::leftJoin('tbl_area as taluka_data', 'tbl_area.parent_id', '=', 'taluka_data.location_id')
-    //                     ->leftJoin('tbl_area as district_data', 'taluka_data.parent_id', '=', 'district_data.location_id')
-    //                     ->where('tbl_area.location_type','=','4')
-	// 					->select('tbl_area.location_id',
-	// 							'tbl_area.name',
-    //                             'tbl_area.is_active',
-    //                             'taluka_data.name as taluka_name',
-    //                             'district_data.name as district_name',
-	// 						)
-	// 						->orderBy('taluka_data.name', 'asc')
-	// 						// ->get()
-	// 						->paginate(20);
-	// 	dd($data_village);					
-							
-	// 	return $data_village;
-	// }
-
     public function addVillageInsert($request)
 	{
         // dd($request);
