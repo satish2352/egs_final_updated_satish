@@ -321,8 +321,8 @@ public function index(Request $request)
                 ->count();  
 
             
-            $todayCount = Labour::where('updated_at', '>=', $fromDate)
-            ->where('updated_at', '<=', $toDate)
+            $todayCount = Labour::where('created_at', '>=', $fromDate)
+            ->where('created_at', '<=', $toDate)
             ->where('user_id', $sess_user_id)
             // ->where('is_approved', 2)
             ->get()

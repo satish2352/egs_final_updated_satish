@@ -291,6 +291,7 @@
                                                     </a>
                                                 </div>
                                             </div>
+                                            @else
                                             <div class="col-md-3">
                                                 <div class="card">
                                                     <a href="{{ route('list-projects') }}">
@@ -312,7 +313,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @else
+                                    
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="card">
