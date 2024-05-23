@@ -210,7 +210,7 @@ public function index(Request $request)
             ->count();
 
             $currentYearCount = Labour::whereYear('updated_at', date('Y'))
-                ->where('user_id', $sess_user_id)
+                // ->where('user_id', $sess_user_id)
                 ->whereIn('labour.user_id',$data_user_output)
 
                 // ->where('is_approved', 2)
