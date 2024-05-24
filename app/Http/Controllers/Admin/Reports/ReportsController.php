@@ -338,13 +338,14 @@ class ReportsController extends Controller
                   ->leftJoin('tbl_area as taluka_labour', 'labour.taluka_id', '=', 'taluka_labour.location_id')
                   ->leftJoin('tbl_area as village_labour', 'labour.village_id', '=', 'village_labour.location_id')
                   ->leftJoin('users', 'labour.user_id', '=', 'users.id')
+                  ->where('labour.user_id', $sess_user_id)
                   ->where('registrationstatus.is_active', true)
                   ->when($request->get('RegistrationStatusId'), function($query) use ($request) {
                       $query->where('labour.is_approved', $request->RegistrationStatusId);
                   })
           
                   ->when($request->get('villageId'), function($query) use ($request, $data_user_output) {
-                      $query->where('labour.user_id',$sess_user_id);
+                      $query->whereIn('labour.village_id',$data_user_output);
                   })
                   ->when($request->get('SkillId'), function($query) use ($request) {
                       $query->where('labour.skill_id', $request->SkillId);
