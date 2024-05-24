@@ -345,7 +345,7 @@ class ReportsController extends Controller
                   })
           
                   ->when($request->get('villageId'), function($query) use ($request, $data_user_output) {
-                      $query->whereIn('labour.village_id',$data_user_output);
+                    $query->whereIn('labour.user_id',$data_user_output);
                   })
                   ->when($request->get('SkillId'), function($query) use ($request) {
                       $query->where('labour.skill_id', $request->SkillId);
