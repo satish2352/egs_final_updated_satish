@@ -63,7 +63,7 @@ class ReportsController extends Controller
             $village_data=TblArea::where('location_id', $user_working_vil)
                         ->orderBy('name', 'asc')
                         ->get(['location_id', 'name']);       
-            // dd($village_data);                 
+            dd($village_data);                 
 
             $skills_data = Skills::where('is_active', 1) // 4 represents cities
                         ->whereNot('id', '1')

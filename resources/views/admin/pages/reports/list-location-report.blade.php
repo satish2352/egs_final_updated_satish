@@ -427,7 +427,6 @@
                             // },
                             success: function(response) {
                                 if (response.labour_ajax_data.length > 0) {
-                                    console.log(response.labour_ajax_data);
                                     // $('#order-listing tbody').empty();
                                     var table = $('#order-listing').DataTable();
                                     table.clear().draw();
