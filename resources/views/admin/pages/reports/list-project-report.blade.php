@@ -137,18 +137,54 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            @foreach ($data_output as $item)
                                                     <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td> 
-                                                      <td></td> 
-                                                      <td></td> 
-                                                      <td></td> 
-                                                      <td></td> 
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $item->f_name }} {{ $item->m_name }} {{ $item->l_name }}</td>
+                                                        <td>{{ $item->pro_name }}</td>
+                                                        <td>{{ $item->full_name }}</td> 
+                                                        <td>{{ $item->mobile_number }}</td> 
+                                                        <td>{{ $item->mgnrega_card_id }}</td> 
+                                                        <td>
+                                                            @if (session()->get('role_id')=='1')
+                                                                @if ($item->is_approved=='1' && $item->is_resubmitted=='0')
+                                                                    Sent For approval To The Officer
+                                                                @elseif ($item->is_approved=='2')
+                                                                    Approved By Officer
+                                                                @elseif ($item->is_approved=='3' && $item->is_resubmitted=='0')
+                                                                    Disapproved By Officer    
+                                                                @elseif ($item->is_approved=='1' && $item->is_resubmitted=='1')
+                                                                    Resend To Officer For Verification    
+                                                                @endif
+                                                            @elseif (session()->get('role_id')=='2')
+                                                                @if ($item->is_approved=='1' && $item->is_resubmitted=='0')
+                                                                    Received For approval
+                                                                @elseif ($item->is_approved=='2')
+                                                                    Approved
+                                                                @elseif ($item->is_approved=='3' && $item->is_resubmitted=='0')
+                                                                    Disapproved
+                                                                @elseif ($item->is_approved=='1' && $item->is_resubmitted=='1')
+                                                                    Received For Reverification       
+                                                                @endif
+                                                            @elseif (session()->get('role_id')=='3')
+                                                                @if ($item->is_approved=='1' && $item->is_resubmitted=='0')
+                                                                    Sent For approval
+                                                                @elseif ($item->is_approved=='2')
+                                                                    Approved
+                                                                @elseif ($item->is_approved=='3' && $item->is_resubmitted=='0')
+                                                                    Received For Correction
+                                                                @elseif ($item->is_approved=='1' && $item->is_resubmitted=='1')
+                                                                    Sent For Reverification               
+                                                                @endif
+                                                            @endif
+                                                        </td>
+                                                        <td class="d-flex"><a data-id="{{ $item->id }}"
+                                                                class="show-btn btn btn-sm btn-outline-primary m-1"><i
+                                                                    class="fas fa-eye"></i></a>
+                                                         </td> 
                                                       
                                                     </tr>
-
+                                            @endforeach
                                                 
 
                                             </tbody>

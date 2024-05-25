@@ -157,8 +157,141 @@ class ReportsController extends Controller
             $district_data = TblArea::where('parent_id', '2')
                         ->orderBy('name', 'asc')
                         ->get(['location_id', 'name']);
+
+            
+                        
+            if($sess_user_role=='1')
+            {             
+
+                $query = Labour::leftJoin('tbl_area as district_labour', 'labour.district_id', '=', 'district_labour.location_id')
+                ->leftJoin('tbl_area as taluka_labour', 'labour.taluka_id', '=', 'taluka_labour.location_id')
+                ->leftJoin('tbl_area as village_labour', 'labour.village_id', '=', 'village_labour.location_id')
+                ->leftJoin('gender as gender_labour', 'labour.gender_id', '=', 'gender_labour.id')
+                ->leftJoin('users', 'labour.user_id', '=', 'users.id')
+                ->leftJoin('tbl_mark_attendance', 'labour.mgnrega_card_id', '=', 'tbl_mark_attendance.mgnrega_card_id')
+                ->join('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
+                ->select(
+                    'labour.id',
+                    'labour.full_name',
+                    'labour.date_of_birth',
+                    'gender_labour.gender_name as gender_name',
+                    'district_labour.name as district_id',
+                    'taluka_labour.name as taluka_id',
+                    'village_labour.name as village_id',
+                    'labour.mobile_number',
+                    'labour.landline_number',
+                    'labour.mgnrega_card_id',
+                    'labour.aadhar_image',
+                    'labour.mgnrega_image', 
+                    'labour.profile_image', 
+                    'labour.voter_image', 
+                    'labour.is_active',
+                    'labour.is_approved',
+                    'labour.skill_id',
+                    'users.f_name',
+                    'users.m_name',
+                    'users.l_name',
+                    'projects.project_name as pro_name',
+                    'tbl_mark_attendance.created_at',
+                );
+                $data_output = $query->get();
+
+                }else if($sess_user_role=='2')
+                {
+                
+
+                $query_user= User::where('users.role_id','3')
+                ->where('users.user_district',$user_working_dist);
+                $data_user_output=$query_user->select('id')->get();
+
+                    $query = Labour::leftJoin('registrationstatus', 'labour.is_approved', '=', 'registrationstatus.id')
+                    ->leftJoin('gender as gender_labour', 'labour.gender_id', '=', 'gender_labour.id')
+                    ->leftJoin('skills as skills_labour', 'labour.gender_id', '=', 'skills_labour.id')
+                    ->leftJoin('tbl_area as district_labour', 'labour.district_id', '=', 'district_labour.location_id')
+                    ->leftJoin('tbl_area as taluka_labour', 'labour.taluka_id', '=', 'taluka_labour.location_id')
+                    ->leftJoin('tbl_area as village_labour', 'labour.village_id', '=', 'village_labour.location_id')
+                    ->leftJoin('users', 'labour.user_id', '=', 'users.id')
+                    ->leftJoin('tbl_mark_attendance', 'labour.mgnrega_card_id', '=', 'tbl_mark_attendance.mgnrega_card_id')
+                    ->join('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
+                    // ->where('tbl_mark_attendance.project_id', $ProjectId)
+                    ->where('registrationstatus.is_active', true)
+                    ->whereIn('tbl_mark_attendance.user_id',$data_user_output)
+                    ->select(
+                        'labour.id',
+                        'labour.full_name',
+                        'labour.date_of_birth',
+                        'gender_labour.gender_name as gender_name',
+                        'skills_labour.skills as skills',
+                        'district_labour.name as district_id',
+                        'taluka_labour.name as taluka_id',
+                        'village_labour.name as village_id',
+                        'labour.mobile_number',
+                        'labour.landline_number',
+                        'labour.mgnrega_card_id',
+                        'labour.latitude',
+                        'labour.longitude',
+                        'labour.profile_image',
+                        'registrationstatus.status_name',
+                        'labour.is_approved',
+                        'users.f_name',
+                        'users.m_name',
+                        'users.l_name',
+                        'projects.project_name as pro_name',
+                        // 'tbl_mark_attendance.created_at',
+                        
+                    );
+                    
+                    $data_output = $query->get();
+
+                }
+                else if($sess_user_role=='3')
+                {
+                $query_user= User::where('users.role_id','3')
+                ->where('users.user_district',$user_working_vil);
+                    $data_user_output=$query_user->select('id')->get();
+
+                    $query = Labour::leftJoin('registrationstatus', 'labour.is_approved', '=', 'registrationstatus.id')
+                    ->leftJoin('gender as gender_labour', 'labour.gender_id', '=', 'gender_labour.id')
+                    ->leftJoin('skills as skills_labour', 'labour.gender_id', '=', 'skills_labour.id')
+                    ->leftJoin('tbl_area as district_labour', 'labour.district_id', '=', 'district_labour.location_id')
+                    ->leftJoin('tbl_area as taluka_labour', 'labour.taluka_id', '=', 'taluka_labour.location_id')
+                    ->leftJoin('tbl_area as village_labour', 'labour.village_id', '=', 'village_labour.location_id')
+                    ->leftJoin('users', 'labour.user_id', '=', 'users.id')
+                    ->leftJoin('tbl_mark_attendance', 'labour.mgnrega_card_id', '=', 'tbl_mark_attendance.mgnrega_card_id')
+                    ->join('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
+                    // ->where('tbl_mark_attendance.project_id', $ProjectId)
+                    ->where('registrationstatus.is_active', true)
+                    ->whereIn('tbl_mark_attendance.user_id',$data_user_output)
+                    ->select(
+                        'labour.id',
+                        'labour.full_name',
+                        'labour.date_of_birth',
+                        'gender_labour.gender_name as gender_name',
+                        'skills_labour.skills as skills',
+                        'district_labour.name as district_id',
+                        'taluka_labour.name as taluka_id',
+                        'village_labour.name as village_id',
+                        'labour.mobile_number',
+                        'labour.landline_number',
+                        'labour.mgnrega_card_id',
+                        'labour.latitude',
+                        'labour.longitude',
+                        'labour.profile_image',
+                        'registrationstatus.status_name',
+                        'labour.is_approved',
+                        'users.f_name',
+                        'users.m_name',
+                        'users.l_name',
+                        'projects.project_name as pro_name',
+                        // 'tbl_mark_attendance.created_at',
+                        
+                    );
+                               
+                               $data_output = $query->get();
+                
+                            }            
            
-            return view('admin.pages.reports.list-project-report', compact('projects_data','skills_data','registration_status_data','district_data'));
+            return view('admin.pages.reports.list-project-report', compact('projects_data','skills_data','registration_status_data','district_data','data_output'));
         } catch (\Exception $e) {
             return $e;
         }
@@ -463,12 +596,79 @@ class ReportsController extends Controller
                 'projects.project_name as pro_name',
                 'tbl_mark_attendance.created_at',
             );
-
-                    //           $sql = $query->toSql();
-                    // return $sql;
             $data_output = $query->get();
 
-		  }else if($sess_user_role=='2')
+		  }
+          else if($sess_user_role=='2')
+		  {
+            
+
+            $query_user= User::where('users.role_id','3');
+            if ($request->filled('talukaId')) {
+                $query_user->where('users.user_taluka',$talukaId);
+            }
+            if ($request->filled('villageId')) {
+                $query_user->where('users.user_village',$villageId);
+            }
+                
+                $data_user_output=$query_user->select('id')->get();
+
+                $query = Labour::leftJoin('registrationstatus', 'labour.is_approved', '=', 'registrationstatus.id')
+                ->leftJoin('gender as gender_labour', 'labour.gender_id', '=', 'gender_labour.id')
+                ->leftJoin('skills as skills_labour', 'labour.gender_id', '=', 'skills_labour.id')
+                ->leftJoin('tbl_area as district_labour', 'labour.district_id', '=', 'district_labour.location_id')
+                ->leftJoin('tbl_area as taluka_labour', 'labour.taluka_id', '=', 'taluka_labour.location_id')
+                ->leftJoin('tbl_area as village_labour', 'labour.village_id', '=', 'village_labour.location_id')
+				->leftJoin('users', 'labour.user_id', '=', 'users.id')
+                ->leftJoin('tbl_mark_attendance', 'labour.mgnrega_card_id', '=', 'tbl_mark_attendance.mgnrega_card_id')
+                ->join('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
+                // ->where('tbl_mark_attendance.project_id', $ProjectId)
+                ->where('registrationstatus.is_active', true)
+                ->whereIn('tbl_mark_attendance.user_id',$data_user_output)
+                ->when($request->get('ProjectId'), function($query) use ($request) {
+                    $query->where('tbl_mark_attendance.project_id', $request->ProjectId);
+                })
+                ->when($request->get('districtId'), function($query) use ($request) {
+                    $query->where('projects.district', $request->districtId);
+                })
+                ->when($request->get('talukaId'), function($query) use ($request) {
+                    $query->where('projects.taluka', $request->talukaId);
+                })
+                ->when($request->get('villageId'), function($query) use ($request) {
+                    $query->where('projects.taluka', $request->villageId);
+                })
+                ->when($request->get('SkillId'), function($query) use ($request) {
+                    $query->where('labour.skill_id', $request->SkillId);
+                })  
+                ->select(
+                    'labour.id',
+                    'labour.full_name',
+                    'labour.date_of_birth',
+                    'gender_labour.gender_name as gender_name',
+                    'skills_labour.skills as skills',
+                    'district_labour.name as district_id',
+                    'taluka_labour.name as taluka_id',
+                    'village_labour.name as village_id',
+                    'labour.mobile_number',
+                    'labour.landline_number',
+                    'labour.mgnrega_card_id',
+                    'labour.latitude',
+                    'labour.longitude',
+                    'labour.profile_image',
+                    'registrationstatus.status_name',
+					'labour.is_approved',
+					'users.f_name',
+					'users.m_name',
+					'users.l_name',
+                    'projects.project_name as pro_name',
+                    // 'tbl_mark_attendance.created_at',
+                    
+                );
+               
+               $data_output = $query->get();
+
+            }
+            else if($sess_user_role=='3')
 		  {
             
 
