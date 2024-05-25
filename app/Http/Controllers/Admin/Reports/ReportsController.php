@@ -215,7 +215,8 @@ class ReportsController extends Controller
                     ->join('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
                     // ->where('tbl_mark_attendance.project_id', $ProjectId)
                     ->where('registrationstatus.is_active', true)
-                    ->whereIn('tbl_mark_attendance.user_id',$data_user_output)
+                    ->where('projects.district', $user_working_dist)
+                    // ->whereIn('tbl_mark_attendance.user_id',$data_user_output)
                     ->select(
                         'labour.id',
                         'labour.full_name',
@@ -259,9 +260,9 @@ class ReportsController extends Controller
                     ->leftJoin('users', 'labour.user_id', '=', 'users.id')
                     ->leftJoin('tbl_mark_attendance', 'labour.mgnrega_card_id', '=', 'tbl_mark_attendance.mgnrega_card_id')
                     ->join('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
-                    // ->where('tbl_mark_attendance.project_id', $ProjectId)
                     ->where('registrationstatus.is_active', true)
-                    ->whereIn('tbl_mark_attendance.user_id',$data_user_output)
+                    ->where('projects.village', $user_working_vil)
+                    // ->whereIn('tbl_mark_attendance.user_id',$data_user_output)
                     ->select(
                         'labour.id',
                         'labour.full_name',
