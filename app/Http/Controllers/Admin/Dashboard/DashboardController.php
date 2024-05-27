@@ -302,7 +302,7 @@ public function index(Request $request)
 
             $projectCount= Project::leftJoin('users', 'projects.district', '=', 'users.user_district')  
             ->where('projects.is_active', true)
-            ->where('projects.village', $user_village)
+            ->where('projects.village', $user_working_vil)
             ->groupBy('users.id')
             ->count();   
 
