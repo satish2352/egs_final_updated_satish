@@ -144,7 +144,7 @@
                                                                                 NA    
                                                                                 @endif    
                                                                                 </td>
-                                                                                <td>NA</td>
+                                                                                <!-- <td>NA</td> -->
                                                                             </tr>
                                                                             @endif 
                                                                         @endforeach
