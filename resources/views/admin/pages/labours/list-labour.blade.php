@@ -287,10 +287,11 @@
                             success: function(response) {
                                 console.log(response.labour_ajax_data);
                                 if (response.labour_ajax_data.length > 0) {
-                                    $('#order-listing tbody').empty();
+                                    var table = $('#order-listing').DataTable();
+                                    table.clear().draw(); 
                                     
                                     $.each(response.labour_ajax_data, function(index, labour_data) {
-
+                                        index++;
                                         var statusText = "";
                                         if (labour_data.is_approved == '1') {
                                             statusText = "Received For Approval";
@@ -299,7 +300,14 @@
                                         } else if (labour_data.is_approved == '3') {
                                             statusText = "Send For Correction";
                                         }
-                                        $('#order-listing tbody').append('<tr><td>' + index +'</td><td>' + labour_data.f_name +' '+ labour_data.m_name +' '+ labour_data.l_name + '</td><td>' + labour_data.full_name + '</td><td>' + labour_data.mobile_number + '</td><td>' + labour_data.mgnrega_card_id + '</td><td>' + statusText+ '</td><td class="d-flex"><a onClick="getData('+ labour_data.id +')" class="show-btn btn btn-sm btn-outline-primary m-1"><i class="fas fa-eye"></i></a></td></tr>');
+
+                                        table.row.add([ index,
+                                            labour_data.f_name + ' ' + labour_data.m_name + ' ' + labour_data.l_name,
+                                            labour_data.full_name,
+                                            labour_data.mobile_number,
+                                            labour_data.mgnrega_card_id,
+                                            statusText,
+                                            '<a onClick="getData(' + labour_data.id + ')" class="show-btn btn btn-sm btn-outline-primary m-1"><i class="fas fa-eye"></i></a>']).draw(false);
                                     });
                                 }else{
                                     $('#order-listing tbody').empty();
