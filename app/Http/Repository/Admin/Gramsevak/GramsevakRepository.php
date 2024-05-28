@@ -129,6 +129,7 @@ class GramsevakRepository
 				->leftJoin('registrationstatus', 'tbl_gram_panchayat_documents.is_approved', '=', 'registrationstatus.id')
 				->leftJoin('tbl_doc_reason', function($join) {
 					$join->on('tbl_gram_panchayat_documents.reason_doc_id', '=', 'tbl_doc_reason.id')
+					->where('tbl_doc_reason.is_deleted', 0)
 						 ->where(function($query) {
 							 $query->where('tbl_gram_panchayat_documents.reason_doc_id', '>', 0)
 								   ->orWhereNull('tbl_gram_panchayat_documents.reason_doc_id');
