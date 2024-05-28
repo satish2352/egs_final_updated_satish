@@ -302,7 +302,7 @@
                                 }else{
                                     var table = $('#order-listing').DataTable();
                                     table.clear().draw();
-                                    $('#order-listing tbody').append('<tr><td colspan="7" style="text-align:center;"><b>No Record Found</b></td></tr>');
+                                    // $('#order-listing tbody').append('<tr><td colspan="7" style="text-align:center;"><b>No Record Found</b></td></tr>');
 
                                     // alert("No Record Found");
                                 }
