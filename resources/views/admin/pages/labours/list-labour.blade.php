@@ -115,7 +115,7 @@
                                             <input type="hidden" class="form-control" name="is_approved_val" id="is_approved_val"
                                                 placeholder="" value="{{ $labour_type }}">
                                                 <input type="hidden" class="form-control" name="is_resubmitted_val" id="is_resubmitted_val"
-                                                placeholder="" value="{{ $labour_type }}">
+                                                placeholder="" value="{{ $resubmitted_type }}">
                                                 <tr>
                                                 
                                                     <th>Sr. No.</th>
