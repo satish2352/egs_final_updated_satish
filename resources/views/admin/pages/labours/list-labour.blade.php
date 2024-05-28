@@ -114,6 +114,8 @@
                                             <thead>
                                             <input type="hidden" class="form-control" name="is_approved_val" id="is_approved_val"
                                                 placeholder="" value="{{ $labour_type }}">
+                                                <input type="hidden" class="form-control" name="is_resubmitted_val" id="is_resubmitted_val"
+                                                placeholder="" value="{{ $labour_type }}">
                                                 <tr>
                                                 
                                                     <th>Sr. No.</th>
@@ -268,6 +270,7 @@
                     var talukaId = $('#taluka_id').val();
                     var villageId = $('#village_id').val();
                     var IsApprovedId = $('#is_approved_val').val();
+                    var IsResubmittedId = $('#is_resubmitted_val').val();
                     // console.log(talukaId);
                     // $('#village_id').html('<option value="">Select Village</option>');
 
@@ -280,6 +283,7 @@
                                 talukaId: talukaId,
                                 villageId: villageId,
                                 IsApprovedId: IsApprovedId,
+                                IsResubmittedId:IsResubmittedId
                             },
                             // headers: {
                             //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
