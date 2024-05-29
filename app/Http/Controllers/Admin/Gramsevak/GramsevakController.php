@@ -154,6 +154,7 @@ class GramsevakController extends Controller {
                 $history->gram_document_id = $request->edit_id;
                 $history->is_approved = $request->is_approved;
                 $history->reason_doc_id = $request->reason_doc_id; 
+                $history->other_remark = 'null';
                 $history->save();
                 }
     

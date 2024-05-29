@@ -540,6 +540,7 @@ class LaboursController extends Controller {
                             ->get()
                             ->toArray();
         $dynamic_reasons = Reasons::where('is_active', 1)
+					        ->where('tbl_reason.is_deleted', 0)
                             ->where('id', '!=', 1001)
                             ->select('id','reason_name')
                             ->get()
