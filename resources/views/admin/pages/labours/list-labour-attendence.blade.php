@@ -171,7 +171,7 @@
                                                             @else
                                                                 Full Day
                                                             @endif
-                                                        {{ $item->attendance_day }}</td>
+                                                        </td>
                                                         <td>{{ $item->created_at->format('Y-m-d') }}</td>
                                                         
                                                     </tr>
