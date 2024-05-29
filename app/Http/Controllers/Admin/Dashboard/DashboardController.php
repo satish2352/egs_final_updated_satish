@@ -228,16 +228,7 @@ public function index(Request $request)
                 // ->where('is_resubmitted', 0)
                 ->groupBy('is_approved','is_resubmitted')
                 ->get();
-            
-            // foreach ($labourCounts as $count) {
-            //     if ($count->is_approved == 1) {
-            //         $labourRequestCounts['Sent For Approval Labours'] += $count->count;
-            //     } elseif ($count->is_approved == 2) {
-            //         $labourRequestCounts['Approved Labours'] += $count->count;
-            //     } elseif ($count->is_approved == 3) {
-            //         $labourRequestCounts['Not Approved Labours'] += $count->count;
-            //     }
-            // }
+ 
 
             foreach ($labourCounts as $count) {
                 if ($count->is_approved == 1 && $count->is_resubmitted == 0) {
@@ -257,15 +248,6 @@ public function index(Request $request)
                 ->groupBy('is_approved','is_resubmitted')
                 ->get();
 
-            // foreach ($documentCounts as $countdoc) {
-            //     if ($countdoc->is_approved == 1) {
-            //         $documentRequestCounts['Sent For Approval Documents'] += $countdoc->count;
-            //     } elseif ($countdoc->is_approved == 2) {
-            //         $documentRequestCounts['Approved Documents'] += $countdoc->count;
-            //     } elseif ($countdoc->is_approved == 3) {
-            //         $documentRequestCounts['Not Approved Documents'] += $countdoc->count;
-            //     }
-            // }
 
             foreach ($documentCounts as $countdoc) {
                 if ($countdoc->is_approved == 1  && $countdoc->is_resubmitted == 0) {
@@ -286,6 +268,15 @@ public function index(Request $request)
            
         } elseif ($roleId== 3 && $utype == 3) {
 
+            $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
+            ->where('users.id', $sess_user_id)
+            ->first();
+
+            $utype=$data_output->user_type;
+            $user_working_dist=$data_output->user_district;
+            $user_working_tal=$data_output->user_taluka;
+            $user_working_vil=$data_output->user_village;
+
             $userLatitude = $request->latitude; 
             $userLongitude = $request->longitude; 
             $distanceInKm = DistanceKM::first()->distance_km;
@@ -298,16 +289,22 @@ public function index(Request $request)
             $lonW = $latLongArr['lonW'];
 
 
-            $projectCount = Project:: leftJoin('tbl_area as district_projects', 'projects.district', '=', 'district_projects.location_id')  
-                ->where('projects.is_active', true)
-                ->where('projects.end_date', '>=', now())
-                ->when($request->has('latitude'), function($query) use ($latN, $latS, $lonE, $lonW) {
-                    $query->where('projects.latitude', '<=', $latN)
-                        ->where('projects.latitude', '>=', $latS)
-                        ->where('projects.longitude', '<=', $lonE)
-                        ->where('projects.longitude', '>=', $lonW);
-                })
-                ->count();
+            // $projectCount = Project:: leftJoin('tbl_area as district_projects', 'projects.district', '=', 'district_projects.location_id')  
+            //     ->where('projects.is_active', true)
+            //     ->where('projects.end_date', '>=', now())
+            //     ->when($request->has('latitude'), function($query) use ($latN, $latS, $lonE, $lonW) {
+            //         $query->where('projects.latitude', '<=', $latN)
+            //             ->where('projects.latitude', '>=', $latS)
+            //             ->where('projects.longitude', '<=', $lonE)
+            //             ->where('projects.longitude', '>=', $lonW);
+            //     })
+            //     ->count();
+
+            $projectCount= Project::leftJoin('users', 'projects.district', '=', 'users.user_district')  
+            ->where('projects.is_active', true)
+            ->where('projects.village', $user_working_vil)
+            ->groupBy('users.id')
+            ->count();   
 
             $projectCountCompleted = Project:: leftJoin('tbl_area as district_projects', 'projects.district', '=', 'district_projects.location_id')  
                 ->where('projects.is_active', true)

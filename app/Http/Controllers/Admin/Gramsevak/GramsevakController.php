@@ -99,6 +99,7 @@ class GramsevakController extends Controller {
             ->toArray();
 
             $dynamic_reasons = Reasons::where('is_active', 1)
+					->where('tbl_reason.is_deleted', 0)
             ->select('id','reason_name')
             ->get()
             ->toArray();
@@ -153,6 +154,7 @@ class GramsevakController extends Controller {
                 $history->gram_document_id = $request->edit_id;
                 $history->is_approved = $request->is_approved;
                 $history->reason_doc_id = $request->reason_doc_id; 
+                $history->other_remark = 'null';
                 $history->save();
                 }
     
@@ -206,6 +208,7 @@ class GramsevakController extends Controller {
             ->toArray();
 
             $dynamic_reasons = DocumentReasons::where('is_active', 1)
+					->where('tbl_doc_reason.is_deleted', 0)
             ->select('id','reason_name')
             ->get()
             ->toArray();
@@ -283,6 +286,7 @@ class GramsevakController extends Controller {
             ->toArray();
 
             $dynamic_reasons = DocumentReasons::where('is_active', 1)
+					->where('tbl_doc_reason.is_deleted', 0)
             ->select('id','reason_name')
             ->get()
             ->toArray();
@@ -304,6 +308,7 @@ class GramsevakController extends Controller {
         ->toArray();
 
         $dynamic_reasons = DocumentReasons::where('is_active', 1)
+					->where('tbl_doc_reason.is_deleted', 0)
         ->select('id','reason_name')
         ->get()
         ->toArray();
@@ -380,6 +385,7 @@ class GramsevakController extends Controller {
             ->toArray();
 
             $dynamic_reasons = DocumentReasons::where('is_active', 1)
+					->where('tbl_doc_reason.is_deleted', 0)
             ->select('id','reason_name')
             ->get()
             ->toArray();
@@ -401,6 +407,7 @@ class GramsevakController extends Controller {
         ->toArray();
 
         $dynamic_reasons = DocumentReasons::where('is_active', 1)
+					->where('tbl_doc_reason.is_deleted', 0)
         ->select('id','reason_name')
         ->get()
         ->toArray();
@@ -477,6 +484,7 @@ class GramsevakController extends Controller {
             ->toArray();
 
             $dynamic_reasons = DocumentReasons::where('is_active', 1)
+					->where('tbl_doc_reason.is_deleted', 0)
             ->select('id','reason_name')
             ->get()
             ->toArray();
@@ -498,6 +506,7 @@ class GramsevakController extends Controller {
         ->toArray();
 
         $dynamic_reasons = DocumentReasons::where('is_active', 1)
+					->where('tbl_doc_reason.is_deleted', 0)
         ->select('id','reason_name')
         ->get()
         ->toArray();
@@ -574,6 +583,7 @@ class GramsevakController extends Controller {
             ->toArray();
 
             $dynamic_reasons = DocumentReasons::where('is_active', 1)
+					->where('tbl_doc_reason.is_deleted', 0)
             ->select('id','reason_name')
             ->get()
             ->toArray();
@@ -595,6 +605,7 @@ class GramsevakController extends Controller {
         ->toArray();
 
         $dynamic_reasons = DocumentReasons::where('is_active', 1)
+					->where('tbl_doc_reason.is_deleted', 0)
         ->select('id','reason_name')
         ->get()
         ->toArray();

@@ -21,16 +21,16 @@ class AllMasterController extends Controller
     public function getAllMasters(){
         try {
             $data = [];
-            $data['gender'] = Gender::where('is_active', true)->orderBy('id', 'asc')->get();
-            $data['maritalstatus'] = Maritalstatus::where('is_active', true)->orderBy('id', 'asc')->get();
-            $data['skills'] = Skills::where('is_active', true)->orderBy('id', 'asc')->get();
-            $data['relation'] = RelationModel::where('is_active', true)->orderBy('id', 'asc')->get();
-            $data['documenttype'] = Documenttype::where('is_active', true)->orderBy('id', 'asc')->get();
-            $data['registrationstatus'] = Registrationstatus::where('is_active', true)
+            $data['gender'] = Gender::where('is_active', true)->where('is_deleted', false)->orderBy('id', 'asc')->get();
+            $data['maritalstatus'] = Maritalstatus::where('is_active', true)->where('is_deleted', false)->orderBy('id', 'asc')->get();
+            $data['skills'] = Skills::where('is_active', true)->where('is_deleted', false)->orderBy('id', 'asc')->get();
+            $data['relation'] = RelationModel::where('is_active', true)->where('is_deleted', false)->orderBy('id', 'asc')->get();
+            $data['documenttype'] = Documenttype::where('is_active', true)->where('is_deleted', false)->orderBy('id', 'asc')->get();
+            $data['registrationstatus'] = Registrationstatus::where('is_active', true)->where('is_deleted', false)
             ->whereNotIn('id', [1])
             ->orderBy('id', 'asc')->get();
-            $data['reasons'] = Reasons::where('is_active', true)->orderBy('id', 'asc')->get();
-            $data['documentreasons'] = DocumentReasons::where('is_active', true)->orderBy('id', 'asc')->get();
+            $data['reasons'] = Reasons::where('is_active', true)->where('is_deleted', false)->orderBy('id', 'asc')->get();
+            $data['documentreasons'] = DocumentReasons::where('is_active', true)->where('is_deleted', false)->orderBy('id', 'asc')->get();
             // dd($data);
             return response()->json(['status' => 'success', 'message' => 'All data retrieved successfully', 'data' => $data], 200);
         } catch (\Exception $e) {

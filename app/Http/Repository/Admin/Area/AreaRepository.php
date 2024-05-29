@@ -134,6 +134,7 @@ class AreaRepository
                                 'district_data.name as dist_name',
 							)
 							->orderBy('district_data.name', 'asc')
+							->orderBy('tbl_area.name', 'asc')
 							->get();
 							
 		return $data_taluka;

@@ -8,12 +8,12 @@
                 <div class="col-12 grid-margin ">
 
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-start align-items-center">
+                        <div class="col-lg-11 col-md-11 col-sm-11 d-flex justify-content-start align-items-center">
                             <h3 class="page-title">
                                 User Details
                             </h3>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-end align-items-center">
+                        <div class="col-lg-1 col-md-1 col-sm-1 d-flex justify-content-end align-items-center">
                             <div>
                                 <a href="#" onclick="history.back()" class="btn btn-sm btn-primary ml-3">Back</a>
                             </div>

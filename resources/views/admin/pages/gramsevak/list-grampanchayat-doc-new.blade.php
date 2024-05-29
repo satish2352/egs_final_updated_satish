@@ -300,8 +300,9 @@
                                             '<a onClick="getData(' + documents_data.id + ')" class="show-btn btn btn-sm btn-outline-primary m-1"><i class="fas fa-eye"></i></a>']).draw(false);  
                                     });
                                 }else{
-                                    $('#order-listing tbody').empty();
-                                    $('#order-listing tbody').append('<tr><td colspan="7" style="text-align:center;"><b>No Record Found</b></td></tr>');
+                                    var table = $('#order-listing').DataTable();
+                                    table.clear().draw();
+                                    // $('#order-listing tbody').append('<tr><td colspan="7" style="text-align:center;"><b>No Record Found</b></td></tr>');
 
                                     // alert("No Record Found");
                                 }

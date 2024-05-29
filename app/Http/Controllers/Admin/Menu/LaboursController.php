@@ -46,8 +46,9 @@ class LaboursController extends Controller {
                     ->get(['location_id', 'name']);
 
         $labour_type='1';            
+        $resubmitted_type='0';            
         $labours = $this->service->index();
-        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type'));
+        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type','resubmitted_type'));
     }
 
     public function listApprovedLabours()
@@ -66,9 +67,9 @@ class LaboursController extends Controller {
                     ->get(['location_id', 'name']);
                     
         $labour_type='2';            
-
+        $resubmitted_type='0';            
         $labours = $this->service->listApprovedLabours();
-        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type'));
+        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type','resubmitted_type'));
     }
 
     public function listTodayApprovedLabours()
@@ -87,9 +88,9 @@ class LaboursController extends Controller {
                     ->get(['location_id', 'name']);
                     
         $labour_type='2';            
-
+        $resubmitted_type='0';            
         $labours = $this->service->listTodayApprovedLabours();
-        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type'));
+        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type','resubmitted_type'));
     }
 
     public function listDisapprovedLabours()
@@ -107,9 +108,10 @@ class LaboursController extends Controller {
                     ->orderBy('name', 'asc')
                     ->get(['location_id', 'name']);
 
-        $labour_type='2'; 
+        $labour_type='3'; 
+        $resubmitted_type='0';            
         $labours = $this->service->listDisapprovedLabours();
-        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type'));
+        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type','resubmitted_type'));
     }
 
     public function listResubmitedLabours()
@@ -127,9 +129,10 @@ class LaboursController extends Controller {
                     ->orderBy('name', 'asc')
                     ->get(['location_id', 'name']);
 
-        $labour_type='2'; 
+        $labour_type='1'; 
+        $resubmitted_type='1';            
         $labours = $this->service->listResubmitedLabours();
-        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type'));
+        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type','resubmitted_type'));
     }
 
     public function getLabourAttendanceList()
@@ -537,6 +540,7 @@ class LaboursController extends Controller {
                             ->get()
                             ->toArray();
         $dynamic_reasons = Reasons::where('is_active', 1)
+					        ->where('tbl_reason.is_deleted', 0)
                             ->where('id', '!=', 1001)
                             ->select('id','reason_name')
                             ->get()
@@ -730,6 +734,7 @@ class LaboursController extends Controller {
         $talukaId = $request->input('talukaId');
         $villageId = $request->input('villageId');
         $IsApprovedId = $request->input('IsApprovedId');
+        $IsResubmittedId = $request->input('IsResubmittedId');
 
         if($IsApprovedId=='1')
         {
@@ -765,6 +770,7 @@ class LaboursController extends Controller {
 		->leftJoin('gender as gender_labour', 'labour.gender_id', '=', 'gender_labour.id')
 		->leftJoin('users', 'labour.user_id', '=', 'users.id')
 		->where('labour.is_approved', $IsApprovedIdNew)
+		->where('labour.is_resubmitted', $IsResubmittedId)
         ->whereIn('labour.user_id',$data_user_output)
           ->select(
 			'labour.id',
@@ -812,6 +818,7 @@ class LaboursController extends Controller {
                 ->leftJoin('tbl_area as village_labour', 'labour.village_id', '=', 'village_labour.location_id')
 				->leftJoin('users', 'labour.user_id', '=', 'users.id')
 				->where('labour.is_approved', $IsApprovedIdNew)
+		        ->where('labour.is_resubmitted', $IsResubmittedId)
                 ->whereIn('labour.user_id',$data_user_output)
                 ->where('registrationstatus.is_active', true)
                 ->select(
@@ -918,7 +925,7 @@ class LaboursController extends Controller {
                 ->leftJoin('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
                 ->leftJoin('tbl_area as taluka_labour', 'users.user_taluka', '=', 'taluka_labour.location_id')
                 ->leftJoin('tbl_area as village_labour', 'users.user_village', '=', 'village_labour.location_id')
-                ->where('projects.District', $sess_user_working_dist)
+                ->where('projects.district', $sess_user_working_dist)
                 ->when($request->get('ProjectId'), function($query) use ($request) {
                     $query->where('tbl_mark_attendance.project_id', $request->ProjectId);
                 })

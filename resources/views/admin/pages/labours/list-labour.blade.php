@@ -114,6 +114,8 @@
                                             <thead>
                                             <input type="hidden" class="form-control" name="is_approved_val" id="is_approved_val"
                                                 placeholder="" value="{{ $labour_type }}">
+                                                <input type="hidden" class="form-control" name="is_resubmitted_val" id="is_resubmitted_val"
+                                                placeholder="" value="{{ $resubmitted_type }}">
                                                 <tr>
                                                 
                                                     <th>Sr. No.</th>
@@ -268,6 +270,7 @@
                     var talukaId = $('#taluka_id').val();
                     var villageId = $('#village_id').val();
                     var IsApprovedId = $('#is_approved_val').val();
+                    var IsResubmittedId = $('#is_resubmitted_val').val();
                     // console.log(talukaId);
                     // $('#village_id').html('<option value="">Select Village</option>');
 
@@ -280,6 +283,7 @@
                                 talukaId: talukaId,
                                 villageId: villageId,
                                 IsApprovedId: IsApprovedId,
+                                IsResubmittedId:IsResubmittedId
                             },
                             // headers: {
                             //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -287,10 +291,11 @@
                             success: function(response) {
                                 console.log(response.labour_ajax_data);
                                 if (response.labour_ajax_data.length > 0) {
-                                    $('#order-listing tbody').empty();
+                                    var table = $('#order-listing').DataTable();
+                                    table.clear().draw(); 
                                     
                                     $.each(response.labour_ajax_data, function(index, labour_data) {
-
+                                        index++;
                                         var statusText = "";
                                         if (labour_data.is_approved == '1') {
                                             statusText = "Received For Approval";
@@ -299,11 +304,19 @@
                                         } else if (labour_data.is_approved == '3') {
                                             statusText = "Send For Correction";
                                         }
-                                        $('#order-listing tbody').append('<tr><td>' + index +'</td><td>' + labour_data.f_name +' '+ labour_data.m_name +' '+ labour_data.l_name + '</td><td>' + labour_data.full_name + '</td><td>' + labour_data.mobile_number + '</td><td>' + labour_data.mgnrega_card_id + '</td><td>' + statusText+ '</td><td class="d-flex"><a onClick="getData('+ labour_data.id +')" class="show-btn btn btn-sm btn-outline-primary m-1"><i class="fas fa-eye"></i></a></td></tr>');
+
+                                        table.row.add([ index,
+                                            labour_data.f_name + ' ' + labour_data.m_name + ' ' + labour_data.l_name,
+                                            labour_data.full_name,
+                                            labour_data.mobile_number,
+                                            labour_data.mgnrega_card_id,
+                                            statusText,
+                                            '<a onClick="getData(' + labour_data.id + ')" class="show-btn btn btn-sm btn-outline-primary m-1"><i class="fas fa-eye"></i></a>']).draw(false);
                                     });
                                 }else{
-                                    $('#order-listing tbody').empty();
-                                    $('#order-listing tbody').append('<tr><td colspan="7" style="text-align:center;"><b>No Record Found</b></td></tr>');
+                                    var table = $('#order-listing').DataTable();
+                                    table.clear().draw();
+                                    // $('#order-listing tbody').append('<tr><td colspan="7" style="text-align:center;"><b>No Record Found</b></td></tr>');
 
                                     // alert("No Record Found");
                                 }

@@ -293,23 +293,33 @@
                             // },
                             success: function(response) {
                                 if (response.labour_attendance_ajax_data.length > 0) {
+                                    var newattendanceday= '';
                                     var table = $('#order-listing').DataTable();
                                     table.clear().draw();
                                     
                                     $.each(response.labour_attendance_ajax_data, function(index, labour_attendance_data) {
                                     index++;
 
+                                    if(labour_attendance_data.attendance_day == "half_day")
+                                    {
+                                        newattendanceday='Half Day';
+                                    }else if(labour_attendance_data.attendance_day == "full_day")
+                                    {
+                                        newattendanceday='Full Day';
+                                    }
+
                                     table.row.add([ index,
                                             labour_attendance_data.project_name,
                                             labour_attendance_data.full_name,
                                             labour_attendance_data.mobile_number,
                                             labour_attendance_data.mgnrega_card_id,
-                                            labour_attendance_data.attendance_day,
+                                            newattendanceday,
                                             labour_attendance_data.created_at]).draw(false);
                                     });
                                 }else{
-                                    $('#order-listing tbody').empty();
-                                    $('#order-listing tbody').append('<tr><td colspan="7" style="text-align:center;"><b>No Record Found</b></td></tr>');
+                                    var table = $('#order-listing').DataTable();
+                                    table.clear().draw();
+                                    // $('#order-listing tbody').append('<tr><td colspan="7" style="text-align:center;"><b>No Record Found</b></td></tr>');
 
                                     // alert("No Record Found");
                                 }
