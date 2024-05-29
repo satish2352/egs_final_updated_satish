@@ -925,7 +925,7 @@ class LaboursController extends Controller {
                 ->leftJoin('projects', 'tbl_mark_attendance.project_id', '=', 'projects.id')
                 ->leftJoin('tbl_area as taluka_labour', 'users.user_taluka', '=', 'taluka_labour.location_id')
                 ->leftJoin('tbl_area as village_labour', 'users.user_village', '=', 'village_labour.location_id')
-                ->where('projects.District', $sess_user_working_dist)
+                ->where('projects.district', $sess_user_working_dist)
                 ->when($request->get('ProjectId'), function($query) use ($request) {
                     $query->where('tbl_mark_attendance.project_id', $request->ProjectId);
                 })
