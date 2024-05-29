@@ -220,7 +220,7 @@ class OfficerGramDocAppNotAppController extends Controller
                             // 'tbl_doc_history.updated_at',
                         )
                         ->where('tbl_doc_history.gram_document_id', $documenthistory['id'])
-                        ->where('tbl_doc_reason.is_deleted', 0)
+                        // ->where('tbl_doc_reason.is_deleted', 0)
                         ->get();
                 }
                 if(sizeof($data_output)>=0) {

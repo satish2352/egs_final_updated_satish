@@ -259,7 +259,6 @@ class LabourController extends Controller
                 ->leftJoin('tbl_area as village_labour', 'labour.village_id', '=', 'village_labour.location_id')
                 ->leftJoin('skills as skills_labour', 'labour.skill_id', '=', 'skills_labour.id')
                 ->leftJoin('tbl_reason as reason_labour', 'labour.reason_id', '=', 'reason_labour.id')
-					->where('tbl_reason.is_deleted', 0)
                 ->where('labour.user_id', $user)
                 ->when($request->has('is_approved'), function($query) use ($is_approved) {
                     $query->where('labour.is_approved', $is_approved);
@@ -365,7 +364,6 @@ class LabourController extends Controller
 
                         )
                     ->where('tbl_history.labour_id', $labourhistory['id'])
-					->where('tbl_reason.is_deleted', 0)
                     ->get();
             }
             
