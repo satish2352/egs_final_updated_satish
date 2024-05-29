@@ -285,7 +285,7 @@ class LabourController extends Controller
                     $query->where('tbl_mark_attendance.project_id',$request->project_id);
                 });
 
-            $totalRecords = $basic_query_object->select('labour.id')->get()->count();
+            $totalRecords = $basic_query_object->select('labour.id')->where('reason_labour.is_deleted', 0)->get()->count();
             $data_output = $basic_query_object->select(
                 'labour.id',
                 'labour.full_name',
