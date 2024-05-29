@@ -293,6 +293,7 @@
                             // },
                             success: function(response) {
                                 if (response.labour_attendance_ajax_data.length > 0) {
+                                    var newattendanceday= '';
                                     var table = $('#order-listing').DataTable();
                                     table.clear().draw();
                                     
@@ -301,10 +302,10 @@
 
                                     if(labour_attendance_data.attendance_day == "half_day")
                                     {
-                                        $newattendanceday='Half Day';
+                                        newattendanceday='Half Day';
                                     }else if(labour_attendance_data.attendance_day == "full_day")
                                     {
-                                        $newattendanceday='Full Day';
+                                        newattendanceday='Full Day';
                                     }
 
                                     table.row.add([ index,
