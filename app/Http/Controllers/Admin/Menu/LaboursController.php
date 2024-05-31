@@ -46,9 +46,10 @@ class LaboursController extends Controller {
                     ->get(['location_id', 'name']);
 
         $labour_type='1';            
-        $resubmitted_type='0';            
+        $resubmitted_type='0';        
+        $labour_data_type="New Labours";
         $labours = $this->service->index();
-        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type','resubmitted_type'));
+        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type','resubmitted_type','labour_data_type'));
     }
 
     public function listApprovedLabours()
@@ -68,8 +69,9 @@ class LaboursController extends Controller {
                     
         $labour_type='2';            
         $resubmitted_type='0';            
+        $labour_data_type="Approved Labours";
         $labours = $this->service->listApprovedLabours();
-        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type','resubmitted_type'));
+        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type','resubmitted_type','labour_data_type'));
     }
 
     public function listTodayApprovedLabours()
@@ -109,9 +111,10 @@ class LaboursController extends Controller {
                     ->get(['location_id', 'name']);
 
         $labour_type='3'; 
-        $resubmitted_type='0';            
+        $resubmitted_type='0';           
+        $labour_data_type="Not Approved Labours";
         $labours = $this->service->listDisapprovedLabours();
-        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type','resubmitted_type'));
+        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type','resubmitted_type','labour_data_type'));
     }
 
     public function listResubmitedLabours()
@@ -130,9 +133,10 @@ class LaboursController extends Controller {
                     ->get(['location_id', 'name']);
 
         $labour_type='1'; 
-        $resubmitted_type='1';            
+        $resubmitted_type='1';       
+        $labour_data_type="Resubmitted Labours";
         $labours = $this->service->listResubmitedLabours();
-        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type','resubmitted_type'));
+        return view('admin.pages.labours.list-labour',compact('labours','district_data','taluka_data','labour_type','resubmitted_type','labour_data_type'));
     }
 
     public function getLabourAttendanceList()

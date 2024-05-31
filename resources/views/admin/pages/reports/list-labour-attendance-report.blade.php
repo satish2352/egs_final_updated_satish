@@ -87,7 +87,7 @@
                                     @endif
                                 </div>
                             </div>
-
+                        @if(session()->get('role_id')=='1')
                             <div class="col-lg-3 col-md-3 col-sm-3">
                                 <div class="form-group">
                                     <select class="form-control" name="district_id" id="district_id">
@@ -101,11 +101,38 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <select class="form-control" name="taluka_id" id="taluka_id">
+                                        <option value="">Select Taluka</option>
+                                    </select>
+                                    @if ($errors->has('taluka_id'))
+                                        <span class="red-text"><?php echo $errors->first('taluka_id', ':message'); ?></span>
+                                    @endif
+                                </div>
+                            </div>
+                           
+                           
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <select class="form-control" name="village_id" id="village_id">
+                                    <option value="">Select Village</option>
+                                    </select>
+                                    @if ($errors->has('village_id'))
+                                        <span class="red-text"><?php echo $errors->first('village_id', ':message'); ?></span>
+                                    @endif
+                                </div>
+                            </div>
+                        @elseif(session()->get('role_id')=='2')
+                        
 
                             <div class="col-lg-3 col-md-3 col-sm-3">
                                 <div class="form-group">
                                     <select class="form-control" name="taluka_id" id="taluka_id">
                                         <option value="">Select Taluka</option>
+                                        @foreach ($taluka_data as $taluka_for_data)    
+                                        <option value="{{ $taluka_for_data['location_id'] }}">{{ $taluka_for_data['name'] }}</option>
+                                        @endforeach
                                     </select>
                                     @if ($errors->has('taluka_id'))
                                         <span class="red-text"><?php echo $errors->first('taluka_id', ':message'); ?></span>
@@ -123,7 +150,23 @@
                                     @endif
                                 </div>
                             </div>
+                        @elseif(session()->get('role_id')=='3')    
+                       
 
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <select class="form-control" name="village_id" id="village_id">
+                                    <option value="">Select Village</option>
+                                    @foreach ($village_data as $village_for_data)    
+                                        <option value="{{ $village_for_data['location_id'] }}">{{ $village_for_data['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('village_id'))
+                                        <span class="red-text"><?php echo $errors->first('village_id', ':message'); ?></span>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif    
                             <div class="col-lg-3 col-md-3 col-sm-3">
                                 <div class="form-group">
                                     <button type="button" class="btn btn-sm btn-success" id="submitButton">

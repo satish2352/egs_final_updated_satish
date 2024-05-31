@@ -86,6 +86,21 @@ class ReportsController extends Controller
 
     public function getAllLabourDuration()
     {
+
+        $sess_user_id=session()->get('user_id');
+            $sess_user_type=session()->get('user_type');
+            $sess_user_role=session()->get('role_id');
+            $sess_user_working_dist=session()->get('working_dist');
+
+            $data_output = User::leftJoin('usertype', 'users.user_type', '=', 'usertype.id')
+                ->where('users.id', $sess_user_id)
+                ->first();
+
+            $utype=$data_output->user_type;
+            $user_working_dist=$data_output->user_district;
+            $user_working_tal=$data_output->user_taluka;
+            $user_working_vil=$data_output->user_village;
+
         $skills_data = Skills::where('is_active', 1) // 4 represents cities
                         ->whereNot('id', '1')
                         ->orderBy('skills', 'asc')
@@ -94,9 +109,17 @@ class ReportsController extends Controller
         $district_data = TblArea::where('parent_id', '2')
                         ->orderBy('name', 'asc')
                         ->get(['location_id', 'name']);
+
+        $taluka_data=TblArea::where('parent_id', $sess_user_working_dist)
+                    ->orderBy('name', 'asc')
+                    ->get(['location_id', 'name']);
+
+        $village_data=TblArea::where('location_id', $user_working_vil)
+                    ->orderBy('name', 'asc')
+                    ->get(['location_id', 'name']);               
         try {
             $labours = $this->service->getAllLabourLocation();
-            return view('admin.pages.reports.list-labour-attendance-report',compact('labours','skills_data','district_data'));
+            return view('admin.pages.reports.list-labour-attendance-report',compact('labours','skills_data','district_data','taluka_data','village_data'));
         } catch (\Exception $e) {
             return $e;
         }
@@ -908,6 +931,61 @@ public function getFilterLaboursdurationReport(Request $request)
         ->leftJoin('skills', 'labour.skill_id', '=', 'skills.id')
         ->whereBetween('tbl_mark_attendance.created_at', [$startDate, $endDate])
         ->when($request->get('districtId') || $request->get('talukaId') || $request->get('villageId'), function($query) use ($request, $data_user_output) {
+            $query->whereIn('tbl_mark_attendance.user_id',$data_user_output);
+        })
+        ->when($request->get('SkillId'), function($query) use ($request) {
+            $query->where('labour.skill_id', $request->SkillId);
+        })  
+        ->select(
+            'skills.id as skill_id',
+            'skills.skills as skill_name',
+            DB::raw('COUNT(tbl_mark_attendance.id) as attendance_count') // Count attendance records
+        )
+        ->groupBy('skills.id','skills.skills'); // Group by skill id
+
+            $data_output = $query->get();
+
+            // Calculate total working days in the specified month
+            $totalWorkingDays = $startDate->daysInMonth;
+
+            $labour_ajax_data = [];
+            // Calculate average attendance percentage for each skill
+            foreach ($data_output as $skill) {
+                $attendancePercentage = ($skill->attendance_count / $totalWorkingDays) * 100;
+                $averageAttendancePercentage = round($attendancePercentage, 2);
+
+                $labour_ajax_data[] = [
+                    'skill_id' => $skill->skill_id,
+                    'skill_name' => $skill->skill_name,
+                    'average_attendance_percentage' => $averageAttendancePercentage
+                ];
+            }
+
+           
+        //    $data_output = $query->get();
+
+        }
+        else if($sess_user_role=='3')
+      {
+        
+
+        $query_user = User::where('users.role_id','3')
+                ->select('id');
+               
+                if ($request->filled('villageId')) {
+                    $query_user->where('users.user_village', $villageId);
+                }
+
+               $data_user_output=$query_user->get();
+            
+            // $data_user_output=$query_user->select('id')->get();
+
+            $query = LabourAttendanceMark::leftJoin('labour', 'tbl_mark_attendance.mgnrega_card_id', '=', 'labour.mgnrega_card_id')
+        ->leftJoin('users', 'labour.user_id', '=', 'users.id')
+        ->leftJoin('skills', 'labour.skill_id', '=', 'skills.id')
+        ->whereBetween('tbl_mark_attendance.created_at', [$startDate, $endDate])
+        ->where('tbl_mark_attendance.user_id',$sess_user_id)
+        ->when($request->get('villageId'), function($query) use ($request, $data_user_output) {
             $query->whereIn('tbl_mark_attendance.user_id',$data_user_output);
         })
         ->when($request->get('SkillId'), function($query) use ($request) {

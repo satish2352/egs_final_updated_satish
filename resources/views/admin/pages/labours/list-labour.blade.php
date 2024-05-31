@@ -5,9 +5,9 @@
     <div class="main-panel">
         <div class="content-wrapper mt-7">
             <div class="page-header">
-                <!-- <h3 class="page-title">
-                    Labours Master List <a href="{{ route('add-projects') }}" class="btn btn-sm btn-primary ml-3">+ Add</a>
-                </h3> -->
+                <h3 class="page-title">
+                    {{ $labour_data_type }}
+                </h3>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('list-labours') }}">Labours Management</a></li>
