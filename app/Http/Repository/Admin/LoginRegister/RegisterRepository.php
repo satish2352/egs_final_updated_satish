@@ -24,6 +24,7 @@ class RegisterRepository
 						->where('users.role_id','<>','1')
 						->select('roles.role_name',
 								'users.email',
+								'users.personal_email',
 								'users.f_name',
 								'users.m_name',
 								'users.l_name',
@@ -90,6 +91,7 @@ class RegisterRepository
 		// $ipAddress = getIPAddress($request);
 		$user_data = new User();
 		$user_data->email = $request['email'];
+		$user_data->personal_email = $request['personal_email'];
 		// $user_data->u_uname = $request['u_uname'];
 		$user_data->password = bcrypt($request['password']);
 		$user_data->role_id = $request['role_id'];
@@ -132,6 +134,7 @@ class RegisterRepository
 		$user_data = User::where('id',$request['edit_id']) 
 						->update([
 							'email' => $request['email'],
+							'personal_email' => $request['personal_email'],
 							'role_id' => $request['role_id'],
 							'f_name' => $request['f_name'],
 							'm_name' => $request['m_name'],
@@ -269,6 +272,7 @@ class RegisterRepository
 				// 'users.u_uname',
 				'users.password',
 				'users.email',
+				'users.personal_email',
 				'users.f_name',
 				'users.m_name',
 				'users.l_name',
@@ -301,6 +305,7 @@ class RegisterRepository
 							// 'users.u_uname',
 							'users.password',
 							'users.email',
+							'users.personal_email',
 							'users.f_name',
 							'users.m_name',
 							'users.l_name',
@@ -376,7 +381,7 @@ class RegisterRepository
 				->leftJoin('tbl_area as taluka_user', 'users.taluka', '=', 'taluka_user.location_id')
 				->leftJoin('tbl_area as village_user', 'users.village', '=', 'village_user.location_id')
 				->where('users.id', $id)
-				->select('users.f_name','users.m_name','users.l_name','users.email','users.number','users.aadhar_no',
+				->select('users.f_name','users.m_name','users.l_name','users.email','users.personal_email','users.number','users.aadhar_no',
 				'users.address','users.pincode','users.user_profile','roles.role_name',
 				'district_user.name as district','taluka_user.name as taluka','village_user.name as village')
 				->first();

@@ -33,6 +33,17 @@
                                         @endif
                                     </div>
                                 </div> 
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="email">Personal Email ID</label>&nbsp<span class="red-text">*</span>
+                                        <input type="text" class="form-control" name="personal_email" id="personal_email"
+                                            placeholder="" value="{{$user_data['data_users']['personal_email']}}">
+                                        @if ($errors->has('personal_email'))
+                                        <span
+                                            class="red-text"><?php echo $errors->first('personal_email', ':message'); ?></span>
+                                        @endif
+                                    </div>
+                                </div> 
                                 {{--  <div class="col-lg-6 col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <label for="u_uname">User Name</label>&nbsp<span class="red-text">*</span>
