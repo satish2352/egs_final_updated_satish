@@ -135,8 +135,8 @@ class AuthController extends Controller
                 $message->to($email)->subject('Password Reset');
                 $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
 
-                dd($message);
-                
+                dd($msg);
+
             });           
             return true;
 
