@@ -174,7 +174,7 @@ class AuthController extends Controller
                 $newPassword .= $characters[random_int(0, strlen($characters) - 1)];
             }
             $emailSent = $this->sendPasswordEmail($newPassword, $request->email);
-
+            dd($emailSent);
             if (!$emailSent) {
                 return response()->json(['status' => 'false', 'message' => 'Failed to send reset link'], 200);
             }
