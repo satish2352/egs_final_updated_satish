@@ -160,7 +160,7 @@ class AuthController extends Controller
                 return response()->json(['status' => 'false', 'message' => 'Invalid email format'], 200);
             }
 
-            $user = User::where('email', $request->email)->first();
+            $user = User::where('personal_email', $request->email)->first();
             if (!$user) {
                 return response()->json(['status' => 'false', 'message' => 'Email not found'], 200);
             }
