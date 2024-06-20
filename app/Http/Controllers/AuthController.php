@@ -135,7 +135,8 @@ class AuthController extends Controller
                 $message->to($email)->subject('Password Reset');
                 $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
 
-                // dd($message);
+                dd($message);
+                
             });           
             return true;
 
@@ -161,7 +162,7 @@ class AuthController extends Controller
             }
 
             $user = User::where('personal_email', $request->email)->first();
-            dd($user);
+            
             if (!$user) {
                 return response()->json(['status' => 'false', 'message' => 'Email not found'], 200);
             }
