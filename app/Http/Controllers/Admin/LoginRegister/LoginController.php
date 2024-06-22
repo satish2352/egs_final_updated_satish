@@ -136,21 +136,6 @@ class LoginController extends Controller
         $messages = [   
                         'email.required' => 'Please enter email.',
                     ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         try {
             // Validate the request
             $validator = Validator::make($request->all(), [
@@ -162,7 +147,7 @@ class LoginController extends Controller
             }
     
             // Find the user by email
-            $user = User::where('email', $request->email)->first();
+            $user = User::where('personal_email', $request->email)->first();
             if (!$user) {
                 return response()->json(['status' => 'false', 'message' => 'Email not found'], 200);
             }

@@ -46,7 +46,7 @@ class ChangePassController extends Controller
                     ->withInput()
                     ->withErrors($validation);
             } else {            
-                $user = User::where('email', $request->email)->first();
+                $user = User::where('personal_email', $request->email)->first();
 
                 if(!$user)
                 {

@@ -162,7 +162,8 @@ class AuthController extends Controller
                 return response()->json(['status' => 'false', 'message' => 'Invalid email format'], 200);
             }
 
-            $user = User::where('email', $request->email)->first();
+            $user = User::where('personal_email', $request->email)->first();
+            
             if (!$user) {
                 return response()->json(['status' => 'false', 'message' => 'Email not found'], 200);
             }
@@ -176,7 +177,7 @@ class AuthController extends Controller
                 $newPassword .= $characters[random_int(0, strlen($characters) - 1)];
             }
             $emailSent = $this->sendPasswordEmail($newPassword, $request->email);
-
+            
             if (!$emailSent) {
                 return response()->json(['status' => 'false', 'message' => 'Unable to reset password please try after some time'], 200);
             }

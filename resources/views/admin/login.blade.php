@@ -157,13 +157,13 @@
     <!-- container-scroller end-->
     <!--footer-->
     <!-- global js -->
-    <script src="vendors/js/vendor.bundle.base.js"></script>
-    <script src="vendors/js/vendor.bundle.addons.js"></script>
-    <script src="js/off-canvas.js"></script>
-    <script src="js/hoverable-collapse.js"></script>
-    <script src="js/misc.js"></script>
-    <script src="js/settings.js"></script>
-    <script src="js/todolist.js"></script>
+    <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
+    <script src="{{ asset('assets/vendors/js/vendor.bundle.addons.js') }}"></script>
+    <script src="{{ asset('assets/js/off-canvas.js') }}"></script>
+    <script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>
+    <script src="{{ asset('assets/js/misc.js') }}"></script>
+    <script src="{{ asset('assets/js/settings.js') }}"></script>
+    <script src="{{ asset('assets/js/todolist.js') }}"></script>
     <script>
         $('.digit-group').find('input').each(function() {
             $(this).attr('maxlength', 1);
