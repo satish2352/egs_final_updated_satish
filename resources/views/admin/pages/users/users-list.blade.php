@@ -84,61 +84,67 @@
                                             </tbody>
                                         </table>
                                         <div class="col-md-8">
-                                                    <div class="pagination">
-                                                        @if ($register_user->lastPage() > 1)
-                                                            <ul class="pagination">
-                                                                <li class="{{ ($register_user->currentPage() == 1) ? ' disabled' : '' }}">
-                                                                    @if ($register_user->currentPage() > 1)
-                                                                        <a href="{{ $register_user->url($register_user->currentPage() - 1) }}">Previous</a>
-                                                                    @else
-                                                                        <span>Previous</span>
-                                                                    @endif
-                                                                </li>
-                                                                @php
-                                                                    $currentPage = $register_user->currentPage();
-                                                                    $lastPage = $register_user->lastPage();
-                                                                    $startPage = max($currentPage - 5, 1);
-                                                                    $endPage = min($currentPage + 4, $lastPage);
-                                                                @endphp
-                                                                @if ($startPage > 1)
-                                                                    <li>
-                                                                        <a href="{{ $register_user->url(1) }}">1</a>
-                                                                    </li>
-                                                                    @if ($startPage > 2)
-                                                                        <li>
-                                                                            <span>...</span>
-                                                                        </li>
-                                                                    @endif
-                                                                @endif
-                                                                @for ($i = $startPage; $i <= $endPage; $i++)
-                                                                    <li class="{{ ($currentPage == $i) ? ' active' : '' }}">
-                                                                        <a href="{{ $register_user->url($i) }}">{{ $i }}</a>
-                                                                    </li>
-                                                                @endfor
-                                                                @if ($endPage < $lastPage)
-                                                                    @if ($endPage < $lastPage - 1)
-                                                                        <li>
-                                                                            <span>...</span>
-                                                                        </li>
-                                                                    @endif
-                                                                    <li>
-                                                                        <a href="{{ $register_user->url($lastPage) }}">{{ $lastPage }}</a>
-                                                                    </li>
-                                                                @endif
-                                                                <li class="{{ ($currentPage == $lastPage) ? ' disabled' : '' }}">
-                                                                    @if ($currentPage < $lastPage)
-                                                                        <a href="{{ $register_user->url($currentPage + 1) }}">Next</a>
-                                                                    @else
-                                                                        <span>Next</span>
-                                                                    @endif
-                                                                </li>
-                                                                <!-- <li>
-                                                                    <span>Page {{ $currentPage }}</span>
-                                                                </li> -->
-                                                            </ul>
-                                                        @endif
-                                                    </div>
-                                                </div>
+    <div class="pagination">
+        @if ($register_user->lastPage() > 1)
+            <ul class="pagination">
+                <li class="{{ ($register_user->currentPage() == 1) ? ' disabled' : '' }}">
+                    @if ($register_user->currentPage() > 1)
+                        <a href="{{ $register_user->url($register_user->currentPage() - 1) }}">Previous</a>
+                    @else
+                        <span>Previous</span>
+                    @endif
+                </li>
+
+                @php
+                    $currentPage = $register_user->currentPage();
+                    $lastPage = $register_user->lastPage();
+                    $startPage = max($currentPage - 2, 1);
+                    $endPage = min($currentPage + 2, $lastPage);
+                @endphp
+
+                @if ($startPage > 1)
+                    <li>
+                        <a href="{{ $register_user->url(1) }}">1</a>
+                    </li>
+                    @if ($startPage > 2)
+                        <li>
+                            <span>...</span>
+                        </li>
+                    @endif
+                @endif
+
+                @for ($i = $startPage; $i <= $endPage; $i++)
+                    <li class="{{ ($currentPage == $i) ? ' active' : '' }}">
+                        <a href="{{ $register_user->url($i) }}">{{ $i }}</a>
+                    </li>
+                @endfor
+
+                @if ($endPage < $lastPage)
+                    @if ($endPage < $lastPage - 1)
+                        <li>
+                            <span>...</span>
+                        </li>
+                    @endif
+                    <li>
+                        <a href="{{ $register_user->url($lastPage) }}">{{ $lastPage }}</a>
+                    </li>
+                @endif
+
+                <li class="{{ ($currentPage == $lastPage) ? ' disabled' : '' }}">
+                    @if ($currentPage < $lastPage)
+                        <a href="{{ $register_user->url($currentPage + 1) }}">Next</a>
+                    @else
+                        <span>Next</span>
+                    @endif
+                </li>
+                <li>
+                    <span>Page {{ $currentPage }} of {{ $lastPage }}</span>
+                </li>
+            </ul>
+        @endif
+    </div>
+</div>
+
                                     </div>
                                 </div>
                             </div>
