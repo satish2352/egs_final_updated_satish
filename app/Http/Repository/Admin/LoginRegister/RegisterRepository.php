@@ -43,7 +43,8 @@ class RegisterRepository
 								'users.is_active'
 							)
 							->orderBy('users.id', 'desc')
-							->get();
+							->paginate(50);
+							// ->get();
 							// ->toArray();
 
 		return $data_users;
