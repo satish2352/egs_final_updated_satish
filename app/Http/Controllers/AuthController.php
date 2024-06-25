@@ -132,11 +132,13 @@ class AuthController extends Controller
     {
         try {
            $msg= Mail::raw('Your new password is: ' . $password, function ($message) use ($email) {
-                $message->to($email)->subject('Password Reset');
+            dd($msg);
+            die();
+            $message->to($email)->subject('Password Reset');
                 $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
 
-            });      
-            dd($msg);     
+                
+            });           
             return true;
 
         } catch (\Exception $e) {
@@ -177,7 +179,7 @@ class AuthController extends Controller
             $emailSent = $this->sendPasswordEmail($newPassword, $request->email);
             
             if (!$emailSent) {
-                return response()->json(['status' => 'false', 'message' => 'Failed to send reset link'], 200);
+                return response()->json(['status' => 'false', 'message' => 'Unable to reset password please try after some time'], 200);
             }
 
             
