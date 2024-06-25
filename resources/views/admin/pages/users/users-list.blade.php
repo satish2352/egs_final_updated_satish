@@ -23,7 +23,7 @@
                                 <div class="col-12">
                                     @include('admin.layout.alert')
                                     <div class="table-responsive">
-                                        <table id="order-listing" class="table table-bordered">
+                                        <table id="" class="table table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th>Sr. No.</th>
