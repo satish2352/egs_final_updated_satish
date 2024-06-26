@@ -69,6 +69,18 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                 <div class="col-12 grid-margin">
                     <div class="card">
                         <div class="card-body">
+                        <div class="row mb-4">
+                    <div class="col-12">
+                        <form method="GET" action="{{ route('list-users') }}">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" placeholder="Search by name, email, or role" value="{{ request()->input('search') }}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                             <div class="row">
                                 <div class="col-12">
                                     @include('admin.layout.alert')
@@ -134,66 +146,66 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                                             </tbody>
                                         </table>
                                         <div class="col-md-8">
-    <div class="pagination">
-        @if ($register_user->lastPage() > 1)
-            <ul class="pagination">
-                <li class="{{ ($register_user->currentPage() == 1) ? ' disabled' : '' }}">
-                    @if ($register_user->currentPage() > 1)
-                        <a href="{{ $register_user->url($register_user->currentPage() - 1) }}">Previous</a>
-                    @else
-                        <span>Previous</span>
-                    @endif
-                </li>
+                                            <div class="pagination">
+                                                @if ($register_user->lastPage() > 1)
+                                                    <ul class="pagination">
+                                                        <li class="{{ ($register_user->currentPage() == 1) ? ' disabled' : '' }}">
+                                                            @if ($register_user->currentPage() > 1)
+                                                                <a href="{{ $register_user->url($register_user->currentPage() - 1) }}">Previous</a>
+                                                            @else
+                                                                <span>Previous</span>
+                                                            @endif
+                                                        </li>
 
-                @php
-                    $currentPage = $register_user->currentPage();
-                    $lastPage = $register_user->lastPage();
-                    $startPage = max($currentPage - 2, 1);
-                    $endPage = min($currentPage + 2, $lastPage);
-                @endphp
+                                                        @php
+                                                            $currentPage = $register_user->currentPage();
+                                                            $lastPage = $register_user->lastPage();
+                                                            $startPage = max($currentPage - 2, 1);
+                                                            $endPage = min($currentPage + 2, $lastPage);
+                                                        @endphp
 
-                @if ($startPage > 1)
-                    <li>
-                        <a href="{{ $register_user->url(1) }}">1</a>
-                    </li>
-                    @if ($startPage > 2)
-                        <li>
-                            <span>...</span>
-                        </li>
-                    @endif
-                @endif
+                                                        @if ($startPage > 1)
+                                                            <li>
+                                                                <a href="{{ $register_user->url(1) }}">1</a>
+                                                            </li>
+                                                            @if ($startPage > 2)
+                                                                <li>
+                                                                    <span>...</span>
+                                                                </li>
+                                                            @endif
+                                                        @endif
 
-                @for ($i = $startPage; $i <= $endPage; $i++)
-                    <li class="{{ ($currentPage == $i) ? ' active' : '' }}">
-                        <a href="{{ $register_user->url($i) }}">{{ $i }}</a>
-                    </li>
-                @endfor
+                                                        @for ($i = $startPage; $i <= $endPage; $i++)
+                                                            <li class="{{ ($currentPage == $i) ? ' active' : '' }}">
+                                                                <a href="{{ $register_user->url($i) }}">{{ $i }}</a>
+                                                            </li>
+                                                        @endfor
 
-                @if ($endPage < $lastPage)
-                    @if ($endPage < $lastPage - 1)
-                        <li>
-                            <span>...</span>
-                        </li>
-                    @endif
-                    <li>
-                        <a href="{{ $register_user->url($lastPage) }}">{{ $lastPage }}</a>
-                    </li>
-                @endif
+                                                        @if ($endPage < $lastPage)
+                                                            @if ($endPage < $lastPage - 1)
+                                                                <li>
+                                                                    <span>...</span>
+                                                                </li>
+                                                            @endif
+                                                            <li>
+                                                                <a href="{{ $register_user->url($lastPage) }}">{{ $lastPage }}</a>
+                                                            </li>
+                                                        @endif
 
-                <li class="{{ ($currentPage == $lastPage) ? ' disabled' : '' }}">
-                    @if ($currentPage < $lastPage)
-                        <a href="{{ $register_user->url($currentPage + 1) }}">Next</a>
-                    @else
-                        <span>Next</span>
-                    @endif
-                </li>
-                <li>
-                    <span>Page {{ $currentPage }} of {{ $lastPage }}</span>
-                </li>
-            </ul>
-        @endif
-    </div>
-</div>
+                                                        <li class="{{ ($currentPage == $lastPage) ? ' disabled' : '' }}">
+                                                            @if ($currentPage < $lastPage)
+                                                                <a href="{{ $register_user->url($currentPage + 1) }}">Next</a>
+                                                            @else
+                                                                <span>Next</span>
+                                                            @endif
+                                                        </li>
+                                                        <li>
+                                                            <span>Page {{ $currentPage }} of {{ $lastPage }}</span>
+                                                        </li>
+                                                    </ul>
+                                                @endif
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>

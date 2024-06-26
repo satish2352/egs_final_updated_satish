@@ -22,10 +22,16 @@ class RegisterServices
         $this->repo = new RegisterRepository();
     }
 
-    public function index() {
-        $data_users = $this->repo->getUsersList();
-        // dd($data_users);
-        return $data_users;
+    // public function index() {
+    //     $data_users = $this->repo->getUsersList();
+    //     // dd($data_users);
+    //     return $data_users;
+    // }
+
+    public function index($search = null)
+    {
+         $data_users = $this->repo->getUsersList($search);
+         return $data_users;
     }
 
     // public function register($request) {

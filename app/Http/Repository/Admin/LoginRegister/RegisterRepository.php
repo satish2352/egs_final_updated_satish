@@ -16,39 +16,47 @@ use Illuminate\Support\Facades\Mail;
 class RegisterRepository
 {
 
-	public function getUsersList() {
-        $data_users = User::join('roles', function($join) {
-							$join->on('users.role_id', '=', 'roles.id');
-						})
-						// ->where('users.is_active','=',true)
-						->where('users.role_id','<>','1')
-						->select('roles.role_name',
-								'users.email',
-								'users.personal_email',
-								'users.f_name',
-								'users.m_name',
-								'users.l_name',
-								'users.number',
-								'users.aadhar_no',
-								'users.address',
-								'users.district',
-								'users.taluka',
-								'users.village',
-								'users.pincode',
-								'users.user_type',
-								'users.user_district',
-								'users.user_taluka',
-								'users.user_village',
-								'users.id',
-								'users.is_active'
-							)
-							->orderBy('users.id', 'desc')
-							->paginate(50);
-							// ->get();
-							// ->toArray();
+	public function getUsersList($search = null)
+    {
+        $query = User::join('roles', function($join) {
+            $join->on('users.role_id', '=', 'roles.id');
+        })
+        ->where('users.role_id', '<>', '1')
+        ->select(
+            'roles.role_name',
+            'users.email',
+            'users.personal_email',
+            'users.f_name',
+            'users.m_name',
+            'users.l_name',
+            'users.number',
+            'users.aadhar_no',
+            'users.address',
+            'users.district',
+            'users.taluka',
+            'users.village',
+            'users.pincode',
+            'users.user_type',
+            'users.user_district',
+            'users.user_taluka',
+            'users.user_village',
+            'users.id',
+            'users.is_active'
+        );
 
-		return $data_users;
-	}
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('users.f_name', 'LIKE', "%{$search}%")
+                  ->orWhere('users.m_name', 'LIKE', "%{$search}%")
+                  ->orWhere('users.l_name', 'LIKE', "%{$search}%")
+                  ->orWhere('users.email', 'LIKE', "%{$search}%")
+				  ->orWhere('users.personal_email', 'LIKE', "%{$search}%")
+                  ->orWhere('roles.role_name', 'LIKE', "%{$search}%");
+            });
+        }
+
+        return $query->orderBy('users.id', 'desc')->paginate(50);
+    }
 
 
 	public function permissionsData()

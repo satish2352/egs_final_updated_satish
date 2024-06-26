@@ -25,10 +25,18 @@ class RegisterController extends Controller {
         $this->service = new RegisterServices();
     }
 
-    public function index()
+    // public function index()
+    // {
+    //     $register_user = $this->service->index();
+    //     return view('admin.pages.users.users-list',compact('register_user'));
+    // }
+
+    public function index(Request $request)
     {
-        $register_user = $this->service->index();
-        return view('admin.pages.users.users-list',compact('register_user'));
+        $search = $request->input('search');
+        $register_user = $this->service->index($search);
+
+        return view('admin.pages.users.users-list', compact('register_user'));
     }
 
     // public function getProf()
