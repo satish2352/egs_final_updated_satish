@@ -50,7 +50,7 @@ class LabourController extends Controller
                     'village_id' => 'required',
                     'skill_id' => 'required',
                     'mobile_number' => ['required', 'digits:10', 'regex:/^[6789]\d{9}$/'],
-                    'mgnrega_card_id' => ['required', 'digits:16'],
+                    'mgnrega_card_id' =>'required|min:16|max:16',
                     'latitude' => ['required', 'between:-90,90'],
                     'longitude' => ['required', 'between:-180,180'],
                     'aadhar_image' => 'required|image|mimes:jpeg,png,jpg|min:10|max:2048',
@@ -74,7 +74,8 @@ class LabourController extends Controller
                     'mobile_number.digits'=>'Mobile number must be 10 digits.',
                     'mobile_number.regex' => 'Mobile number must start with 9, 8, 7 or 6.',
                     'mgnrega_card_id.required'=>'mgnrega card id is required.',
-                    'mgnrega_card_id.digits' => 'mgnrega card id must be 16 digits.',
+                    'mgnrega_card_id.min' => 'mgnrega card id must be 16 digits.',
+                    'mgnrega_card_id.max' => 'mgnrega card id must be 16 digits.',
                     'latitude.required'=>'latitude is required.',
                     'latitude.between'=>'latitude must be between -90 and 90',
                     'longitude.required'=>'longitude is required.',
@@ -392,7 +393,7 @@ class LabourController extends Controller
                 'village_id' => 'required',
                 'skill_id' => 'required',
                 'mobile_number' => ['required', 'digits:10', 'regex:/^[6789]\d{9}$/'],
-                'mgnrega_card_id' => ['required', 'digits:16'],
+                'mgnrega_card_id' =>'required|min:16|max:16',
             ];
     
             $customMessages = [
@@ -410,7 +411,8 @@ class LabourController extends Controller
                 'mobile_number.digits'=>'Mobile number must be 10 digits.',
                 'mobile_number.regex' => 'Mobile number must start with 9, 8,7, or 6.',
                 'mgnrega_card_id.required'=>'mgnrega card id is required.',
-                'mgnrega_card_id.digits' => 'mgnrega card id must be 16 digits.',
+                'mgnrega_card_id.min' => 'mgnrega card id must be 16 digits.',
+                'mgnrega_card_id.max' => 'mgnrega card id must be 16 digits.',
               
             ];
             $validator = Validator::make($request->all(), $all_data_validation, $customMessages);
