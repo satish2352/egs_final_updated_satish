@@ -110,12 +110,12 @@ class ProjectController extends Controller
                ->leftJoin('tbl_area as village_projects', 'projects.village', '=', 'village_projects.location_id')
                 ->where('projects.is_active', true)
                 ->where('projects.end_date', '>=', now())
-                ->when($request->has('latitude'), function($query) use ($latN, $latS, $lonE, $lonW) {
-                    $query->where('projects.latitude', '<=', $latN)
-                        ->where('projects.latitude', '>=', $latS)
-                        ->where('projects.longitude', '<=', $lonE)
-                        ->where('projects.longitude', '>=', $lonW);
-                })
+                // ->when($request->has('latitude'), function($query) use ($latN, $latS, $lonE, $lonW) {
+                //     $query->where('projects.latitude', '<=', $latN)
+                //         ->where('projects.latitude', '>=', $latS)
+                //         ->where('projects.longitude', '<=', $lonE)
+                //         ->where('projects.longitude', '>=', $lonW);
+                // })
                 
                 ->when($request->has('project_name'), function($query) use ($request) {
                     $query->where('projects.project_name', 'like', '%' . $request->project_name . '%');
