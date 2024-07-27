@@ -148,6 +148,7 @@ class ProjectController extends Controller
                     $filteredProjects = $projects->filter(function($project) use ($userLatitude, $userLongitude, $distanceInKm) {
                         return $this->isWithinDistance($userLatitude, $userLongitude, $project->latitude, $project->longitude, $distanceInKm);
                     });
+        Log::info($filteredProjects);
         Log::info($filteredProjects->pluck('id'));
 
                     return $query->whereIn('projects.id', $filteredProjects->pluck('id'));
@@ -156,7 +157,7 @@ class ProjectController extends Controller
                     $query->where('projects.project_name', 'like', '%' . $request->project_name . '%');
                 })
                 ->select(
-                    'projects.id',
+                    'projects.id as ',
                     'projects.project_name',
                     'projects.start_date',
                     'projects.end_date',
