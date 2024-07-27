@@ -144,15 +144,17 @@ class ProjectController extends Controller
     ->where('projects.is_active', true)
     ->where('projects.end_date', '>=', now())
     ->when($request->has('latitude'), function($query) use ($userLatitude, $userLongitude, $distanceInKm) {
-        $projects = $query->get();
+        // $projects = $query->get();
+        $projects = $query->select('projects.*','projects.id as pid')->get();
         $filteredProjects = $projects->filter(function($project) use ($userLatitude, $userLongitude, $distanceInKm) {
             return $this->isWithinDistance($userLatitude, $userLongitude, $project->latitude, $project->longitude, $distanceInKm);
         });
 
         Log::info($filteredProjects);
-        Log::info($filteredProjects->pluck('id'));
+        Log::info($filteredProjects->pluck('pid'));
+        Log::info($projects);
 
-        return $query->whereIn('projects.id', $filteredProjects->pluck('id')->toArray());
+        return $query->whereIn('projects.id', $filteredProjects->pluck('pid')->toArray());
     })
     ->when($request->has('project_name'), function($query) use ($request) {
         $query->where('projects.project_name', 'like', '%' . $request->project_name . '%');
