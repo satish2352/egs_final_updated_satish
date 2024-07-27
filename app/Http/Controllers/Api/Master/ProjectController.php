@@ -87,7 +87,6 @@ class ProjectController extends Controller
     // Convert degrees to radians
     private function degreesToRadians($degrees)
     {
-        Log::info( $degrees * (pi() / 180));
 
         return $degrees * (pi() / 180);
     }
@@ -95,8 +94,10 @@ class ProjectController extends Controller
     // Check if a point is within a certain distance from the center
     private function isWithinDistance($centerLat, $centerLon, $pointLat, $pointLon, $distanceInKm)
     {
-        
         $distance = $this->calculateDistance($centerLat, $centerLon, $pointLat, $pointLon);
+        Log::info('distancedistancedistancedistance',$distance);
+        Log::info('distanceInKmdistanceInKmdistanceInKm',$distanceInKm);
+
         return $distance <= $distanceInKm;
     }
 
