@@ -68,8 +68,11 @@ class ProjectController extends Controller
     private function calculateDistance($lat1, $lon1, $lat2, $lon2)
     {
         $R = 6371; // Radius of the Earth in kilometers
-        Log::info($lat1);
-        Log::info($lat2);
+        $lat1 = (float) $lat1;
+        $lon1 = (float) $lon1;
+
+        $lat2 = (float) $lat2;
+        $lon2 = (float) $lon2;
         $dLat = $this->degreesToRadians($lat2 - $lat1);
         $dLon = $this->degreesToRadians($lon2 - $lon1);
 
