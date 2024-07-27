@@ -148,7 +148,7 @@ class ProjectController extends Controller
                     $filteredProjects = $projects->filter(function($project) use ($userLatitude, $userLongitude, $distanceInKm) {
                         return $this->isWithinDistance($userLatitude, $userLongitude, $project->latitude, $project->longitude, $distanceInKm);
                     });
-        Log::info($filteredProjects);
+        Log::info($filteredProjects->pluck('id'));
 
                     return $query->whereIn('projects.id', $filteredProjects->pluck('id'));
                 })
