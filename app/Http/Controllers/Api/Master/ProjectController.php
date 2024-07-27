@@ -95,8 +95,8 @@ class ProjectController extends Controller
     private function isWithinDistance($centerLat, $centerLon, $pointLat, $pointLon, $distanceInKm)
     {
         $distance = $this->calculateDistance($centerLat, $centerLon, $pointLat, $pointLon);
-        Log::info('distancedistancedistancedistance',$distance);
-        Log::info('distanceInKmdistanceInKmdistanceInKm',$distanceInKm);
+        Log::info($distance);
+        Log::info($distanceInKm);
 
         return $distance <= $distanceInKm;
     }
