@@ -139,38 +139,40 @@ class ProjectController extends Controller
 
             // Modify this block to use distance calculation logic
             $projectQuery = Project::leftJoin('tbl_area as district_projects', 'projects.district', '=', 'district_projects.location_id')  
-                ->leftJoin('tbl_area as taluka_projects', 'projects.taluka', '=', 'taluka_projects.location_id')
-                ->leftJoin('tbl_area as village_projects', 'projects.village', '=', 'village_projects.location_id')
-                ->where('projects.is_active', true)
-                ->where('projects.end_date', '>=', now())
-                ->when($request->has('latitude'), function($query) use ($userLatitude, $userLongitude, $distanceInKm) {
-                    $projects = $query->get();
-                    $filteredProjects = $projects->filter(function($project) use ($userLatitude, $userLongitude, $distanceInKm) {
-                        return $this->isWithinDistance($userLatitude, $userLongitude, $project->latitude, $project->longitude, $distanceInKm);
-                    });
+    ->leftJoin('tbl_area as taluka_projects', 'projects.taluka', '=', 'taluka_projects.location_id')
+    ->leftJoin('tbl_area as village_projects', 'projects.village', '=', 'village_projects.location_id')
+    ->where('projects.is_active', true)
+    ->where('projects.end_date', '>=', now())
+    ->when($request->has('latitude'), function($query) use ($userLatitude, $userLongitude, $distanceInKm) {
+        $projects = $query->get();
+        $filteredProjects = $projects->filter(function($project) use ($userLatitude, $userLongitude, $distanceInKm) {
+            return $this->isWithinDistance($userLatitude, $userLongitude, $project->latitude, $project->longitude, $distanceInKm);
+        });
+
         Log::info($filteredProjects);
         Log::info($filteredProjects->pluck('id'));
 
-                    return $query->whereIn('projects.id', $filteredProjects->pluck('id'));
-                })
-                ->when($request->has('project_name'), function($query) use ($request) {
-                    $query->where('projects.project_name', 'like', '%' . $request->project_name . '%');
-                })
-                ->select(
-                    'projects.id as ',
-                    'projects.project_name',
-                    'projects.start_date',
-                    'projects.end_date',
-                    'projects.latitude',
-                    'projects.longitude',
-                    'projects.district',
-                    'district_projects.name as district_name',
-                    'projects.taluka',
-                    'taluka_projects.name as taluka_name',
-                    'projects.village',
-                    'village_projects.name as village_name'
-                )
-                ->orderBy('projects.id', 'desc');
+        return $query->whereIn('projects.id', $filteredProjects->pluck('id')->toArray());
+    })
+    ->when($request->has('project_name'), function($query) use ($request) {
+        $query->where('projects.project_name', 'like', '%' . $request->project_name . '%');
+    })
+    ->select(
+        'projects.id',
+        'projects.project_name',
+        'projects.start_date',
+        'projects.end_date',
+        'projects.latitude',
+        'projects.longitude',
+        'projects.district',
+        'district_projects.name as district_name',
+        'projects.taluka',
+        'taluka_projects.name as taluka_name',
+        'projects.village',
+        'village_projects.name as village_name'
+    )
+    ->orderBy('projects.id', 'desc');
+
 
             $gramsevakdocumentQuery = GramPanchayatDocuments::where('tbl_gram_panchayat_documents.user_id', $user)
                 ->where('tbl_gram_panchayat_documents.is_approved', 2)
