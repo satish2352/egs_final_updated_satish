@@ -87,9 +87,8 @@ class ProjectController extends Controller
     // Check if a point is within a certain distance from the center
     private function isWithinDistance($centerLat, $centerLon, $pointLat, $pointLon, $distanceInKm)
     {
-
+        
         $distance = $this->calculateDistance($centerLat, $centerLon, $pointLat, $pointLon);
-        dd($distanceInKm);
         return $distance <= $distanceInKm;
     }
 
