@@ -67,6 +67,8 @@ class ProjectController extends Controller
     private function calculateDistance($lat1, $lon1, $lat2, $lon2)
     {
         $R = 6371; // Radius of the Earth in kilometers
+        Log::info($lat1);
+        Log::info($lat2);
         $dLat = $this->degreesToRadians($lat2 - $lat1);
         $dLon = $this->degreesToRadians($lon2 - $lon1);
 
@@ -81,6 +83,8 @@ class ProjectController extends Controller
     // Convert degrees to radians
     private function degreesToRadians($degrees)
     {
+        Log::info( $degrees * (pi() / 180));
+
         return $degrees * (pi() / 180);
     }
 
