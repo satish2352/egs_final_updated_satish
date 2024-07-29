@@ -94,7 +94,7 @@ class ProjectController extends Controller
 
     $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
       cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
-      Log::info($angle * $R);
+    //   Log::info($angle * $R);
 
 
     return $angle * $R;
@@ -111,8 +111,8 @@ class ProjectController extends Controller
     private function isWithinDistance($centerLat, $centerLon, $pointLat, $pointLon, $distanceInKm)
     {
         $distance = $this->calculateDistance($centerLat, $centerLon, $pointLat, $pointLon);
-        Log::info($distance);
-        Log::info($distanceInKm);
+        // Log::info($distance);
+        // Log::info($distanceInKm);
 
         return $distance <= $distanceInKm;
     }
