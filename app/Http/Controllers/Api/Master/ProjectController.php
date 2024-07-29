@@ -149,8 +149,9 @@ class ProjectController extends Controller
                     'labour.latitude',
                     'labour.longitude',
                     'tbl_mark_attendance.attendance_day',
-                    LabourAttendanceMark::raw("CONVERT_TZ(tbl_mark_attendance.updated_at, '+00:00', '+05:30') as updated_at")
-                )
+                    // LabourAttendanceMark::raw("CONVERT_TZ(tbl_mark_attendance.updated_at, '+00:00', '+05:30') as updated_at"), 
+                    LabourAttendanceMark::raw("tbl_mark_attendance.updated_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata' as updated_at"), 
+                    )
                 ->orderBy('tbl_mark_attendance.id', 'desc');
 
             // Modify this block to use distance calculation logic
